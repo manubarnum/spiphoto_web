@@ -1,0 +1,24 @@
+# Dépendances
+node_modules/
+vendor/
+
+# Fichiers de config sensibles
+*.env
+.env.local
+config-local.php
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Fichiers de build temporaires
+*.cache
+.sass-cache/
+
+# IDE
+.vscode/
+.idea/
