@@ -76,6 +76,8 @@ spiphoto-fse/
 │       ├── main.js              # JS principal (vanilla, 0 dépendances)
 │       └── block-variations.js  # Variations de blocs pour l'éditeur
 └── languages/                   # Fichiers de traduction
+└── .github/workflows/           # Github Action
+        └── deploy.yml           # Déploiement automatique
 ```
 
 ---
