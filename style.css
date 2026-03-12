@@ -590,7 +590,7 @@ html[data-theme="light"] .header-brand-row .wp-block-site-tagline { color: var(-
 
 /* ── Dropdown ── */
 .cats-submenu {
-  display: none !important;
+  display: none !important;   /* ← ajoute cette ligne */
   position: absolute; top: 100%; left: 0;
   min-width: 200px;
   background: var(--sp-surface-top);
