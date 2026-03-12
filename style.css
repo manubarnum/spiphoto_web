@@ -590,7 +590,7 @@ html[data-theme="light"] .header-brand-row .wp-block-site-tagline { color: var(-
 
 /* ── Dropdown ── */
 .cats-submenu {
-  display: none;
+  display: none !important;
   position: absolute; top: 100%; left: 0;
   min-width: 200px;
   background: var(--sp-surface-top);
@@ -602,7 +602,7 @@ html[data-theme="light"] .header-brand-row .wp-block-site-tagline { color: var(-
 }
 /* Affichage au survol desktop */
 .cats-nav-item:hover .cats-submenu,
-.cats-nav-item.is-open .cats-submenu { display: block; }
+.cats-nav-item.is-open .cats-submenu { display: block !important; }
 
 /* Éléments de la liste */
 .cats-submenu li { margin: 0; padding: 0; border: none; list-style: none; }
@@ -645,12 +645,12 @@ html[data-theme="light"] .cats-submenu { background: var(--sp-surface-top); bord
 
   /* Dropdown mobile : statique, en accordéon */
   .cats-submenu {
-    position: static; display: none;
+    position: static; display: none !important;
     border: none; border-top: 1px solid var(--sp-border);
     border-radius: 0; box-shadow: none;
     background: rgba(75,90,34,.05); padding: 0.25rem 0;
   }
-  .cats-nav-item.is-open .cats-submenu { display: block; }
+  .cats-nav-item.is-open .cats-submenu { display: block !important; }
   .cats-submenu a { padding: 0.5rem clamp(1rem, 4vw, 2rem) 0.5rem calc(clamp(1rem, 4vw, 2rem) + 1rem); }
 }
 
