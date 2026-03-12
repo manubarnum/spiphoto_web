@@ -71,11 +71,11 @@ html[data-theme="light"] {
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
+  overflow-x: hidden;
   background-color: var(--sp-bg);
   color: var(--sp-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 img, video { max-width: 100%; height: auto; display: block; }
 ::selection { background: rgba(147, 104, 147, 0.35); color: var(--sp-text); }
@@ -590,8 +590,9 @@ html[data-theme="light"] .header-brand-row .wp-block-site-tagline { color: var(-
 
 /* ── Dropdown ── */
 .cats-submenu {
-  display: none !important;   /* ← ajoute cette ligne */
-  position: absolute; top: 100%; left: 0;
+  display: none !important;
+  position: fixed;   /* ← à la place de absolute */
+  top: auto;
   min-width: 200px;
   background: var(--sp-surface-top);
   border: 1px solid var(--sp-border-lt);

@@ -210,6 +210,14 @@
           item.classList.toggle('is-open');
         }
       });
+      // Positionner le dropdown sous le lien parent
+      item.addEventListener('mouseenter', function() {
+         if (window.innerWidth > 900) {
+            var rect = item.getBoundingClientRect();
+            submenu.style.top  = rect.bottom + 'px';
+           submenu.style.left = rect.left + 'px';
+         }
+});
 
       /* Fermer au Escape */
       item.addEventListener('keydown', function(e) {
