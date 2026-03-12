@@ -522,9 +522,15 @@ html[data-theme="light"] .header-brand-row .wp-block-site-tagline { color: var(-
 .header-cats-bar {
   background: var(--sp-surface);
   border-bottom: 1px solid var(--sp-border);
-  overflow-x: auto; scrollbar-width: none;
+  /* PAS d'overflow ici — couperait les dropdowns */
 }
-.header-cats-bar::-webkit-scrollbar { display: none; }
+
+/* Le scroll horizontal est sur un wrapper interne */
+.cats-nav-scroll {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cats-nav-scroll::-webkit-scrollbar { display: none; }
 
 .cats-nav {
   max-width: 1200px; margin: 0 auto;

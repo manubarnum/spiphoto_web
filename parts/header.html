@@ -48,77 +48,77 @@
 
   <!-- Barre catégories avec sous-menus -->
   <div class="header-cats-bar" id="cats-nav">
-    <nav class="cats-nav" aria-label="Catégories">
+    <!-- wrapper scroll horizontal séparé pour ne pas couper les dropdowns -->
+    <div class="cats-nav-scroll">
+      <nav class="cats-nav" aria-label="Catégories">
 
-      <!-- Blog (pas de sous-catégorie) 
-      <a href="/category/blog/">Blog</a>-->
+        <!-- Découvrir → Animaux, Art, Danse, Histoire, Mécanique, Musique, Sport -->
+        <div class="cats-nav-item has-submenu">
+          <a href="/category/decouvrir/">Découvrir
+            <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="cats-submenu" role="list">
+            <li><a href="/category/decouvrir/animaux/">Animaux</a></li>
+            <li><a href="/category/decouvrir/art/">Art</a></li>
+            <li><a href="/category/decouvrir/danse/">Danse</a></li>
+            <li><a href="/category/decouvrir/histoire/">Histoire</a></li>
+            <li><a href="/category/decouvrir/mecanique/">Mécanique</a></li>
+            <li><a href="/category/decouvrir/musique/">Musique</a></li>
+            <li><a href="/category/decouvrir/sport/">Sport</a></li>
+          </ul>
+        </div>
 
-      <!-- Découvrir → Animaux, Art, Danse, Histoire, Mécanique, Musique, Sport -->
-      <div class="cats-nav-item has-submenu">
-        <a href="/category/decouvrir/">Découvrir
-          <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-        <ul class="cats-submenu" role="list">
-          <li><a href="/category/decouvrir/animaux/">Animaux</a></li>
-          <li><a href="/category/decouvrir/art/">Art</a></li>
-          <li><a href="/category/decouvrir/danse/">Danse</a></li>
-          <li><a href="/category/decouvrir/histoire/">Histoire</a></li>
-          <li><a href="/category/decouvrir/mecanique/">Mécanique</a></li>
-          <li><a href="/category/decouvrir/musique/">Musique</a></li>
-          <li><a href="/category/decouvrir/sport/">Sport</a></li>
-        </ul>
-      </div>
+        <!-- Sortir → Compétition, Concert, Exposition, Fête, Meeting, Salon, Spectacle -->
+        <div class="cats-nav-item has-submenu">
+          <a href="/category/sortir/">Sortir
+            <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="cats-submenu" role="list">
+            <li><a href="/category/sortir/competition/">Compétition</a></li>
+            <li><a href="/category/sortir/concert/">Concert</a></li>
+            <li><a href="/category/sortir/exposition/">Exposition</a></li>
+            <li><a href="/category/sortir/fete/">Fête</a></li>
+            <li><a href="/category/sortir/meeting/">Meeting</a></li>
+            <li><a href="/category/sortir/salon/">Salon</a></li>
+            <li><a href="/category/sortir/spectacle/">Spectacle</a></li>
+          </ul>
+        </div>
 
-      <!-- Sortir → Compétition, Concert, Exposition, Fête, Meeting, Salon, Spectacle -->
-      <div class="cats-nav-item has-submenu">
-        <a href="/category/sortir/">Sortir
-          <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-        <ul class="cats-submenu" role="list">
-          <li><a href="/category/sortir/competition/">Compétition</a></li>
-          <li><a href="/category/sortir/concert/">Concert</a></li>
-          <li><a href="/category/sortir/exposition/">Exposition</a></li>
-          <li><a href="/category/sortir/fete/">Fête</a></li>
-          <li><a href="/category/sortir/meeting/">Meeting</a></li>
-          <li><a href="/category/sortir/salon/">Salon</a></li>
-          <li><a href="/category/sortir/spectacle/">Spectacle</a></li>
-        </ul>
-      </div>
+        <!-- Visiter → Campagne, Ville et village -->
+        <div class="cats-nav-item has-submenu">
+          <a href="/category/visiter/">Visiter
+            <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="cats-submenu" role="list">
+            <li><a href="/category/visiter/campagne/">Campagne</a></li>
+            <li><a href="/category/visiter/ville-et-village/">Ville et village</a></li>
+          </ul>
+        </div>
 
-      <!-- Visiter → Campagne, Ville et village -->
-      <div class="cats-nav-item has-submenu">
-        <a href="/category/visiter/">Visiter
-          <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-        <ul class="cats-submenu" role="list">
-          <li><a href="/category/visiter/campagne/">Campagne</a></li>
-          <li><a href="/category/visiter/ville-et-village/">Ville et village</a></li>
-        </ul>
-      </div>
+        <!-- Vivre → Association -->
+        <div class="cats-nav-item has-submenu">
+          <a href="/category/vivre/">Vivre
+            <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="cats-submenu" role="list">
+            <li><a href="/category/vivre/association/">Association</a></li>
+          </ul>
+        </div>
 
-      <!-- Vivre → Association -->
-      <div class="cats-nav-item has-submenu">
-        <a href="/category/vivre/">Vivre
-          <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-        <ul class="cats-submenu" role="list">
-          <li><a href="/category/vivre/association/">Association</a></li>
-        </ul>
-      </div>
+        <!-- Voyager → Europe, France, Monde -->
+        <div class="cats-nav-item has-submenu">
+          <a href="/category/voyager/">Voyager
+            <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="cats-submenu" role="list">
+            <li><a href="/category/voyager/europe/">Europe</a></li>
+            <li><a href="/category/voyager/france/">France</a></li>
+            <li><a href="/category/voyager/monde/">Monde</a></li>
+          </ul>
+        </div>
 
-      <!-- Voyager → Europe, France, Monde -->
-      <div class="cats-nav-item has-submenu">
-        <a href="/category/voyager/">Voyager
-          <svg class="submenu-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
-        <ul class="cats-submenu" role="list">
-          <li><a href="/category/voyager/europe/">Europe</a></li>
-          <li><a href="/category/voyager/france/">France</a></li>
-          <li><a href="/category/voyager/monde/">Monde</a></li>
-        </ul>
-      </div>
-
-    </nav>
+      </nav>
+    </div>
   </div>
 
 </div>
@@ -192,7 +192,7 @@
       if (href && href !== '/' && path.startsWith(href)) a.classList.add('active');
     });
 
-    /* Sous-menus : accessibilité clavier */
+    /* Sous-menus : toggle mobile + accessibilité clavier */
     document.querySelectorAll('.cats-nav-item.has-submenu').forEach(function(item) {
       var link = item.querySelector(':scope > a');
       var submenu = item.querySelector('.cats-submenu');
