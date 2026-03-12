@@ -6,9 +6,8 @@
   <div class="header-topbar">
     <div class="header-topbar-inner">
 
-      <!-- Navigation Secondary (pages institutionnelles) -->
+      <!-- Slot navigation Secondary (Menu principal — ID 25) -->
       <nav class="topbar-nav-wrap" aria-label="Pages du site">
-        <!-- SLOT : wp:navigation Secondary injecté ci-dessous -->
         <div id="sp-secondary-nav-slot"></div>
       </nav>
 
@@ -51,7 +50,7 @@
 
   <!-- ── BARRE NAVIGATION PRIMAIRE ─────────────────── -->
   <div class="header-cats-bar" id="cats-nav">
-    <!-- SLOT : wp:navigation Primary injecté ci-dessous -->
+    <!-- Slot navigation Primary (Catégories — ID 120) -->
     <div id="sp-primary-nav-slot"></div>
   </div>
 
@@ -62,7 +61,7 @@
      BLOCS FSE — rendus par WordPress, déplacés par JS
      ══════════════════════════════════════════════════════ -->
 
-<!-- Blocs logo + titre (slot brand) -->
+<!-- Blocs logo + titre -->
 <!-- wp:group {"className":"sp-brand-blocks","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}}} -->
 <div class="wp-block-group sp-brand-blocks" style="display:none" aria-hidden="true">
   <!-- wp:site-logo {"width":44,"shouldSyncIcon":false} /-->
@@ -75,33 +74,17 @@
 </div>
 <!-- /wp:group -->
 
-<!-- Navigation Secondary (topbar — pages institutionnelles) -->
+<!-- Navigation Secondary — Menu principal (ID 25) -->
 <!-- wp:group {"className":"sp-secondary-nav-blocks","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}}} -->
 <div class="wp-block-group sp-secondary-nav-blocks" style="display:none" aria-hidden="true">
-  <!-- wp:navigation {
-    "overlayMenu":"never",
-    "layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"nowrap"},
-    "style":{
-      "typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6875rem","fontWeight":"500","textTransform":"uppercase","letterSpacing":"0.06em"},
-      "color":{"text":"rgba(242,239,232,0.5)"}
-    },
-    "__unstableLocation":"secondary"
-  } /-->
+  <!-- wp:navigation {"ref":25,"overlayMenu":"never","layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"nowrap"},"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6875rem","fontWeight":"500","textTransform":"uppercase","letterSpacing":"0.06em"},"color":{"text":"rgba(242,239,232,0.5)"}}} /-->
 </div>
 <!-- /wp:group -->
 
-<!-- Navigation Primary (barre catégories) -->
+<!-- Navigation Primary — Catégories (ID 120) -->
 <!-- wp:group {"className":"sp-primary-nav-blocks","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}}} -->
 <div class="wp-block-group sp-primary-nav-blocks" style="display:none" aria-hidden="true">
-  <!-- wp:navigation {
-    "overlayMenu":"never",
-    "layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"nowrap"},
-    "style":{
-      "typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem","fontWeight":"600","textTransform":"uppercase","letterSpacing":"0.05em"},
-      "color":{"text":"var(--sp-text-sec)"}
-    },
-    "__unstableLocation":"primary"
-  } /-->
+  <!-- wp:navigation {"ref":120,"overlayMenu":"never","layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"nowrap"},"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem","fontWeight":"600","textTransform":"uppercase","letterSpacing":"0.05em"},"color":{"text":"var(--sp-text-sec)"}}} /-->
 </div>
 <!-- /wp:group -->
 
@@ -126,7 +109,7 @@
   /* ── DOM ready ──────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
 
-    /* Déplacer logo + titre dans .header-brand */
+    /* Déplacer logo + titre */
     var brandBlocks = document.querySelector('.sp-brand-blocks');
     var logoSlot    = document.getElementById('sp-logo-slot');
     var idSlot      = document.getElementById('sp-identity-slot');
@@ -138,7 +121,7 @@
       brandBlocks.remove();
     }
 
-    /* Déplacer la navigation Secondary dans la topbar */
+    /* Déplacer navigation Secondary → topbar */
     var secNavBlocks = document.querySelector('.sp-secondary-nav-blocks');
     var secNavSlot   = document.getElementById('sp-secondary-nav-slot');
     if (secNavBlocks && secNavSlot) {
@@ -147,7 +130,7 @@
       secNavBlocks.remove();
     }
 
-    /* Déplacer la navigation Primary dans la barre cats */
+    /* Déplacer navigation Primary → barre catégories */
     var primNavBlocks = document.querySelector('.sp-primary-nav-blocks');
     var primNavSlot   = document.getElementById('sp-primary-nav-slot');
     if (primNavBlocks && primNavSlot) {
@@ -172,7 +155,7 @@
       }, { passive: true });
     }
 
-    /* Menu mobile — toggle barre primaire */
+    /* Menu mobile */
     var mobileBtn = document.querySelector('.mobile-menu-btn');
     var catsBar   = document.getElementById('cats-nav');
     if (mobileBtn && catsBar) {
@@ -182,11 +165,11 @@
       });
     }
 
-    /* Marquer le lien actif */
+    /* Lien actif */
     var path = window.location.pathname;
     document.querySelectorAll('#sp-primary-nav-slot a, #sp-secondary-nav-slot a').forEach(function (a) {
       var href = a.getAttribute('href');
-      if (href && path.startsWith(href) && href !== '/') {
+      if (href && href !== '/' && path.startsWith(href)) {
         a.classList.add('active');
       }
     });
