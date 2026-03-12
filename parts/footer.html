@@ -1,94 +1,54 @@
 <!-- wp:group {"tagName":"footer","className":"site-footer","layout":{"type":"constrained","wideSize":"1200px"},"style":{"color":{"background":"#0d0e09","text":"rgba(242,239,232,0.7)"},"spacing":{"padding":{"top":"0","bottom":"0"}}}} -->
 <footer class="wp-block-group site-footer has-background has-text-color" style="background-color:#0d0e09;color:rgba(242,239,232,0.7)">
 
-  <!-- ── ZONE PRINCIPALE : description + partenaires ── -->
-  <!-- wp:columns {"isStackedOnMobile":true,"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"2.5rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"},"blockGap":{"left":"3rem"}},"border":{"bottom":{"color":"rgba(242,239,232,0.06)","width":"1px"}}}}} -->
-  <div class="wp-block-columns" style="padding:2.5rem clamp(1rem,4vw,2rem);border-bottom:1px solid rgba(242,239,232,0.06)">
+	<!-- Zone principale : description + partenaires côte à côte -->
+	<!-- wp:columns {"isStackedOnMobile":true,"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"2.5rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"},"blockGap":{"left":"3rem"}},"border":{"bottom":{"color":"rgba(242,239,232,0.06)","width":"1px"}}}}} -->
+	<div class="wp-block-columns" style="padding:2.5rem clamp(1rem,4vw,2rem);border-bottom:1px solid rgba(242,239,232,0.06)">
 
-    <!-- Colonne gauche : identité + navigation footer -->
-    <!-- wp:column {"width":"60%"} -->
-    <div class="wp-block-column" style="flex-basis:60%">
+		<!-- Bloc gauche : identité du club -->
+		<!-- wp:column {"width":"60%"} -->
+		<div class="wp-block-column" style="flex-basis:60%">
+			<!-- wp:site-title {"level":0,"isLink":true,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--playfair)","fontWeight":"800","fontSize":"1.375rem","letterSpacing":"-0.02em"},"color":{"text":"#f2efe8"},"spacing":{"margin":{"bottom":"0.35rem"}}}} /-->
+			<!-- wp:site-tagline {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6875rem","textTransform":"uppercase","letterSpacing":"0.08em"},"color":{"text":"rgba(242,239,232,0.4)"},"spacing":{"margin":{"bottom":"0.75rem"}}}} /-->
+			<!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--source-serif)","fontSize":"0.875rem","lineHeight":"1.7"},"color":{"text":"rgba(242,239,232,0.5)"}}} -->
+			<p class="has-text-color">Club photographique de Gournay-en-Bray (Seine-Maritime). Passionnés de photo, nous partageons sorties, reportages et techniques depuis 2004.</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
 
-      <!-- Logo + titre -->
-      <!-- wp:site-title {"level":0,"isLink":true,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--playfair)","fontWeight":"800","fontSize":"1.375rem","letterSpacing":"-0.02em"},"color":{"text":"#f2efe8"},"spacing":{"margin":{"bottom":"0.35rem"}}}} /-->
-      <!-- wp:site-tagline {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6875rem","textTransform":"uppercase","letterSpacing":"0.08em"},"color":{"text":"rgba(242,239,232,0.4)"},"spacing":{"margin":{"bottom":"0.75rem"}}}} /-->
+		<!-- Bloc droit : partenaires -->
+		<!-- wp:column {"width":"40%"} -->
+		<div class="wp-block-column" style="flex-basis:40%">
+			<!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6rem","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.15em"},"color":{"text":"rgba(242,239,232,0.28)"},"spacing":{"margin":{"bottom":"0.875rem"}}}} -->
+			<p class="has-text-color">Partenaires</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"1.25rem"}}} -->
+			<div class="wp-block-group">
+				<!-- wp:image {"width":80,"sizeSlug":"full","style":{"opacity":0.45}} -->
+				<figure class="wp-block-image" style="width:80px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2025/04/image.png" alt="Sport-Santé Bien-être, Team de Gournay-en-Bray" /></figure>
+				<!-- /wp:image -->
+				<!-- wp:image {"width":88,"sizeSlug":"full","style":{"opacity":0.45}} -->
+				<figure class="wp-block-image" style="width:88px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2023/10/Logo_GournayenBray.png" alt="Ville de Gournay-en-Bray" /></figure>
+				<!-- /wp:image -->
+			</div>
+			<!-- /wp:group -->
+		</div>
+		<!-- /wp:column -->
 
-      <!-- Description du club -->
-      <!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--source-serif)","fontSize":"0.875rem","lineHeight":"1.7"},"color":{"text":"rgba(242,239,232,0.5)"},"spacing":{"margin":{"bottom":"1.25rem"}}}} -->
-      <p class="has-text-color" style="margin-bottom:1.25rem">Club photographique de Gournay-en-Bray (Seine-Maritime). Passionnés de photo, nous partageons sorties, reportages et techniques depuis 2004.</p>
-      <!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:columns -->
 
-      <!-- Navigation Footer -->
-      <!-- wp:navigation {
-        "overlayMenu":"never",
-        "layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"wrap"},
-        "style":{
-          "typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.8125rem"},
-          "color":{"text":"rgba(242,239,232,0.45)"}
-        },
-        "__unstableLocation":"footer"
-      } /-->
-
-      <!-- Réseaux sociaux -->
-      <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"margin":{"top":"1rem"},"blockGap":"0.5rem"}}} -->
-      <div class="wp-block-group" style="margin-top:1rem">
-        <!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6rem","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.15em"},"color":{"text":"rgba(242,239,232,0.28)"},"spacing":{"margin":{"right":"0.25rem"}}}} -->
-        <p class="has-text-color">Suivre</p>
-        <!-- /wp:paragraph -->
-        <!-- wp:navigation {
-          "overlayMenu":"never",
-          "layout":{"type":"flex","orientation":"horizontal","justifyContent":"left","flexWrap":"wrap"},
-          "style":{
-            "typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"},
-            "color":{"text":"rgba(242,239,232,0.45)"}
-          },
-          "__unstableLocation":"social"
-        } /-->
-      </div>
-      <!-- /wp:group -->
-
-    </div>
-    <!-- /wp:column -->
-
-    <!-- Colonne droite : partenaires -->
-    <!-- wp:column {"width":"40%"} -->
-    <div class="wp-block-column" style="flex-basis:40%">
-
-      <!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.6rem","fontWeight":"700","textTransform":"uppercase","letterSpacing":"0.15em"},"color":{"text":"rgba(242,239,232,0.28)"},"spacing":{"margin":{"bottom":"0.875rem"}}}} -->
-      <p class="has-text-color">Partenaires</p>
-      <!-- /wp:paragraph -->
-
-      <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"1.25rem"}}} -->
-      <div class="wp-block-group">
-        <!-- wp:image {"width":80,"sizeSlug":"full","style":{"opacity":0.45}} -->
-        <figure class="wp-block-image" style="width:80px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2025/04/image.png" alt="Sport-Santé Bien-être, Team de Gournay-en-Bray" /></figure>
-        <!-- /wp:image -->
-        <!-- wp:image {"width":88,"sizeSlug":"full","style":{"opacity":0.45}} -->
-        <figure class="wp-block-image" style="width:88px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2023/10/Logo_GournayenBray.png" alt="Ville de Gournay-en-Bray" /></figure>
-        <!-- /wp:image -->
-      </div>
-      <!-- /wp:group -->
-
-    </div>
-    <!-- /wp:column -->
-
-  </div>
-  <!-- /wp:columns -->
-
-  <!-- ── BARRE COPYRIGHT ──────────────────────────── -->
-  <!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"padding":{"top":"0.875rem","bottom":"0.875rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"}}}} -->
-  <div class="wp-block-group" style="padding:0.875rem clamp(1rem,4vw,2rem)">
-
-    <!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"},"color":{"text":"rgba(242,239,232,0.28)"}}} -->
-    <p class="has-text-color">© SPIPHOTO 2025 · Propulsé par WordPress · <a href="/carte-du-site/mentions-legales/" style="color:rgba(242,239,232,0.35)">Mentions légales</a> · <a href="/carte-du-site/politique-de-cookies-ue/" style="color:rgba(242,239,232,0.35)">Cookies</a></p>
-    <!-- /wp:paragraph -->
-
-    <!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"},"color":{"text":"rgba(242,239,232,0.22)"}}} -->
-    <p class="has-text-color">Licence <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:rgba(242,239,232,0.28)">CC BY-NC-ND 4.0</a></p>
-    <!-- /wp:paragraph -->
-
-  </div>
-  <!-- /wp:group -->
+	<!-- Barre copyright -->
+	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"padding":{"top":"0.875rem","bottom":"0.875rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"}}}} -->
+	<div class="wp-block-group" style="padding:0.875rem clamp(1rem,4vw,2rem)">
+		<!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"},"color":{"text":"rgba(242,239,232,0.28)"}}} -->
+		<p class="has-text-color">© SPIPHOTO 2025 · Propulsé par WordPress · <a href="/carte-du-site/mentions-legales/" style="color:rgba(242,239,232,0.35)">Mentions légales</a> · <a href="/carte-du-site/politique-de-cookies-ue/" style="color:rgba(242,239,232,0.35)">Cookies</a></p>
+		<!-- /wp:paragraph -->
+		<!-- wp:paragraph {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"},"color":{"text":"rgba(242,239,232,0.22)"}}} -->
+		<p class="has-text-color">Licence <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" style="color:rgba(242,239,232,0.28)">CC BY-NC-ND 4.0</a></p>
+		<!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
 
 </footer>
 <!-- /wp:group -->
