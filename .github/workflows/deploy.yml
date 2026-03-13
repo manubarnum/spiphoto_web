@@ -29,7 +29,6 @@ jobs:
                 chmod 700 ~/.ssh
                 echo "${{ secrets.SSH_PRIVATE_KEY_B64 }}" | base64 -d > ~/.ssh/id_rsa
                 chmod 0400 ~/.ssh/id_rsa
-                ssh-keyscan -H ${{ secrets.CPANEL_SERVER }} >> ~/.ssh/known_hosts
 
       - name: Déployer via SSH
         run: |
