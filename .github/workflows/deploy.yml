@@ -25,21 +25,15 @@ jobs:
 
       - name: Installer la clé SSH
         run: |
-          eval $(ssh-agent -s)
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 0400 ~/.ssh/id_rsa
+                mkdir -p ~/.ssh
+                chmod 700 ~/.ssh
+                echo "${{ secrets.SSH_PRIVATE_KEY_B64 }}" | base64 -d > ~/.ssh/id_rsa
+                chmod 0400 ~/.ssh/id_rsa
+                ssh-keyscan -H ${{ secrets.CPANEL_SERVER }} >> ~/.ssh/known_hosts
 
       - name: Déployer via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd preprod.spiphoto.fr/wp-content/themes/spiphoto
-            git pull origin main
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.CPANEL_SERVER }} "cd preprod.spiphoto.fr/wp-content/themes/spiphoto && git pull origin main"
 
       - name: Nettoyer les clés SSH
         if: always()
