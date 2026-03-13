@@ -71,7 +71,7 @@
 
   /* ── Injecter le bouton toggle dans .topbar-right ── */
   function injectToggle() {
-    var right = document.querySelector('.topbar-right');
+    var right = document.querySelector('.topbar-right') || document.querySelector('.header-topbar-inner') || document.querySelector('.site-header');
     if (!right || document.getElementById('theme-toggle')) return;
     var btn = document.createElement('button');
     btn.className = 'theme-toggle';
