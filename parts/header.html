@@ -1,95 +1,62 @@
 <!-- wp:html -->
 <script>
 (function(){
-  var STORAGE_KEY = 'spiphoto-theme';
-  var root = document.documentElement;
-  function applyTheme(t) {
-    root.setAttribute('data-theme', t);
-    localStorage.setItem(STORAGE_KEY, t);
-  }
-  var saved = localStorage.getItem(STORAGE_KEY);
-  var preferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  applyTheme(saved || preferred);
+  var k='spiphoto-theme', r=document.documentElement;
+  var s=localStorage.getItem(k);
+  var p=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';
+  r.setAttribute('data-theme',s||p);
 })();
 </script>
 <!-- /wp:html -->
 
-<!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"default"},"style":{"position":{"type":"sticky","top":"0px"},"zIndex":100}} -->
 <header class="wp-block-group site-header">
 
   <!-- ── TOPBAR ── -->
   <!-- wp:group {"className":"header-topbar","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-topbar">
-
-    <!-- wp:group {"className":"header-topbar-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+    <!-- wp:group {"className":"header-topbar-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"1rem"}}} -->
     <div class="wp-block-group header-topbar-inner">
 
-      <!-- Navigation pages — assignée via Apparence → Éditeur → Navigation -->
+      <!-- Navigation topbar — à assigner dans Apparence → Éditeur → Navigation -->
       <!-- wp:navigation {"overlayMenu":"never","className":"topbar-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
 
-      <!-- Droite : recherche + toggle -->
-      <!-- wp:group {"className":"topbar-right","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
-      <div class="wp-block-group topbar-right">
-
-        <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Rechercher…","buttonText":"","buttonUseIcon":true,"className":"topbar-search","style":{"border":{"radius":"4px"}}} /-->
-
-        <!-- wp:html -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Basculer thème clair/sombre">
-          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
-            <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-          </svg>
-          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-          <span class="toggle-label-dark">Jour</span>
-          <span class="toggle-label-light">Nuit</span>
-        </button>
-        <!-- /wp:html -->
-
-      </div>
-      <!-- /wp:group -->
+      <!-- Recherche -->
+      <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Rechercher…","buttonText":"","buttonUseIcon":true,"className":"topbar-search","style":{"border":{"radius":"4px"}}} /-->
 
     </div>
     <!-- /wp:group -->
-
   </div>
   <!-- /wp:group -->
 
   <!-- ── LOGO / TITRE ── -->
   <!-- wp:group {"className":"header-brand-row","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-brand-row">
-
     <!-- wp:group {"className":"header-brand-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
     <div class="wp-block-group header-brand-inner">
 
       <!-- wp:group {"className":"header-brand","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
       <div class="wp-block-group header-brand">
-
         <!-- wp:site-logo {"width":44,"shouldSyncIcon":false} /-->
-
         <!-- wp:group {"layout":{"type":"vertical"},"style":{"spacing":{"blockGap":"0.1rem"}}} -->
         <div class="wp-block-group">
           <!-- wp:site-title {"level":0,"isLink":true,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--playfair)","fontWeight":"800","fontSize":"1.5rem","letterSpacing":"-0.02em","lineHeight":"1"},"color":{"text":"#f2efe8"}}} /-->
           <!-- wp:site-tagline {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.625rem","textTransform":"uppercase","letterSpacing":"0.06em"},"color":{"text":"#6b6860"}}} /-->
         </div>
         <!-- /wp:group -->
-
       </div>
       <!-- /wp:group -->
 
     </div>
     <!-- /wp:group -->
-
   </div>
   <!-- /wp:group -->
 
   <!-- ── BARRE CATÉGORIES ── -->
   <!-- wp:group {"className":"header-cats-bar","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-cats-bar">
-
-    <!-- Navigation catégories — assignée via Apparence → Éditeur → Navigation -->
+    <!-- Navigation catégories — à assigner dans Apparence → Éditeur → Navigation -->
     <!-- wp:navigation {"overlayMenu":"mobile","className":"cats-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
-
   </div>
   <!-- /wp:group -->
 
@@ -97,15 +64,26 @@
 <!-- /wp:group -->
 
 <!-- wp:html -->
+<button class="theme-toggle" id="theme-toggle" aria-label="Basculer thème clair/sombre">
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+    <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+  </svg>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+  <span class="toggle-label-dark">Jour</span>
+  <span class="toggle-label-light">Nuit</span>
+</button>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
   /* ── Toggle thème ── */
-  var STORAGE_KEY = 'spiphoto-theme';
+  var k = 'spiphoto-theme';
   var root = document.documentElement;
   function applyTheme(t) {
     root.setAttribute('data-theme', t);
-    localStorage.setItem(STORAGE_KEY, t);
+    localStorage.setItem(k, t);
   }
   var btn = document.getElementById('theme-toggle');
   if (btn) btn.addEventListener('click', function(){
