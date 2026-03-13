@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd public_html/wp-content/themes/spiphoto
+            cd preprod.spiphoto.fr/wp-content/themes/spiphoto
             git pull origin main
 
       - name: Nettoyer les clés SSH
