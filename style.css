@@ -681,3 +681,14 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 }
 .admin-bar .theme-toggle { top: 38px; }
 @media screen and (max-width: 782px) { .admin-bar .theme-toggle { top: 54px; } }
+
+html[data-theme="light"] .site-footer {
+  color: var(--sp-text) !important;
+}
+html[data-theme="light"] .site-footer p,
+html[data-theme="light"] .site-footer a {
+  color: var(--sp-text-sec) !important;
+}
+html[data-theme="light"] .site-footer a:hover {
+  color: var(--sp-text) !important;
+}
