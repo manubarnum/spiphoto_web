@@ -659,3 +659,12 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 html[data-theme="light"] .theme-toggle .toggle-label-dark  { display: none; }
 html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 @media (max-width: 900px) { .theme-toggle .toggle-label-dark, .theme-toggle .toggle-label-light { display: none !important; } }
+
+.header-topbar .wp-block-navigation__submenu-container {
+  background-color: var(--sp-surface-top) !important;
+  color: var(--sp-text) !important;
+}
+.header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+  background-color: transparent !important;
+  color: var(--sp-text-sec) !important;
+}
