@@ -56,7 +56,7 @@ html[data-theme="light"] {
   --sp-surface-top:    #e5dfd3;
   --sp-border:         #ddd8cb;
   --sp-border-lt:      #c4bead;
-  --sp-text:           #1c1e0f;
+  --sp-text:           #1c1e0f !important;
   --sp-text-sec:       #3e4028;
   --sp-text-muted:     #7a7660;
   --sp-text-disabled:  #b8b4a2;
