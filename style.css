@@ -174,22 +174,25 @@ img, video { max-width: 100%; height: auto; display: block; }
 }
 .topbar-search .wp-block-search__button:hover { color: var(--sp-text) !important; }
 
-/* Navigation topbar */
-.topbar-navigation .wp-block-navigation-item__content {
+/* Navigation topbar — mode nuit */
+.header-topbar .wp-block-navigation-item__content {
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
   font-size: 0.6875rem !important; font-weight: 500 !important;
   letter-spacing: 0.06em !important; text-transform: uppercase !important;
-  color: rgba(242,239,232,0.45) !important;
+  color: rgba(242,239,232,0.55) !important;
   padding: 0.5rem 0.75rem !important;
   text-decoration: none !important;
   transition: color var(--sp-transition-fast);
 }
-.topbar-navigation .wp-block-navigation-item__content:hover { color: rgba(242,239,232,0.8) !important; }
-.topbar-navigation .wp-block-navigation-item__content::after { display: none !important; }
+.header-topbar .wp-block-navigation-item__content:hover { color: rgba(242,239,232,0.9) !important; }
+.header-topbar .wp-block-navigation-item__content::after { display: none !important; }
 
-/* Sous-menus topbar */
-.topbar-navigation .wp-block-navigation__submenu-container {
-  background: var(--sp-surface-top) !important;
+/* Sous-menus topbar — fond forcé */
+.header-topbar .wp-block-navigation__submenu-container,
+.header-topbar .wp-block-navigation__submenu-container * {
+  background-color: var(--sp-surface-top) !important;
+}
+.header-topbar .wp-block-navigation__submenu-container {
   border: 1px solid var(--sp-border-lt) !important;
   border-top: 2px solid var(--sp-primary) !important;
   border-radius: 0 0 var(--sp-radius) var(--sp-radius) !important;
@@ -197,30 +200,40 @@ img, video { max-width: 100%; height: auto; display: block; }
   min-width: 180px !important;
   padding: 0.4rem 0 !important;
 }
-.topbar-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+.header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
   font-size: 0.8125rem !important;
   text-transform: none !important;
   letter-spacing: 0 !important;
   padding: 0.55rem 1.25rem !important;
   color: var(--sp-text-sec) !important;
+  background: transparent !important;
 }
-.topbar-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item__content::after {
+.header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item__content::after {
   display: none !important;
 }
-.topbar-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item__content:hover {
+.header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item:hover .wp-block-navigation-item__content {
   color: var(--sp-text) !important;
   background: rgba(75,90,34,.2) !important;
 }
 
 /* Mode jour — topbar */
-html[data-theme="light"] .topbar-navigation .wp-block-navigation-item__content {
-  color: rgba(28,30,15,0.55) !important;
+html[data-theme="light"] .header-topbar {
+  background: var(--sp-surface-raised) !important;
+  border-bottom-color: var(--sp-border) !important;
 }
-html[data-theme="light"] .topbar-navigation .wp-block-navigation-item__content:hover {
-  color: rgba(28,30,15,0.9) !important;
+html[data-theme="light"] .header-topbar .wp-block-navigation-item__content {
+  color: rgba(28,30,15,0.6) !important;
 }
-html[data-theme="light"] .topbar-navigation .wp-block-navigation__submenu-container {
+html[data-theme="light"] .header-topbar .wp-block-navigation-item__content:hover {
+  color: rgba(28,30,15,0.95) !important;
+}
+html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container,
+html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container * {
+  background-color: var(--sp-surface-top) !important;
+}
+html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container {
   box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
+  border-color: var(--sp-border) !important;
 }
 
 /* ═══════════════════════════════════════════════
