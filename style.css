@@ -698,15 +698,21 @@ html[data-theme="light"] .entry-content h1,
 html[data-theme="light"] .entry-content h2,
 html[data-theme="light"] .entry-content h3,
 html[data-theme="light"] .entry-content h4 {
-  color: var(--sp-text) !important;
+  color: var(--sp-text);
 }
 
 html[data-theme="light"] .wp-block-post-excerpt p,
 html[data-theme="light"] .wp-block-post-author__name {
-  color: var(--sp-text-sec) !important;
+  color: var(--sp-text-sec);
 }
 
 html[data-theme="light"] .wp-block-post-date,
 html[data-theme="light"] .wp-block-post-date a {
   color: var(--sp-text-muted) !important;
+}
+
+/* Cache uniquement la recherche qui n'est pas dans le header */
+body > .search-overlay,
+footer .search-overlay {
+    display: none !important;
 }
