@@ -679,4 +679,5 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
   background-color: transparent !important;
   color: var(--sp-text-sec) !important;
 }
-.admin-bar .theme-toggle { top: 40px; }
+.admin-bar .theme-toggle { top: 38px; }
+@media screen and (max-width: 782px) { .admin-bar .theme-toggle { top: 54px; } }
