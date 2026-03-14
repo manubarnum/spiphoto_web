@@ -56,14 +56,19 @@ html[data-theme="light"] {
   --sp-surface-top:    #e5dfd3;
   --sp-border:         #ddd8cb;
   --sp-border-lt:      #c4bead;
-  --sp-text:           #1c1e0f;
-  --sp-text-sec:       #3e4028;
+  --sp-text:           #1c1e0f!important;
+  --sp-text-sec:       #3e4028!important;
   --sp-text-muted:     #7a7660;
   --sp-text-disabled:  #b8b4a2;
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.08);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.14), 0 0 0 1px rgba(75,90,34,.2);
   --sp-hero-overlay:   linear-gradient(to top, rgba(28,30,15,.85) 0%, rgba(28,30,15,.35) 50%, transparent 100%);
 }
+/* Correction spécifique pour les menus qui resteraient blancs */
+html[data-theme="light"] .wp-block-navigation-item__content,
+html[data-theme="light"] .wp-block-site-title a,
+html[data-theme="light"] .post-card .wp-block-post-title {
+  color: var(--sp-text) !important;
 
 /* ═══════════════════════════════════════════════
    BASE
@@ -681,14 +686,3 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 }
 .admin-bar .theme-toggle { top: 38px; }
 @media screen and (max-width: 782px) { .admin-bar .theme-toggle { top: 54px; } }
-
-html[data-theme="light"] .site-footer {
-  color: var(--sp-text) !important;
-}
-html[data-theme="light"] .site-footer p,
-html[data-theme="light"] .site-footer a {
-  color: var(--sp-text-sec) !important;
-}
-html[data-theme="light"] .site-footer a:hover {
-  color: var(--sp-text) !important;
-}
