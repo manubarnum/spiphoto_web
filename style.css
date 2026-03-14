@@ -690,3 +690,23 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
   background-color: transparent !important;
   color: var(--sp-text-sec) !important;
 }
+html[data-theme="light"] .wp-block-post-title,
+html[data-theme="light"] .wp-block-post-title a,
+html[data-theme="light"] .wp-block-query-title,
+html[data-theme="light"] .wp-block-heading,
+html[data-theme="light"] .entry-content h1,
+html[data-theme="light"] .entry-content h2,
+html[data-theme="light"] .entry-content h3,
+html[data-theme="light"] .entry-content h4 {
+  color: var(--sp-text) !important;
+}
+
+html[data-theme="light"] .wp-block-post-excerpt p,
+html[data-theme="light"] .wp-block-post-author__name {
+  color: var(--sp-text-sec) !important;
+}
+
+html[data-theme="light"] .wp-block-post-date,
+html[data-theme="light"] .wp-block-post-date a {
+  color: var(--sp-text-muted) !important;
+}
