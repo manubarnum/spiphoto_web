@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.0
+Version:           1.4.1
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -710,6 +710,8 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
   font-size: 0.6rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.15em;
 }
+/* Logos partenaires discrets (le bloc Image ne gere pas l'opacite). */
+.site-footer .footer-partner-logo { opacity: 0.45; }
 .site-footer .footer-copyright,
 .site-footer .footer-license {
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif);

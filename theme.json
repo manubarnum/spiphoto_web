@@ -551,7 +551,7 @@
             "button": {
                 "color": {
                     "background": "var(--sp-primary)",
-                    "text": "var(--sp-text)"
+                    "text": "var(--sp-on-brand)"
                 },
                 "typography": {
                     "fontFamily": "var(--wp--preset--font-family--dm-sans)",
@@ -610,7 +610,7 @@
             },
             "core/quote": {
                 "color": {
-                    "text": "var(--sp-text-secondary)"
+                    "text": "var(--sp-text-sec)"
                 },
                 "typography": {
                     "fontFamily": "var(--wp--preset--font-family--playfair)",

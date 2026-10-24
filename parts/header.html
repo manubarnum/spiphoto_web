@@ -1,16 +1,13 @@
 <!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"default"}} -->
 <header class="wp-block-group site-header">
 
-  <!-- ── TOPBAR ── -->
   <!-- wp:group {"className":"header-topbar","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-topbar">
     <!-- wp:group {"className":"header-topbar-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"1rem"}}} -->
     <div class="wp-block-group header-topbar-inner">
 
-      <!-- Navigation topbar — à assigner dans Apparence → Éditeur → Navigation -->
       <!-- wp:navigation {"ref":64676,"overlayMenu":"never","className":"topbar-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
 
-      <!-- Recherche + toggle (toggle injecté par JS) -->
       <!-- wp:group {"className":"topbar-right","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
       <div class="wp-block-group topbar-right">
         <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Rechercher…","buttonText":"","buttonUseIcon":true,"className":"topbar-search","style":{"border":{"radius":"4px"}}} /-->
@@ -22,7 +19,6 @@
   </div>
   <!-- /wp:group -->
 
-  <!-- ── LOGO / TITRE ── -->
   <!-- wp:group {"className":"header-brand-row","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-brand-row">
     <!-- wp:group {"className":"header-brand-inner","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
@@ -30,7 +26,7 @@
       <!-- wp:group {"className":"header-brand","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
       <div class="wp-block-group header-brand">
         <!-- wp:site-logo {"width":44,"shouldSyncIcon":false} /-->
-        <!-- wp:group {"layout":{"type":"vertical"},"style":{"spacing":{"blockGap":"0.1rem"}}} -->
+        <!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"spacing":{"blockGap":"0.1rem"}}} -->
         <div class="wp-block-group">
           <!-- wp:site-title {"level":0,"isLink":true} /-->
           <!-- wp:site-tagline {} /-->
@@ -43,10 +39,8 @@
   </div>
   <!-- /wp:group -->
 
-  <!-- ── BARRE CATÉGORIES ── -->
   <!-- wp:group {"className":"header-cats-bar","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-cats-bar">
-    <!-- Navigation catégories — à assigner dans Apparence → Éditeur → Navigation -->
     <!-- wp:navigation {"ref":64677,"overlayMenu":"mobile","className":"cats-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
   </div>
   <!-- /wp:group -->

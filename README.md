@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.0** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.1** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -141,6 +141,13 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.1
+- Boutons : texte en `--sp-on-brand` (le texte sombre sur fond olive était illisible en mode clair)
+- Templates et parties : plus aucun bloc invalide dans l'éditeur (JSON réparé, commentaires retirés de l'intérieur des blocs, styles alignés sur les attributs) ; le rendu public est inchangé
+- Éditeur de site : les groupes déclarés en `"layout":{"type":"vertical"}` (type inexistant, qui faisait planter l'aperçu de l'en-tête, des cartes et des encadrés) passent en pile flex verticale ; leurs espacements `blockGap` s'appliquent désormais, d'où un en-tête et des cartes un peu plus compacts
+- Barres latérales : balise `<aside>` portée par un groupe, la colonne ne pouvant pas changer de balise
+- Citations : correction d'une variable de couleur inexistante dans `theme.json`
 
 ### 1.4.0
 - Quatre compositions réparties dans trois catégories « SPIPHOTO » : en-tête de page, infos pratiques, derniers articles, articles épinglés ; la catégorie CTA, restée vide, est retirée

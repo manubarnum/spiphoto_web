@@ -1,11 +1,9 @@
-<!-- wp:group {"tagName":"footer","className":"site-footer","layout":{"type":"constrained","wideSize":"1200px"},"style":{"spacing":{"padding":{"top":"0","bottom":"0"}}}} -->
+<!-- wp:group {"tagName":"footer","className":"site-footer","layout":{"type":"constrained","wideSize":"1200px"}} -->
 <footer class="wp-block-group site-footer">
 
-	<!-- Zone principale : description + partenaires côte à côte -->
-	<!-- wp:columns {"isStackedOnMobile":true,"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"2.5rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"},"blockGap":{"left":"3rem"}},"border":{"bottom":{"color":"var(--sp-border)","width":"1px"}}}}} -->
-	<div class="wp-block-columns" style="padding:2.5rem clamp(1rem,4vw,2rem);border-bottom:1px solid var(--sp-border)">
+	<!-- wp:columns {"isStackedOnMobile":true,"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"2.5rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"},"blockGap":{"left":"3rem"}},"border":{"bottom":{"color":"var(--sp-border)","width":"1px","style":"solid"}}}} -->
+	<div class="wp-block-columns" style="border-bottom-color:var(--sp-border);border-bottom-style:solid;border-bottom-width:1px;padding-top:2.5rem;padding-right:clamp(1rem,4vw,2rem);padding-bottom:2.5rem;padding-left:clamp(1rem,4vw,2rem)">
 
-		<!-- Bloc gauche : identité du club -->
 		<!-- wp:column {"width":"60%"} -->
 		<div class="wp-block-column" style="flex-basis:60%">
 			<!-- wp:site-title {"level":0,"isLink":true,"style":{"spacing":{"margin":{"bottom":"0.35rem"}}}} /-->
@@ -16,7 +14,6 @@
 		</div>
 		<!-- /wp:column -->
 
-		<!-- Bloc droit : partenaires -->
 		<!-- wp:column {"width":"40%"} -->
 		<div class="wp-block-column" style="flex-basis:40%">
 			<!-- wp:paragraph {"style":{"spacing":{"margin":{"bottom":"0.875rem"}}},"className":"footer-partners-label"} -->
@@ -24,11 +21,11 @@
 			<!-- /wp:paragraph -->
 			<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"1.25rem"}}} -->
 			<div class="wp-block-group">
-				<!-- wp:image {"width":80,"sizeSlug":"full","style":{"opacity":0.45}} -->
-				<figure class="wp-block-image" style="width:80px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2025/04/image.png" alt="Sport-Santé Bien-être, Team de Gournay-en-Bray" /></figure>
+				<!-- wp:image {"width":"80px","sizeSlug":"full","className":"footer-partner-logo"} -->
+				<figure class="wp-block-image size-full is-resized footer-partner-logo"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2025/04/image.png" alt="Sport-Santé Bien-être, Team de Gournay-en-Bray" style="width:80px;height:auto"/></figure>
 				<!-- /wp:image -->
-				<!-- wp:image {"width":88,"sizeSlug":"full","style":{"opacity":0.45}} -->
-				<figure class="wp-block-image" style="width:88px;opacity:0.45"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2023/10/Logo_GournayenBray.png" alt="Ville de Gournay-en-Bray" /></figure>
+				<!-- wp:image {"width":"88px","sizeSlug":"full","className":"footer-partner-logo"} -->
+				<figure class="wp-block-image size-full is-resized footer-partner-logo"><img src="https://preprod.spiphoto.fr/wp-content/uploads/2023/10/Logo_GournayenBray.png" alt="Ville de Gournay-en-Bray" style="width:88px;height:auto"/></figure>
 				<!-- /wp:image -->
 			</div>
 			<!-- /wp:group -->
@@ -38,9 +35,8 @@
 	</div>
 	<!-- /wp:columns -->
 
-	<!-- Barre copyright -->
 	<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"},"style":{"spacing":{"padding":{"top":"0.875rem","bottom":"0.875rem","left":"clamp(1rem,4vw,2rem)","right":"clamp(1rem,4vw,2rem)"}}}} -->
-	<div class="wp-block-group" style="padding:0.875rem clamp(1rem,4vw,2rem)">
+	<div class="wp-block-group" style="padding-top:0.875rem;padding-right:clamp(1rem,4vw,2rem);padding-bottom:0.875rem;padding-left:clamp(1rem,4vw,2rem)">
 		<!-- wp:paragraph {"className":"footer-copyright"} -->
 		<p class="footer-copyright">© SPIPHOTO 2025 · Propulsé par WordPress · <a href="/carte-du-site/mentions-legales/">Mentions légales</a> · <a href="/carte-du-site/politique-de-cookies-ue/">Cookies</a></p>
 		<!-- /wp:paragraph -->
