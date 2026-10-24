@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.3.0
+Version:           1.4.0
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -621,6 +621,48 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
   content: "✓"; position: absolute; left: 0; top: 0;
   color: var(--sp-accent-line); font-weight: 700;
 }
+
+/* ═══════════════════════════════════════════════
+   COMPOSITIONS (patterns/)
+   Typographie et couleurs ici ; les espacements restent dans les
+   attributs de bloc des compositions.
+═══════════════════════════════════════════════ */
+/* Surtitre et chapo (En-tete de page) */
+.sp-eyebrow {
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.14em;
+  /* --sp-accent-line n'atteint que 4,3:1 sur fond sombre ; le mauve de
+     --sp-accent-hover tient le AA dans les deux modes (6,6:1 et 5,6:1). */
+  color: var(--sp-accent-hover);
+}
+.sp-lead {
+  font-family: var(--wp--preset--font-family--source-serif, Georgia, serif);
+  font-size: clamp(1.0625rem, 2vw, 1.25rem); line-height: 1.6; color: var(--sp-text-sec);
+}
+.sp-page-header { position: relative; border-bottom: 1px solid var(--sp-border); }
+.sp-page-header::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 48px; height: 2px; background: var(--sp-accent-line);
+}
+
+/* Titre d'une .section-header : meme rendu que sur l'accueil, sans attributs
+   de typographie dans le bloc. */
+.section-header > .wp-block-heading {
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.8125rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--sp-text);
+}
+
+/* Titres dans un groupe Card (Infos pratiques) */
+.wp-block-group.is-style-card > h3.wp-block-heading {
+  font-family: var(--wp--preset--font-family--playfair, Georgia, serif);
+  font-size: 1.125rem; color: var(--sp-text);
+}
+
+/* Separateur entre les elements d'une liste d'articles */
+.post-list-item { border-bottom: 1px solid var(--sp-border); }
+.wp-block-post-template > li:last-child .post-list-item { border-bottom: none; }
 
 /* ═══════════════════════════════════════════════
    FORMULAIRES

@@ -252,11 +252,13 @@ add_action('init', __NAMESPACE__ . '\\register_block_styles');
 // ─────────────────────────────────────────────
 // 7. CUSTOM BLOCK PATTERNS
 // ─────────────────────────────────────────────
+// Les compositions sont dans patterns/ (une par fichier, chargees par WordPress).
+// Categorie 'spiphoto-fse-cta' retiree le 24/10/2026 : sa seule composition
+// (Rejoindre le club) a ete supprimee, et une categorie vide ne sert a rien.
 function register_pattern_categories(): void {
     register_block_pattern_category('spiphoto-fse-headers',  ['label' => __('SPIPHOTO – En-têtes',  'spiphoto-fse')]);
     register_block_pattern_category('spiphoto-fse-sections', ['label' => __('SPIPHOTO – Sections', 'spiphoto-fse')]);
     register_block_pattern_category('spiphoto-fse-posts',    ['label' => __('SPIPHOTO – Articles',    'spiphoto-fse')]);
-    register_block_pattern_category('spiphoto-fse-cta',      ['label' => __('SPIPHOTO – CTA',      'spiphoto-fse')]);
 }
 add_action('init', __NAMESPACE__ . '\\register_pattern_categories');
 

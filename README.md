@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.3.0** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.0** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -35,7 +35,14 @@ Version actuelle : **1.3.0** (voir l'en-tête de `style.css`).
 - Bouton de retour en haut de page
 - Défilement doux vers les ancres, en tenant compte de l'en-tête fixe
 - Surbrillance de la section active dans le bloc Table des matières
-- Styles de blocs supplémentaires : boutons *Outline* et *Ghost*, images *Rounded*, *Shadow* et *Frame*, groupes *Card* et *Glass*, séparateur *Dots*, etc.
+- Styles de blocs supplémentaires : boutons *Outline* et *Ghost*, image *Shadow*, groupe *Card*, citation *Pull Quote*, liste *Check List*
+- Compositions prêtes à l'emploi, dans l'inséreur de blocs sous « SPIPHOTO – … » :
+
+| Catégorie | Composition |
+|---|---|
+| En-têtes | En-tête de page (surtitre, titre, chapô) |
+| Sections | Infos pratiques (lieu, réunions, contact) |
+| Articles | Derniers articles en grille · À ne pas manquer (articles épinglés) |
 
 ---
 
@@ -56,6 +63,7 @@ spiphoto_web/
 │   ├── no-sidebar.html  # Article ou page sans barre latérale
 │   ├── blank.html       # Contenu seul, sans en-tête ni pied de page
 │   └── 404.html         # Page introuvable
+├── patterns/            # Compositions (une par fichier, en-tête Title/Slug/Categories)
 ├── parts/
 │   ├── header.html      # En-tête + bouton Jour/Nuit
 │   └── footer.html      # Pied de page
@@ -133,6 +141,11 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.0
+- Quatre compositions réparties dans trois catégories « SPIPHOTO » : en-tête de page, infos pratiques, derniers articles, articles épinglés ; la catégorie CTA, restée vide, est retirée
+- Styles de bloc : retrait de ceux qui étaient sans effet ou faisaient doublon avec WordPress ; CSS pour *Shadow*, *Card*, *Pull Quote* et *Check List*
+- Retrait du CSS inutilisé de la section « hero »
 
 ### 1.3.0
 - Palette olive & mauve prune, mode sombre par défaut avec bouton Jour/Nuit
