@@ -601,6 +601,42 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
 .is-style-ghost .wp-block-button__link:hover { background: rgba(147,104,147,.15); color: var(--sp-accent-hover); box-shadow: 0 4px 12px rgba(147,104,147,.3) !important; }
 
 /* ═══════════════════════════════════════════════
+   STYLES DE BLOC (enregistres dans functions.php)
+═══════════════════════════════════════════════ */
+/* Image — Shadow : les ombres --sp-card-* sont deja adaptees au mode clair. */
+.wp-block-image.is-style-shadow img { box-shadow: var(--sp-card-shadow-h); border-radius: var(--sp-radius-sm); }
+
+/* Groupe — Card : meme surface et meme ombre que les cartes d'articles. */
+.wp-block-group.is-style-card {
+  background: var(--sp-surface-raised); border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius); box-shadow: var(--sp-card-shadow);
+  padding: 1.5rem 1.75rem;
+}
+.wp-block-group.is-style-card > :first-child { margin-top: 0; }
+.wp-block-group.is-style-card > :last-child { margin-bottom: 0; }
+
+/* Citation — Pull Quote : centree, filets olive, sans le lisere gauche. */
+.wp-block-quote.is-style-pull-quote {
+  border-left: none; border-radius: 0; background: none;
+  border-block: 2px solid var(--sp-accent-line);
+  padding: 1.5rem 1rem; margin-block: 2.5rem; text-align: center;
+  font-size: 1.5rem; line-height: 1.4; color: var(--sp-text);
+}
+.wp-block-quote.is-style-pull-quote cite {
+  display: block; margin-top: 0.75rem; font-style: normal;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.8125rem;
+  letter-spacing: 0.05em; text-transform: uppercase; color: var(--sp-text-muted);
+}
+
+/* Liste — Check List : coche en couleur d'accent a la place de la puce. */
+.wp-block-list.is-style-check-list { list-style: none; padding-left: 0; }
+.wp-block-list.is-style-check-list li { position: relative; padding-left: 1.75rem; }
+.wp-block-list.is-style-check-list li::before {
+  content: "✓"; position: absolute; left: 0; top: 0;
+  color: var(--sp-accent-line); font-weight: 700;
+}
+
+/* ═══════════════════════════════════════════════
    FORMULAIRES
 ═══════════════════════════════════════════════ */
 input[type="text"], input[type="email"], input[type="search"], input[type="url"], textarea, select {

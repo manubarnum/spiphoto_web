@@ -229,17 +229,16 @@ function breadcrumbs(): void {
 // ─────────────────────────────────────────────
 // 6. CUSTOM BLOCK STYLES
 // ─────────────────────────────────────────────
+// Retires le 24/10/2026 : image 'rounded' et separator 'dots' doublonnaient les
+// styles natifs de WordPress (memes noms, CSS fourni par le coeur) ; image
+// 'frame', group 'glass' et heading 'section-label' n'avaient aucun CSS.
+// Chaque style ci-dessous a ses regles dans style.css (section STYLES DE BLOC).
 function register_block_styles(): void {
     $styles = [
         ['core/button',    'outline',      __('Outline',      'spiphoto-fse')],
         ['core/button',    'ghost',        __('Ghost',        'spiphoto-fse')],
-        ['core/image',     'rounded',      __('Rounded',      'spiphoto-fse')],
         ['core/image',     'shadow',       __('Shadow',       'spiphoto-fse')],
-        ['core/image',     'frame',        __('Frame',        'spiphoto-fse')],
         ['core/group',     'card',         __('Card',         'spiphoto-fse')],
-        ['core/group',     'glass',        __('Glass',        'spiphoto-fse')],
-        ['core/separator', 'dots',         __('Dots',         'spiphoto-fse')],
-        ['core/heading',   'section-label',__('Section Label','spiphoto-fse')],
         ['core/quote',     'pull-quote',   __('Pull Quote',   'spiphoto-fse')],
         ['core/list',      'check-list',   __('Check List',   'spiphoto-fse')],
     ];
