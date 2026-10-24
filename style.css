@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.1
+Version:           1.4.2
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -501,6 +501,9 @@ h1.wp-block-post-title {
   letter-spacing: 0.14em; color: var(--sp-text); display: inline-block;
   margin-bottom: 1.25rem !important; padding-bottom: 0.65rem !important;
   border-bottom: 2px solid var(--sp-primary);
+  /* Dans un encadre en pile flex, ne pas etirer le titre : le filet garde
+     la largeur du texte. */
+  align-self: flex-start;
 }
 .wp-block-tag-cloud { display: flex !important; flex-wrap: wrap !important; gap: 0.35rem !important; }
 .wp-block-tag-cloud a {
@@ -513,9 +516,20 @@ h1.wp-block-post-title {
 }
 .wp-block-tag-cloud a:hover { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-on-brand); }
 .wp-block-categories-list { list-style: none !important; margin: 0 !important; padding: 0 !important; }
-.wp-block-categories-list li { padding: 0.45rem 0; border-bottom: 1px solid var(--sp-border); font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.875rem; }
+/* WordPress ecrit le nombre d'articles en texte brut apres le lien
+   (<a>Nom</a> (12)) : c'est le <li> qui doit etre flex pour garder le nombre
+   sur la ligne, a droite. Le texte du <li> sert donc au nombre. */
+.wp-block-categories-list li {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+  padding: 0.45rem 0; border-bottom: 1px solid var(--sp-border);
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  /* --sp-text-muted n'a que 3,2:1 sur la surface sombre : --sp-text-sec
+     tient le AA dans les deux modes. */
+  font-size: 0.75rem; color: var(--sp-text-sec);
+}
+.wp-block-categories-list li > ul { flex-basis: 100%; }
 .wp-block-categories-list li:last-child { border-bottom: none; }
-.wp-block-categories-list a { color: var(--sp-text-sec); text-decoration: none; transition: color var(--sp-transition-fast); display: flex; justify-content: space-between; align-items: center; }
+.wp-block-categories-list a { color: var(--sp-text-sec); text-decoration: none; transition: color var(--sp-transition-fast); font-size: 0.875rem; }
 .wp-block-categories-list a:hover { color: var(--sp-accent-hover); }
 .wp-block-categories__post-count { font-size: 0.6875rem; color: var(--sp-text-muted); margin-left: 0.35rem; }
 
