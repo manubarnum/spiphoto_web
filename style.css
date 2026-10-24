@@ -53,7 +53,6 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
   --sp-text-disabled:  #3d3c38;
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.45);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.65), 0 0 0 1px rgba(75,90,34,.3);
-  --sp-hero-overlay:   linear-gradient(to top, rgba(13,14,9,.95) 0%, rgba(13,14,9,.55) 45%, transparent 100%);
 
   --sp-header-h:       110px;
   --sp-radius-sm:      4px;
@@ -86,7 +85,6 @@ html[data-theme="light"] {
   --sp-text-disabled:  #b8b4a2;
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.08);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.14), 0 0 0 1px rgba(75,90,34,.2);
-  --sp-hero-overlay:   linear-gradient(to top, rgba(28,30,15,.85) 0%, rgba(28,30,15,.35) 50%, transparent 100%);
 }
 
 /* ═══════════════════════════════════════════════
@@ -410,20 +408,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .site-sidebar { position: sticky; top: calc(var(--sp-header-h) + 1.5rem); align-self: start; }
 @media (max-width: 900px) { .site-sidebar { position: static; display: none; } }
 
-/* ═══════════════════════════════════════════════
-   HERO
-═══════════════════════════════════════════════ */
-.featured-hero { position: relative; overflow: hidden; border-radius: var(--sp-radius); }
-.featured-hero img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.7s cubic-bezier(.25,.46,.45,.94); display: block;
-}
-.featured-hero:hover img { transform: scale(1.04); }
-.featured-hero-overlay { position: absolute; inset: 0; background: var(--sp-hero-overlay); pointer-events: none; }
-.featured-hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 2.5rem; }
-.featured-hero-content .wp-block-post-title { color: var(--sp-text); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
-.featured-hero-content .wp-block-post-title a { color: var(--sp-text); text-decoration: none; }
-.featured-hero-content .wp-block-post-title a:hover { color: var(--sp-accent-hover); }
+/* Section HERO (.featured-hero*) retiree le 24/10/2026 : aucune de ces classes
+   n'etait utilisee, ni dans les templates ni en base. */
 
 /* ═══════════════════════════════════════════════
    BADGE CATÉGORIE
@@ -732,7 +718,6 @@ hr { border-color: var(--sp-border); }
 }
 @media (max-width: 600px) {
   .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr !important; }
-  .featured-hero-content { padding: 1.25rem 1.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
 @media print { body { background: #fff !important; color: #000 !important; } .site-header, .site-sidebar, .site-footer, .back-to-top, .reading-progress-bar { display: none !important; } a { color: #000; text-decoration: underline; } }
