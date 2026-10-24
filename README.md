@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.2** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.3** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -141,6 +141,9 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.3
+- Galeries Meow : elles occupent toute la largeur de la colonne de l'article au lieu de la largeur de lecture du texte ; en mise en page « justified », les photos ne s'affichent plus une par ligne
 
 ### 1.4.2
 - Liste des catégories : le nombre d'articles reste sur la ligne de sa catégorie, aligné à droite (il passait à la ligne)
