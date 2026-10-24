@@ -8,7 +8,7 @@
     <div class="wp-block-group header-topbar-inner">
 
       <!-- Navigation topbar — à assigner dans Apparence → Éditeur → Navigation -->
-      <!-- wp:navigation {"overlayMenu":"never","className":"topbar-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
+      <!-- wp:navigation {"ref":64676,"overlayMenu":"never","className":"topbar-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
 
       <!-- Recherche + toggle (toggle injecté par JS) -->
       <!-- wp:group {"className":"topbar-right","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
@@ -32,8 +32,8 @@
         <!-- wp:site-logo {"width":44,"shouldSyncIcon":false} /-->
         <!-- wp:group {"layout":{"type":"vertical"},"style":{"spacing":{"blockGap":"0.1rem"}}} -->
         <div class="wp-block-group">
-          <!-- wp:site-title {"level":0,"isLink":true,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--playfair)","fontWeight":"800","fontSize":"1.5rem","letterSpacing":"-0.02em","lineHeight":"1"},"color":{"text":"#f2efe8"}}} /-->
-          <!-- wp:site-tagline {"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.625rem","textTransform":"uppercase","letterSpacing":"0.06em"},"color":{"text":"#6b6860"}}} /-->
+          <!-- wp:site-title {"level":0,"isLink":true} /-->
+          <!-- wp:site-tagline {} /-->
         </div>
         <!-- /wp:group -->
       </div>
@@ -47,7 +47,7 @@
   <!-- wp:group {"className":"header-cats-bar","layout":{"type":"constrained","wideSize":"1200px"}} -->
   <div class="wp-block-group header-cats-bar">
     <!-- Navigation catégories — à assigner dans Apparence → Éditeur → Navigation -->
-    <!-- wp:navigation {"overlayMenu":"mobile","className":"cats-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
+    <!-- wp:navigation {"ref":64677,"overlayMenu":"mobile","className":"cats-navigation","layout":{"type":"flex","justifyContent":"left","flexWrap":"nowrap"},"style":{"spacing":{"blockGap":"0"}}} /-->
   </div>
   <!-- /wp:group -->
 
@@ -65,14 +65,14 @@
     root.setAttribute('data-theme', t);
     localStorage.setItem(k, t);
   }
-  var saved = localStorage.getItem(k);
-  var preferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-  applyTheme(saved || preferred);
+  /* Etat initial pose par theme_antiflash() dans functions.php (wp_head, priorite 1),
+     avant tout rendu : c'est ce qui evite le flash. Ne pas dupliquer ici. */
 
   /* ── Injecter le bouton toggle dans .topbar-right ── */
   function injectToggle() {
-    var right = document.querySelector('.topbar-right') || document.querySelector('.header-topbar-inner') || document.querySelector('.site-header');
-    if (!right || document.getElementById('theme-toggle')) return;
+    /* Attache au body : le bouton est en position:fixed, et .header-topbar
+       passe en display:none sous 900px, ce qui masquait aussi ses enfants. */
+    if (document.getElementById('theme-toggle')) return;
     var btn = document.createElement('button');
     btn.className = 'theme-toggle';
     btn.id = 'theme-toggle';
@@ -85,7 +85,7 @@
     btn.addEventListener('click', function(){
       applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
     });
-    right.appendChild(btn);
+    document.body.appendChild(btn);
   }
 
   /* ── DOMContentLoaded ── */

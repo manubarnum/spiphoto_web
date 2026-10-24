@@ -81,25 +81,13 @@ add_action('wp_head', __NAMESPACE__ . '\\theme_antiflash', 1);
 function enqueue_assets(): void {
     $ver = wp_get_theme()->get('Version');
 
-    // Google Fonts (preconnect first).
-    wp_enqueue_style(
-        'spiphoto-fse-fonts-preconnect',
-        'https://fonts.googleapis.com',
-        [],
-        null
-    );
-    wp_enqueue_style(
-        'spiphoto-fse-fonts',
-        'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap',
-        ['spiphoto-fse-fonts-preconnect'],
-        null
-    );
+    // Polices : servies localement depuis assets/fonts/ via theme.json (RGPD).
 
     // Main stylesheet.
     wp_enqueue_style(
         'spiphoto-fse-style',
         get_template_directory_uri() . '/style.css',
-        ['spiphoto-fse-fonts'],
+        [],
         $ver
     );
 
@@ -133,50 +121,35 @@ add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\enqueue_assets');
 
 // Editor styles.
 function enqueue_editor_assets(): void {
-    add_editor_style([
-        'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..900&display=swap',
-        'style.css',
-    ]);
+    add_editor_style(['style.css']);
 }
 add_action('after_setup_theme', __NAMESPACE__ . '\\enqueue_editor_assets');
 
+// Section 3 (WIDGETS) retiree le 21/10/2026 : theme FSE, les zones de widgets
+// classiques ne sont pas utilisables. Les 5 sidebars enregistrees etaient vides.
+
 // ─────────────────────────────────────────────
-// 3. WIDGETS
+// 3. NAVIGATION CONDITIONNELLE (membres connectes)
 // ─────────────────────────────────────────────
-function register_widgets(): void {
-    $defaults = [
-        'before_widget' => '<div class="sidebar-widget %2$s" id="%1$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="widget-title">',
-        'after_title'   => '</h3>',
-    ];
+// Remplace le menu de la topbar par LoggedMenu pour un utilisateur connecte.
+// Remplace Conditional Menus, inoperant sur le bloc Navigation (il ne passe
+// pas par wp_nav_menu()). Les IDs sont ceux des objets wp_navigation.
+const NAV_MEMBRES = 64675; // LoggedMenu
 
-    register_sidebar(array_merge($defaults, [
-        'name' => __('Primary Sidebar', 'spiphoto-fse'),
-        'id'   => 'sidebar-primary',
-        'description' => __('Widgets shown in the primary sidebar.', 'spiphoto-fse'),
-    ]));
-
-    register_sidebar(array_merge($defaults, [
-        'name' => __('Footer Column 1', 'spiphoto-fse'),
-        'id'   => 'footer-col-1',
-    ]));
-    register_sidebar(array_merge($defaults, [
-        'name' => __('Footer Column 2', 'spiphoto-fse'),
-        'id'   => 'footer-col-2',
-    ]));
-    register_sidebar(array_merge($defaults, [
-        'name' => __('Footer Column 3', 'spiphoto-fse'),
-        'id'   => 'footer-col-3',
-    ]));
-
-    register_sidebar(array_merge($defaults, [
-        'name'        => __('Before Post Content', 'spiphoto-fse'),
-        'id'          => 'before-post',
-        'description' => __('Displayed above single post content.', 'spiphoto-fse'),
-    ]));
+function swap_navigation_for_members(array $block): array {
+    if ('core/navigation' !== ($block['blockName'] ?? '')) {
+        return $block;
+    }
+    $class = $block['attrs']['className'] ?? '';
+    if (!str_contains($class, 'topbar-navigation')) {
+        return $block;
+    }
+    if (is_user_logged_in()) {
+        $block['attrs']['ref'] = NAV_MEMBRES;
+    }
+    return $block;
 }
-add_action('widgets_init', __NAMESPACE__ . '\\register_widgets');
+add_filter('render_block_data', __NAMESPACE__ . '\\swap_navigation_for_members');
 
 // ─────────────────────────────────────────────
 // 4. READING TIME
@@ -291,16 +264,9 @@ add_action('init', __NAMESPACE__ . '\\register_pattern_categories');
 // ─────────────────────────────────────────────
 // 8. CUSTOM BLOCK VARIATIONS
 // ─────────────────────────────────────────────
-function enqueue_block_variations(): void {
-    wp_enqueue_script(
-        'spiphoto-fse-variations',
-        get_template_directory_uri() . '/assets/js/block-variations.js',
-        ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'],
-        wp_get_theme()->get('Version'),
-        true
-    );
-}
-add_action('enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_variations');
+// Retire le 21/10/2026 : assets/js/block-variations.js n'a jamais existe,
+// l'enqueue provoquait un 404 a chaque ouverture de l'editeur.
+// Pour reactiver : creer le fichier puis restaurer l'enqueue ci-dessous.
 
 // ─────────────────────────────────────────────
 // 9. READING PROGRESS (inject HTML)
@@ -339,14 +305,24 @@ remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'rsd_link');
 
 // Resource hints.
-function resource_hints(array $hints, string $relation_type): array {
-    if ('preconnect' === $relation_type) {
-        $hints[] = ['href' => 'https://fonts.googleapis.com'];
-        $hints[] = ['href' => 'https://fonts.gstatic.com', 'crossorigin' => 'anonymous'];
+// Resource hints Google Fonts retires le 21/10/2026 : polices servies localement.
+
+// Preload des deux polices critiques pour le LCP (latin uniquement).
+// L'attribut crossorigin est obligatoire : les requetes de polices sont en mode
+// CORS, sans lui le navigateur telechargerait le fichier deux fois.
+function preload_critical_fonts(): void {
+    $fonts = [
+        'playfair-normal-latin.woff2',
+        'source-serif-normal-latin.woff2',
+    ];
+    foreach ($fonts as $font) {
+        printf(
+            '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+            esc_url(get_template_directory_uri() . '/assets/fonts/' . $font)
+        );
     }
-    return $hints;
 }
-add_filter('wp_resource_hints', __NAMESPACE__ . '\\resource_hints', 10, 2);
+add_action('wp_head', __NAMESPACE__ . '\\preload_critical_fonts', 2);
 
 // ─────────────────────────────────────────────
 // 11. STRUCTURED DATA (JSON-LD)
@@ -409,43 +385,6 @@ function security_headers(array $headers): array {
 }
 add_filter('wp_headers', __NAMESPACE__ . '\\security_headers');
 
-// ─────────────────────────────────────────────
-// 14. AJAX: LOAD MORE POSTS
-// ─────────────────────────────────────────────
-function ajax_load_more(): void {
-    check_ajax_referer('spiphoto_fse', 'nonce');
-
-    $page     = absint($_POST['page'] ?? 1);
-    $cat      = sanitize_text_field($_POST['category'] ?? '');
-    $per_page = absint($_POST['perPage'] ?? 6);
-
-    $args = [
-        'post_type'      => 'post',
-        'paged'          => $page,
-        'posts_per_page' => $per_page,
-        'post_status'    => 'publish',
-    ];
-    if ($cat) $args['category_name'] = $cat;
-
-    $query = new \WP_Query($args);
-
-    if (!$query->have_posts()) {
-        wp_send_json_error(['message' => 'No more posts'], 404);
-    }
-
-    ob_start();
-    while ($query->have_posts()) {
-        $query->the_post();
-        // Render minimal card markup – customise to match your block patterns.
-        get_template_part('template-parts/content', get_post_type());
-    }
-    wp_reset_postdata();
-
-    wp_send_json_success([
-        'html'     => ob_get_clean(),
-        'hasMore'  => $query->max_num_pages > $page,
-        'maxPages' => $query->max_num_pages,
-    ]);
-}
-add_action('wp_ajax_spiphoto_load_more',        __NAMESPACE__ . '\\ajax_load_more');
-add_action('wp_ajax_nopriv_spiphoto_load_more', __NAMESPACE__ . '\\ajax_load_more');
+// Section 14 (AJAX load more) retiree le 21/10/2026 : aucun bouton
+// [data-action="load-more"] n'existait dans les templates ni en base,
+// et template-parts/ etait absent. Utiliser le bloc Requete + Pagination.

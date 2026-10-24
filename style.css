@@ -4,9 +4,9 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.2.0
+Version:           1.3.0
 Requires at least: 6.4
-Tested up to:      6.7
+Tested up to:      7.1
 Requires PHP:      8.1
 License:           GNU General Public License v2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,22 +18,38 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
    CUSTOM PROPERTIES — Palette SPIPHOTO
 ═══════════════════════════════════════════════ */
 :root {
-  --sp-primary:        #4b5a22;
-  --sp-primary-dk:     #3a4519;
-  --sp-primary-lt:     #6a7e30;
-  --sp-secondary:      #936893;
-  --sp-secondary-dk:   #7a5579;
-  --sp-secondary-lt:   #b08ab0;
+  /* Les couleurs viennent de theme.json. Les variables --sp-* n'en sont que
+     des alias courts : une seule source de verite pour la palette. */
+  --sp-primary:        var(--wp--preset--color--primary);
+  --sp-primary-dk:     var(--wp--preset--color--primary-dark);
+  --sp-primary-lt:     var(--wp--preset--color--primary-light);
+  --sp-secondary:      var(--wp--preset--color--secondary);
+  --sp-secondary-dk:   var(--wp--preset--color--secondary-dark);
+  --sp-secondary-lt:   var(--wp--preset--color--secondary-light);
 
-  --sp-bg:             #0d0e09;
-  --sp-surface:        #161a0e;
-  --sp-surface-raised: #1e2412;
-  --sp-surface-top:    #252c15;
-  --sp-border:         #2a3118;
+  --sp-bg:             var(--wp--preset--color--bg);
+  --sp-surface:        var(--wp--preset--color--surface);
+  --sp-surface-raised: var(--wp--preset--color--surface-raised);
+  --sp-surface-top:    var(--wp--preset--color--surface-top);
+  --sp-border:         var(--wp--preset--color--border);
+  --sp-text:           var(--wp--preset--color--text);
+  --sp-text-sec:       var(--wp--preset--color--text-secondary);
+  --sp-text-muted:     var(--wp--preset--color--text-muted);
+
+  /* Texte pose SUR une couleur de marque. Les couleurs de marque sont
+     identiques en clair et en sombre, donc cette variable ne doit JAMAIS
+     etre redefinie dans [data-theme="light"]. */
+  --sp-on-brand:       #f2efe8;
+
+  /* Accent de survol : mauve eclairci sur fond sombre, assombri sur fond
+     clair. Redefini dans [data-theme="light"]. */
+  --sp-accent-hover:   var(--wp--preset--color--secondary-light);
+  /* Trait d'accent (soulignements, liseres). L'olive de base est trop sombre
+     sur fond nuit : on l'eclaircit. Redefini en mode clair. */
+  --sp-accent-line:    var(--wp--preset--color--primary-light);
+
+  /* Sans equivalent dans la palette theme.json */
   --sp-border-lt:      #3a4519;
-  --sp-text:           #f2efe8;
-  --sp-text-sec:       #9e9a8e;
-  --sp-text-muted:     #6b6860;
   --sp-text-disabled:  #3d3c38;
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.45);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.65), 0 0 0 1px rgba(75,90,34,.3);
@@ -50,15 +66,23 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
 }
 
 html[data-theme="light"] {
-  --sp-bg:             #f7f3ec;
-  --sp-surface:        #ffffff;
-  --sp-surface-raised: #eee9df;
-  --sp-surface-top:    #e5dfd3;
-  --sp-border:         #ddd8cb;
+  /* On redefinit les variables de la PALETTE theme.json, pas seulement les
+     --sp-*. Ainsi les blocs qui utilisent une couleur de palette (boutons,
+     navigation, badges) suivent le mode clair sans !important. */
+  --wp--preset--color--bg:             #f7f3ec;
+  --wp--preset--color--surface:        #ffffff;
+  --wp--preset--color--surface-raised: #eee9df;
+  --wp--preset--color--surface-top:    #e5dfd3;
+  --wp--preset--color--border:         #ddd8cb;
+  --wp--preset--color--text:           #1c1e0f;
+  --wp--preset--color--text-secondary: #3e4028;
+  --wp--preset--color--text-muted:     #7a7660;
+
+  --sp-accent-hover:   var(--wp--preset--color--secondary-dark);
+  --sp-accent-line:    var(--wp--preset--color--primary);
+
+  /* Hors palette */
   --sp-border-lt:      #c4bead;
-  --sp-text:           #1c1e0f !important;
-  --sp-text-sec:       #3e4028;
-  --sp-text-muted:     #7a7660;
   --sp-text-disabled:  #b8b4a2;
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.08);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.14), 0 0 0 1px rgba(75,90,34,.2);
@@ -85,7 +109,7 @@ img, video { max-width: 100%; height: auto; display: block; }
 ═══════════════════════════════════════════════ */
 .skip-to-content {
   position: absolute; top: -100%; left: 1rem; z-index: 9999;
-  padding: 0.75rem 1.5rem; background: var(--sp-secondary); color: var(--sp-text);
+  padding: 0.75rem 1.5rem; background: var(--sp-secondary); color: var(--sp-on-brand);
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
   font-size: 0.875rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   text-decoration: none; border-radius: 0 0 var(--sp-radius-sm) var(--sp-radius-sm);
@@ -114,17 +138,20 @@ img, video { max-width: 100%; height: auto; display: block; }
 
 /* Titre du site */
 .wp-block-site-title {
-  font-family: var(--wp--preset--font-family--playfair, Georgia, serif) !important;
-  font-weight: 800 !important; letter-spacing: -0.02em !important; line-height: 1 !important;
+  font-family: var(--wp--preset--font-family--playfair, Georgia, serif);
+  font-weight: 800; letter-spacing: -0.02em; line-height: 1;
 }
-.wp-block-site-title a { color: var(--sp-text) !important; text-decoration: none !important; transition: color var(--sp-transition-fast); }
-.wp-block-site-title a:hover { color: var(--sp-primary-lt) !important; }
+/* Tailles reprises des templates (le CSS fait desormais autorite) */
+.site-header .wp-block-site-title { font-size: 1.5rem; }
+.site-footer .wp-block-site-title { font-size: 1.375rem; }
+.wp-block-site-title a { color: var(--sp-text); text-decoration: none; transition: color var(--sp-transition-fast); }
+.wp-block-site-title a:hover { color: var(--sp-primary-lt); }
 
 /* Tagline */
 .wp-block-site-tagline {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.625rem !important; letter-spacing: 0.1em !important;
-  text-transform: uppercase !important; color: var(--sp-text-muted) !important;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.625rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sp-text-muted);
 }
 
 /* ═══════════════════════════════════════════════
@@ -146,45 +173,45 @@ img, video { max-width: 100%; height: auto; display: block; }
 
 /* Recherche dans la topbar */
 .topbar-search .wp-block-search__input {
-  background: transparent !important;
-  border: 1px solid var(--sp-border-lt) !important;
+  background: transparent;
+  border: 1px solid var(--sp-border-lt);
   border-radius: var(--sp-radius-sm) !important;
-  color: var(--sp-text) !important;
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.75rem !important;
+  color: var(--sp-text);
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.75rem;
   padding: 0.3rem 0.65rem !important;
   width: 160px;
   transition: border-color var(--sp-transition-fast), width var(--sp-transition);
 }
 .topbar-search .wp-block-search__input:focus {
   outline: none !important;
-  border-color: var(--sp-primary) !important;
+  border-color: var(--sp-primary);
   width: 220px;
   box-shadow: none !important;
 }
-.topbar-search .wp-block-search__input::placeholder { color: var(--sp-text-disabled) !important; }
+.topbar-search .wp-block-search__input::placeholder { color: var(--sp-text-disabled); }
 .topbar-search .wp-block-search__button {
-  background: none !important;
-  border: none !important;
+  background: none;
+  border: none;
   cursor: pointer;
-  color: var(--sp-text-muted) !important;
+  color: var(--sp-text-muted);
   padding: 0.3rem !important;
   display: flex; align-items: center;
   transition: color var(--sp-transition-fast);
 }
-.topbar-search .wp-block-search__button:hover { color: var(--sp-text) !important; }
+.topbar-search .wp-block-search__button:hover { color: var(--sp-text); }
 
 /* Navigation topbar — mode nuit */
 .header-topbar .wp-block-navigation-item__content {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.6875rem !important; font-weight: 500 !important;
-  letter-spacing: 0.06em !important; text-transform: uppercase !important;
-  color: rgba(242,239,232,0.55) !important;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.6875rem; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(242,239,232,0.55);
   padding: 0.5rem 0.75rem !important;
-  text-decoration: none !important;
+  text-decoration: none;
   transition: color var(--sp-transition-fast);
 }
-.header-topbar .wp-block-navigation-item__content:hover { color: rgba(242,239,232,0.9) !important; }
+.header-topbar .wp-block-navigation-item__content:hover { color: rgba(242,239,232,0.9); }
 .header-topbar .wp-block-navigation-item__content::after { display: none !important; }
 
 /* Sous-menus topbar — fond forcé */
@@ -201,9 +228,9 @@ img, video { max-width: 100%; height: auto; display: block; }
   padding: 0.4rem 0 !important;
 }
 .header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-  font-size: 0.8125rem !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
+  font-size: 0.8125rem;
+  text-transform: none;
+  letter-spacing: 0;
   padding: 0.55rem 1.25rem !important;
   color: var(--sp-text-sec) !important;
   background: transparent !important;
@@ -217,20 +244,16 @@ img, video { max-width: 100%; height: auto; display: block; }
 }
 
 /* Mode jour — topbar */
-html[data-theme="light"] .header-topbar {
-  background: var(--sp-surface-raised) !important;
-  border-bottom-color: var(--sp-border) !important;
-}
+/* Regle .header-topbar supprimee ici le 21/10/2026 : doublon mort, ecrase
+   plus bas par la meme regle en --sp-surface-top (section RESPONSIVE). */
 html[data-theme="light"] .header-topbar .wp-block-navigation-item__content {
-  color: rgba(28,30,15,0.6) !important;
+  color: rgba(28,30,15,0.6);
 }
 html[data-theme="light"] .header-topbar .wp-block-navigation-item__content:hover {
-  color: rgba(28,30,15,0.95) !important;
+  color: rgba(28,30,15,0.95);
 }
-html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container,
-html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container * {
-  background-color: var(--sp-surface-top) !important;
-}
+/* Fond du sous-menu en mode clair supprime : --sp-surface-top suit deja
+   le theme, la regle de base plus haut donne le meme resultat. */
 html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container {
   box-shadow: 0 8px 24px rgba(0,0,0,.12) !important;
   border-color: var(--sp-border) !important;
@@ -272,12 +295,12 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 
 /* Navigation catégories — liens parents */
 .cats-navigation .wp-block-navigation-item__content {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.75rem !important; font-weight: 600 !important;
-  letter-spacing: 0.05em !important; text-transform: uppercase !important;
-  color: var(--sp-text-sec) !important;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.75rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--sp-text-sec);
   padding: 0.65rem 1.1rem !important;
-  text-decoration: none !important;
+  text-decoration: none;
   white-space: nowrap;
   position: relative;
   display: flex !important;
@@ -287,15 +310,15 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 }
 .cats-navigation .wp-block-navigation-item__content::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 2px; background: var(--sp-primary);
+  height: 2px; background: var(--sp-accent-line);
   transform: scaleX(0); transform-origin: left;
   transition: transform var(--sp-transition);
 }
 .cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content,
 .cats-navigation .current-menu-item > .wp-block-navigation-item__content,
 .cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content {
-  color: var(--sp-text) !important;
-  background: rgba(75,90,34,.08) !important;
+  color: var(--sp-text);
+  background: rgba(106,126,48,.16);
 }
 .cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content::after,
 .cats-navigation .current-menu-item > .wp-block-navigation-item__content::after,
@@ -324,38 +347,57 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   padding: 0.4rem 0 !important;
 }
 .cats-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-  font-size: 0.8125rem !important;
-  font-weight: 500 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
   padding: 0.55rem 1.25rem !important;
-  color: var(--sp-text-sec) !important;
+  color: var(--sp-text-sec);
   position: static !important;
 }
 .cats-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item__content::after {
   display: none !important;
 }
 .cats-navigation .wp-block-navigation__submenu-container .wp-block-navigation-item:hover > .wp-block-navigation-item__content {
-  color: var(--sp-text) !important;
-  background: rgba(75,90,34,.2) !important;
+  color: var(--sp-text);
+  background: rgba(75,90,34,.2);
 }
 
 /* Bouton burger mobile (généré par WP) */
 .cats-navigation .wp-block-navigation__responsive-container-open svg,
 .cats-navigation .wp-block-navigation__responsive-container-close svg {
-  color: var(--sp-text) !important;
+  color: var(--sp-text);
 }
 .cats-navigation .wp-block-navigation__responsive-container.is-menu-open {
   background: var(--sp-surface) !important;
   padding: 1.5rem !important;
   z-index: 200 !important;
 }
+/* Menu deplie : annule le flex-direction:row de .wp-block-navigation__container,
+   qui s'appliquait a tous les etats et empilait mal les entrees en overlay. */
+.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  padding: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+}
+/* Sous-menus en overlay : dans le flux, pas en position absolue */
+.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container {
+  position: static !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding-left: 1rem !important;
+  min-width: 0 !important;
+}
 .cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
-  font-size: 1rem !important;
+  font-size: 1rem;
   padding: 0.75rem 0 !important;
   color: var(--sp-text) !important;
   border-bottom: 1px solid var(--sp-border) !important;
-  text-transform: uppercase !important;
+  text-transform: uppercase;
   background: none !important;
 }
 .cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
@@ -379,27 +421,38 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .featured-hero:hover img { transform: scale(1.04); }
 .featured-hero-overlay { position: absolute; inset: 0; background: var(--sp-hero-overlay); pointer-events: none; }
 .featured-hero-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 2.5rem; }
-.featured-hero-content .wp-block-post-title { color: var(--sp-text) !important; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
-.featured-hero-content .wp-block-post-title a { color: var(--sp-text) !important; text-decoration: none !important; }
-.featured-hero-content .wp-block-post-title a:hover { color: var(--sp-secondary-lt) !important; }
+.featured-hero-content .wp-block-post-title { color: var(--sp-text); text-shadow: 0 2px 12px rgba(0,0,0,.5); }
+.featured-hero-content .wp-block-post-title a { color: var(--sp-text); text-decoration: none; }
+.featured-hero-content .wp-block-post-title a:hover { color: var(--sp-accent-hover); }
 
 /* ═══════════════════════════════════════════════
    BADGE CATÉGORIE
 ═══════════════════════════════════════════════ */
 .category-badge, .wp-block-post-terms {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.6rem !important; font-weight: 700 !important;
-  letter-spacing: 0.12em !important; text-transform: uppercase !important;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
 }
 .category-badge a, .wp-block-post-terms a {
-  color: var(--sp-secondary) !important; text-decoration: none !important;
+  color: var(--sp-secondary); text-decoration: none;
   padding: 0.2rem 0.55rem; background: rgba(147,104,147,.12);
   border-radius: var(--sp-radius-sm); border: 1px solid rgba(147,104,147,.25);
   transition: all var(--sp-transition-fast); display: inline-block;
 }
 .category-badge a:hover, .wp-block-post-terms a:hover {
-  background: var(--sp-secondary); border-color: var(--sp-secondary); color: var(--sp-text) !important;
+  background: var(--sp-secondary); border-color: var(--sp-secondary); color: var(--sp-on-brand);
 }
+
+/* \u2550\u2550\u2550 TITRES D'ARTICLE (grands formats) \u2550\u2550\u2550
+   Tailles reprises des templates : le CSS fait autorite. Les contextes sont
+   distingues par les classes que WordPress pose sur <body>. */
+
+h1.wp-block-post-title {
+  font-family: var(--wp--preset--font-family--playfair, Georgia, serif);
+  font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+.single h1.wp-block-post-title { font-size: clamp(1.75rem, 4vw, 2.75rem); }
 
 /* ═══════════════════════════════════════════════
    CARTES D'ARTICLES
@@ -417,12 +470,18 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   transition: transform 0.55s cubic-bezier(.25,.46,.45,.94); display: block;
 }
 .post-card:hover .wp-block-post-featured-image img { transform: scale(1.07); }
-.post-card .wp-block-post-title {
-  font-family: var(--wp--preset--font-family--playfair, Georgia, serif) !important;
-  font-weight: 700 !important; line-height: 1.35 !important; color: var(--sp-text) !important;
+.post-card .wp-block-post-title,
+.post-list-item .wp-block-post-title {
+  font-family: var(--wp--preset--font-family--playfair, Georgia, serif);
+  font-weight: 700; line-height: 1.35; color: var(--sp-text);
 }
-.post-card .wp-block-post-title a { color: var(--sp-text) !important; text-decoration: none !important; transition: color var(--sp-transition-fast); }
-.post-card .wp-block-post-title a:hover { color: var(--sp-secondary-lt) !important; }
+/* Tailles par contexte, reprises des templates */
+.post-card .wp-block-post-title { font-size: clamp(1rem, 1.8vw, 1.2rem); }
+.search .post-card .wp-block-post-title { font-size: 1.0625rem; }
+.single .post-card .wp-block-post-title { font-size: 0.9375rem; }
+.post-list-item .wp-block-post-title { font-size: 0.875rem; line-height: 1.3; }
+.post-card .wp-block-post-title a { color: var(--sp-text); text-decoration: none; transition: color var(--sp-transition-fast); }
+.post-card .wp-block-post-title a:hover { color: var(--sp-accent-hover); }
 .post-card .wp-block-post-excerpt p {
   color: var(--sp-text-sec); display: -webkit-box; -webkit-line-clamp: 3;
   -webkit-box-orient: vertical; overflow: hidden; margin: 0; line-height: 1.65;
@@ -434,8 +493,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .post-list-item { display: flex; gap: 0.875rem; align-items: flex-start; }
 .post-list-item .wp-block-post-featured-image { flex-shrink: 0; border-radius: 6px; overflow: hidden; }
 .post-list-item .wp-block-post-featured-image img { width: 100%; height: 100%; object-fit: cover; }
-.post-list-item .wp-block-post-title a { color: var(--sp-text) !important; text-decoration: none !important; transition: color var(--sp-transition-fast); }
-.post-list-item .wp-block-post-title a:hover { color: var(--sp-secondary-lt) !important; }
+.post-list-item .wp-block-post-title a { color: var(--sp-text); text-decoration: none; transition: color var(--sp-transition-fast); }
+.post-list-item .wp-block-post-title a:hover { color: var(--sp-accent-hover); }
 
 /* ═══════════════════════════════════════════════
    EN-TÊTE DE SECTION
@@ -449,29 +508,29 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 /* ═══════════════════════════════════════════════
    WIDGETS SIDEBAR
 ═══════════════════════════════════════════════ */
-.sidebar-widget { background: var(--sp-surface) !important; border-radius: var(--sp-radius) !important; border: 1px solid var(--sp-border); }
+.sidebar-widget { background: var(--sp-surface); border-radius: var(--sp-radius) !important; border: 1px solid var(--sp-border); }
 .widget-title {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  font-size: 0.6875rem !important; font-weight: 800 !important; text-transform: uppercase !important;
-  letter-spacing: 0.14em !important; color: var(--sp-text) !important; display: inline-block;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.6875rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.14em; color: var(--sp-text); display: inline-block;
   margin-bottom: 1.25rem !important; padding-bottom: 0.65rem !important;
-  border-bottom: 2px solid var(--sp-primary) !important;
+  border-bottom: 2px solid var(--sp-primary);
 }
 .wp-block-tag-cloud { display: flex !important; flex-wrap: wrap !important; gap: 0.35rem !important; }
 .wp-block-tag-cloud a {
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  padding: 0.25rem 0.7rem !important; background: rgba(75,90,34,.1) !important;
-  border: 1px solid rgba(75,90,34,.3) !important; border-radius: 999px !important;
-  color: var(--sp-text-sec) !important; text-decoration: none !important;
+  padding: 0.25rem 0.7rem !important; background: rgba(75,90,34,.1);
+  border: 1px solid rgba(75,90,34,.3); border-radius: 999px !important;
+  color: var(--sp-text-sec); text-decoration: none;
   transition: all var(--sp-transition-fast) !important; font-size: 0.75rem !important;
   font-weight: 500 !important; line-height: 1 !important;
 }
-.wp-block-tag-cloud a:hover { background: var(--sp-primary) !important; border-color: var(--sp-primary) !important; color: var(--sp-text) !important; }
+.wp-block-tag-cloud a:hover { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-on-brand); }
 .wp-block-categories-list { list-style: none !important; margin: 0 !important; padding: 0 !important; }
 .wp-block-categories-list li { padding: 0.45rem 0; border-bottom: 1px solid var(--sp-border); font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.875rem; }
 .wp-block-categories-list li:last-child { border-bottom: none; }
-.wp-block-categories-list a { color: var(--sp-text-sec) !important; text-decoration: none !important; transition: color var(--sp-transition-fast); display: flex; justify-content: space-between; align-items: center; }
-.wp-block-categories-list a:hover { color: var(--sp-secondary-lt) !important; }
+.wp-block-categories-list a { color: var(--sp-text-sec); text-decoration: none; transition: color var(--sp-transition-fast); display: flex; justify-content: space-between; align-items: center; }
+.wp-block-categories-list a:hover { color: var(--sp-accent-hover); }
 .wp-block-categories__post-count { font-size: 0.6875rem; color: var(--sp-text-muted); margin-left: 0.35rem; }
 
 /* ═══════════════════════════════════════════════
@@ -506,7 +565,7 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
   color: var(--sp-secondary); text-decoration: underline; text-decoration-color: rgba(147,104,147,.4);
   text-underline-offset: 3px; transition: color var(--sp-transition-fast), text-decoration-color var(--sp-transition-fast);
 }
-.entry-content a:hover { color: var(--sp-secondary-lt); text-decoration-color: var(--sp-secondary-lt); }
+.entry-content a:hover { color: var(--sp-accent-hover); text-decoration-color: var(--sp-accent-hover); }
 
 /* ═══════════════════════════════════════════════
    PAGINATION
@@ -524,22 +583,22 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
 .wp-block-query-pagination-numbers a:hover,
 .wp-block-query-pagination-previous a:hover,
 .wp-block-query-pagination-next a:hover { border-color: var(--sp-primary); color: var(--sp-text); background: rgba(75,90,34,.15); }
-.wp-block-query-pagination-numbers .current { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-text); font-weight: 700; }
+.wp-block-query-pagination-numbers .current { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-on-brand); font-weight: 700; }
 
 /* ═══════════════════════════════════════════════
    BOUTONS
 ═══════════════════════════════════════════════ */
 .wp-block-button .wp-block-button__link, .wp-element-button {
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important; font-size: 0.8125rem !important;
-  font-weight: 600 !important; letter-spacing: 0.05em !important; text-transform: uppercase !important;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.8125rem;
+  font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   border-radius: var(--sp-radius-sm) !important;
   transition: background var(--sp-transition), transform var(--sp-transition-fast), box-shadow var(--sp-transition) !important;
 }
 .wp-block-button .wp-block-button__link:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(75,90,34,.4); }
-.is-style-outline .wp-block-button__link { background: transparent !important; border: 1.5px solid var(--sp-primary) !important; color: var(--sp-text) !important; }
-.is-style-outline .wp-block-button__link:hover { background: rgba(75,90,34,.2) !important; }
-.is-style-ghost .wp-block-button__link { background: transparent !important; border: 1.5px solid var(--sp-secondary) !important; color: var(--sp-secondary) !important; }
-.is-style-ghost .wp-block-button__link:hover { background: rgba(147,104,147,.15) !important; color: var(--sp-secondary-lt) !important; box-shadow: 0 4px 12px rgba(147,104,147,.3) !important; }
+.is-style-outline .wp-block-button__link { background: transparent; border: 1.5px solid var(--sp-primary); color: var(--sp-text); }
+.is-style-outline .wp-block-button__link:hover { background: rgba(75,90,34,.2); }
+.is-style-ghost .wp-block-button__link { background: transparent; border: 1.5px solid var(--sp-secondary); color: var(--sp-secondary); }
+.is-style-ghost .wp-block-button__link:hover { background: rgba(147,104,147,.15); color: var(--sp-accent-hover); box-shadow: 0 4px 12px rgba(147,104,147,.3) !important; }
 
 /* ═══════════════════════════════════════════════
    FORMULAIRES
@@ -556,34 +615,49 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 /* ═══════════════════════════════════════════════
    COMMENTAIRES
 ═══════════════════════════════════════════════ */
-.wp-block-comments-title { font-family: var(--wp--preset--font-family--playfair, Georgia, serif) !important; color: var(--sp-text) !important; }
+.wp-block-comments-title { font-family: var(--wp--preset--font-family--playfair, Georgia, serif) !important; color: var(--sp-text); }
 .comment-body { background: var(--sp-surface); border: 1px solid var(--sp-border); border-radius: var(--sp-radius); padding: 1.25rem; margin-bottom: 1rem; }
 .comment-author b { font-family: var(--wp--preset--font-family--dm-sans, sans-serif); color: var(--sp-text); font-weight: 600; }
 .comment-content p { font-family: var(--wp--preset--font-family--source-serif, Georgia, serif); font-size: 0.9375rem; color: var(--sp-text-sec); }
-.comment-reply-link { font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important; font-size: 0.75rem !important; font-weight: 600 !important; color: var(--sp-secondary) !important; text-decoration: none !important; text-transform: uppercase; letter-spacing: 0.05em; }
-.comment-reply-link:hover { color: var(--sp-secondary-lt) !important; }
+.comment-reply-link { font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important; font-size: 0.75rem !important; font-weight: 600 !important; color: var(--sp-secondary); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+.comment-reply-link:hover { color: var(--sp-accent-hover); }
 
 /* ═══════════════════════════════════════════════
    FOOTER
 ═══════════════════════════════════════════════ */
 .site-footer {
-  background: var(--sp-bg) !important;
+  background: var(--sp-surface);
   border-top: 1px solid var(--sp-border);
   color: var(--sp-text-sec);
 }
 .site-footer p { color: var(--sp-text-sec); }
 .site-footer a { color: var(--sp-text-muted); text-decoration: none; transition: color var(--sp-transition-fast); }
-.site-footer a:hover { color: var(--sp-secondary-lt) !important; }
-.site-footer .wp-block-site-title a { color: var(--sp-text) !important; }
-.site-footer .wp-block-site-tagline { color: var(--sp-text-muted) !important; }
-.site-footer .footer-partners-label { color: var(--sp-text-disabled) !important; }
+.site-footer a:hover { color: var(--sp-accent-hover); }
+.site-footer .wp-block-site-title a { color: var(--sp-text); }
+.site-footer .wp-block-site-tagline { color: var(--sp-text-muted); }
+/* Typographie du pied de page : reprise des templates, le CSS fait autorite */
+.site-footer .footer-tagline-text {
+  font-family: var(--wp--preset--font-family--source-serif, Georgia, serif);
+  font-size: 0.875rem; line-height: 1.7;
+}
+.site-footer .footer-partners-label {
+  color: var(--sp-text-disabled);
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.6rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.15em;
+}
 .site-footer .footer-copyright,
-.site-footer .footer-license { color: var(--sp-text-muted) !important; }
-.site-footer .wp-block-navigation-item__content { color: var(--sp-text-sec) !important; font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important; font-size: 0.875rem !important; text-transform: none !important; letter-spacing: 0 !important; }
-.site-footer .wp-block-navigation-item__content:hover { color: var(--sp-secondary-lt) !important; }
+.site-footer .footer-license {
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.75rem;
+}
+.site-footer .footer-copyright,
+.site-footer .footer-license { color: var(--sp-text-muted); }
+.site-footer .wp-block-navigation-item__content { color: var(--sp-text-sec) !important; font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.875rem; text-transform: none; letter-spacing: 0; }
+.site-footer .wp-block-navigation-item__content:hover { color: var(--sp-accent-hover) !important; }
 .site-footer .wp-block-navigation-item__content::after { display: none !important; }
-.site-footer .wp-block-categories-list a { color: var(--sp-text-sec) !important; }
-.site-footer .wp-block-categories-list a:hover { color: var(--sp-secondary-lt) !important; }
+.site-footer .wp-block-categories-list a { color: var(--sp-text-sec); }
+.site-footer .wp-block-categories-list a:hover { color: var(--sp-accent-hover); }
 .site-footer .wp-block-categories-list li { border-color: var(--sp-border); }
 
 /* ═══════════════════════════════════════════════
@@ -592,7 +666,7 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 .reading-progress-bar { position: fixed; top: 0; left: 0; width: 0; height: 3px; background: linear-gradient(90deg, var(--sp-primary) 0%, var(--sp-secondary) 100%); z-index: 9999; transition: width 0.1s linear; }
 .back-to-top {
   position: fixed; bottom: 2rem; right: 2rem; width: 42px; height: 42px;
-  background: var(--sp-primary); color: var(--sp-text); border: none; border-radius: 50%;
+  background: var(--sp-primary); color: var(--sp-on-brand); border: none; border-radius: 50%;
   cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem;
   box-shadow: 0 4px 16px rgba(0,0,0,.5), 0 0 0 1px rgba(75,90,34,.4);
   opacity: 0; visibility: hidden; transform: translateY(10px); transition: all var(--sp-transition); z-index: 500;
@@ -603,7 +677,7 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 /* ═══════════════════════════════════════════════
    SÉPARATEUR + SCROLLBAR
 ═══════════════════════════════════════════════ */
-.wp-block-separator { border-color: var(--sp-border-lt) !important; opacity: 1; }
+.wp-block-separator { border-color: var(--sp-border-lt); opacity: 1; }
 hr { border-color: var(--sp-border); }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--sp-bg); }
@@ -618,6 +692,7 @@ hr { border-color: var(--sp-border); }
   :root { --sp-header-h: 72px; }
   .header-topbar { display: none; }
   .theme-toggle { top: 8px; right: 60px; }
+  .admin-bar .theme-toggle { top: 54px; right: 60px; }
 }
 @media (max-width: 600px) {
   .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr !important; }
@@ -635,16 +710,17 @@ body, .site-header, .header-topbar, .header-brand-row, .header-cats-bar,
 
 html[data-theme="light"] .site-header { box-shadow: 0 2px 12px rgba(0,0,0,.10); }
 html[data-theme="light"] .site-header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,.16); }
-html[data-theme="light"] .header-topbar { background: var(--sp-surface-top) !important; border-bottom-color: var(--sp-border) !important; }
+html[data-theme="light"] .header-topbar { background: var(--sp-surface-top); border-bottom-color: var(--sp-border); }
 html[data-theme="light"] .header-brand-row { background: var(--sp-surface); border-bottom-color: var(--sp-border); }
 html[data-theme="light"] .header-cats-bar { background: #fff; border-bottom-color: var(--sp-border); }
-html[data-theme="light"] .section-header { border-bottom-color: var(--sp-primary) !important; }
+html[data-theme="light"] .section-header { border-bottom-color: var(--sp-primary); }
 html[data-theme="light"] .post-card { box-shadow: var(--sp-card-shadow); border-color: var(--sp-border); }
 html[data-theme="light"] .post-card:hover { box-shadow: var(--sp-card-shadow-h); }
-html[data-theme="light"] .sidebar-widget { background: var(--sp-surface) !important; border: 1px solid var(--sp-border); }
-html[data-theme="light"] .site-footer { background-color: var(--sp-surface-top) !important; border-top: 1px solid var(--sp-border); }
+html[data-theme="light"] .sidebar-widget { border: 1px solid var(--sp-border); }
+/* Le pied de page utilise --sp-surface, deja sensible au theme : la regle
+   specifique au mode clair qui se trouvait ici est devenue inutile. */
 html[data-theme="light"] { scrollbar-color: var(--sp-border-lt) var(--sp-bg); }
-html[data-theme="light"] .cats-navigation .wp-block-navigation__submenu-container { box-shadow: 0 8px 24px rgba(0,0,0,.12) !important; background: var(--sp-surface-top) !important; }
+html[data-theme="light"] .cats-navigation .wp-block-navigation__submenu-container { box-shadow: 0 8px 24px rgba(0,0,0,.12) !important; }
 
 /* ═══════════════════════════════════════════════
    TOGGLE JOUR/NUIT
@@ -660,6 +736,9 @@ html[data-theme="light"] .cats-navigation .wp-block-navigation__submenu-containe
   transition: color var(--sp-transition-fast), border-color var(--sp-transition-fast), background var(--sp-transition-fast);
 }
 .theme-toggle:hover { color: var(--sp-text); border-color: var(--sp-primary); background: rgba(75,90,34,.1); }
+/* Decalage sous la barre d'administration (32px, 46px sous 782px) */
+.admin-bar .theme-toggle { top: 38px; }
+@media (max-width: 782px) { .admin-bar .theme-toggle { top: 52px; } }
 .theme-toggle svg { width: 13px; height: 13px; flex-shrink: 0; }
 .theme-toggle .icon-sun  { display: block; }
 .theme-toggle .icon-moon { display: none; }
@@ -674,41 +753,27 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 /* ═══════════════════════════════════════════════
    FIX FOND SUBMENU — override WP block CSS
 ═══════════════════════════════════════════════ */
-.header-topbar .wp-block-navigation__submenu-container {
-  background-color: var(--sp-surface-top) !important;
-  color: var(--sp-text) !important;
-}
-.header-topbar .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-  background-color: transparent !important;
-  color: var(--sp-text-sec) !important;
-}
-.header-cats-bar .wp-block-navigation__submenu-container {
-  background-color: var(--sp-surface-top) !important;
-  color: var(--sp-text) !important;
-}
-.header-cats-bar .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
-  background-color: transparent !important;
-  color: var(--sp-text-sec) !important;
-}
-html[data-theme="light"] .wp-block-post-title,
-html[data-theme="light"] .wp-block-post-title a,
-html[data-theme="light"] .wp-block-query-title,
-html[data-theme="light"] .wp-block-heading,
-html[data-theme="light"] .entry-content h1,
-html[data-theme="light"] .entry-content h2,
-html[data-theme="light"] .entry-content h3,
-html[data-theme="light"] .entry-content h4 {
-  color: var(--sp-text);
-}
+/* Doublon retire le 21/10/2026 : fond et couleur des liens deja definis
+   plus haut (section TOPBAR) avec les memes valeurs. Seul le color du
+   conteneur etait inedit, il est conserve ci-dessous. */
+.header-topbar .wp-block-navigation__submenu-container { color: var(--sp-text) !important; }
+/* Doublon .header-cats-bar retire : memes valeurs que les regles
+   .cats-navigation plus haut. Seul le color du conteneur est conserve. */
+.header-cats-bar .wp-block-navigation__submenu-container { color: var(--sp-text) !important; }
+/* Les regles de titres en mode clair ont ete supprimees : theme.json les
+   colore deja avec var(--sp-text), qui suit le thme depuis que la palette
+   est redefinie dans [data-theme="light"]. */
 
-html[data-theme="light"] .wp-block-post-excerpt p,
-html[data-theme="light"] .wp-block-post-author__name {
+/* Extraits, auteur et dates : memes teintes secondaires dans les deux modes.
+   Ces regles etaient auparavant limitees au mode clair, ce qui laissait les
+   dates en pleine intensite en mode nuit. */
+.wp-block-post-excerpt p,
+.wp-block-post-author__name {
   color: var(--sp-text-sec);
 }
-
-html[data-theme="light"] .wp-block-post-date,
-html[data-theme="light"] .wp-block-post-date a {
-  color: var(--sp-text-muted) !important;
+.wp-block-post-date,
+.wp-block-post-date a {
+  color: var(--sp-text-muted);
 }
 
 /* Cache uniquement la recherche qui n'est pas dans le header */

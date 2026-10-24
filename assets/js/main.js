@@ -107,60 +107,6 @@
   });
 
   // ─────────────────────────────────────────
-  // Load More Posts (AJAX)
-  // ─────────────────────────────────────────
-  const loadMoreBtn = qs('[data-action="load-more"]');
-  if (loadMoreBtn) {
-    let page    = 2;
-    let loading = false;
-
-    on(loadMoreBtn, 'click', async () => {
-      if (loading) return;
-      loading = true;
-      loadMoreBtn.setAttribute('aria-busy', 'true');
-      loadMoreBtn.textContent = '…';
-
-      try {
-        const body = new FormData();
-        body.append('action',   'spiphoto_load_more');
-        body.append('nonce',    spiphotoFSE.nonce);
-        body.append('page',     page);
-        body.append('category', loadMoreBtn.dataset.category || '');
-        body.append('perPage',  loadMoreBtn.dataset.perPage  || 6);
-
-        const res  = await fetch(spiphotoFSE.ajaxUrl, { method: 'POST', body });
-        const json = await res.json();
-
-        if (json.success) {
-          const container = qs('[data-post-grid]');
-          if (container) {
-            container.insertAdjacentHTML('beforeend', json.data.html);
-            // Fade in new items.
-            const newItems = qsa('[data-post-grid] > *:nth-last-child(-n+' + (json.data.html.match(/post-card/g)?.length || 6) + ')');
-            newItems.forEach((el, i) => {
-              el.style.opacity = 0;
-              el.style.transform = 'translateY(16px)';
-              el.style.transition = `opacity .4s ease ${i * 0.08}s, transform .4s ease ${i * 0.08}s`;
-              requestAnimationFrame(() => { el.style.opacity = 1; el.style.transform = 'none'; });
-            });
-            page++;
-          }
-          if (!json.data.hasMore) loadMoreBtn.style.display = 'none';
-          else loadMoreBtn.textContent = loadMoreBtn.dataset.label || 'Load More';
-        } else {
-          loadMoreBtn.style.display = 'none';
-        }
-      } catch (err) {
-        console.error('Load more error:', err);
-        loadMoreBtn.textContent = 'Error – try again';
-      } finally {
-        loading = false;
-        loadMoreBtn.removeAttribute('aria-busy');
-      }
-    });
-  }
-
-  // ─────────────────────────────────────────
   // Smooth Scroll for Anchor Links
   // ─────────────────────────────────────────
   on(document, 'click', e => {
