@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.4
+Version:           1.4.5
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -505,15 +505,20 @@ h1.wp-block-post-title {
      la largeur du texte. */
   align-self: flex-start;
 }
-.wp-block-tag-cloud { display: flex !important; flex-wrap: wrap !important; gap: 0.35rem !important; }
+.wp-block-tag-cloud { display: flex !important; flex-wrap: wrap !important; align-items: center; gap: 0.35rem !important; }
+/* Pas de font-size ici : WordPress ecrit sur chaque lien une taille
+   proportionnelle au nombre d'articles (bornes smallestFontSize /
+   largestFontSize du bloc). Le padding en em suit cette taille. */
 .wp-block-tag-cloud a {
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif) !important;
-  padding: 0.25rem 0.7rem !important; background: rgba(75,90,34,.1);
+  padding: 0.35em 0.9em !important; background: rgba(75,90,34,.1);
   border: 1px solid rgba(75,90,34,.3); border-radius: 999px !important;
   color: var(--sp-text-sec); text-decoration: none;
-  transition: all var(--sp-transition-fast) !important; font-size: 0.75rem !important;
+  transition: all var(--sp-transition-fast) !important;
   font-weight: 500 !important; line-height: 1 !important;
 }
+/* Liste deroulante des series (bloc Categories, taxonomie series) */
+.sidebar-series select { width: 100%; }
 .wp-block-tag-cloud a:hover { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-on-brand); }
 .wp-block-categories-list { list-style: none !important; margin: 0 !important; padding: 0 !important; }
 /* WordPress ecrit le nombre d'articles en texte brut apres le lien
