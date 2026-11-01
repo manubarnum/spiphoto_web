@@ -357,6 +357,9 @@ function output_schema(): void {
         $schema['image'] = $img_src;
     }
 
+    // Point d'extension : le plugin SPIPHOTO Site y ajoute contentLocation.
+    $schema = apply_filters('spiphoto_fse_schema_article', $schema, $post);
+
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
 }
 add_action('wp_head', __NAMESPACE__ . '\\output_schema');

@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.3
+Version:           1.4.4
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -572,6 +572,17 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
   text-underline-offset: 3px; transition: color var(--sp-transition-fast), text-decoration-color var(--sp-transition-fast);
 }
 .entry-content a:hover { color: var(--sp-accent-hover); text-decoration-color: var(--sp-accent-hover); }
+/* Sommaire de serie, ajoute sous l'article par le plugin SPIPHOTO Site.
+   Meme carte que le style de groupe Card. */
+.entry-content .bloc-sommaire-serie {
+  background: var(--sp-surface-raised); border: 1px solid var(--sp-border);
+  border-radius: var(--sp-radius); box-shadow: var(--sp-card-shadow);
+  padding: 1.5rem 1.75rem; margin-top: 3rem;
+}
+.entry-content .bloc-sommaire-serie h3 { margin-top: 0; font-size: 1.25rem; }
+.entry-content .bloc-sommaire-serie ul { margin: 0; padding-left: 1.25rem; }
+.entry-content .bloc-sommaire-serie li { margin-block: 0.35em; }
+.entry-content .bloc-sommaire-serie .episode-actuel { color: var(--sp-text-sec); }
 
 /* ═══════════════════════════════════════════════
    PAGINATION
