@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.12
+Version:           1.4.13
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -487,6 +487,16 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 .post-card:focus-within .wp-block-post-featured-image::after { opacity: 0; }
 .post-card:hover .wp-block-post-title a,
 .post-card:focus-within .wp-block-post-title a { color: var(--sp-accent-hover); }
+
+/* Accueil : le dernier article occupe toute la largeur de la grille, a la
+   maniere d'une une de magazine. Avec 9 articles par page, la grille de deux
+   colonnes reste ainsi complete (1 + 8) sur chaque page de la pagination.
+   En mobile, la grille passe deja a une colonne. */
+.sp-grid-lead.is-layout-grid > li:first-child { grid-column: 1 / -1; }
+.sp-grid-lead > li:first-child .post-card .wp-block-post-title {
+  font-size: clamp(1.375rem, 2.6vw, 1.875rem); line-height: 1.2;
+}
+.sp-grid-lead > li:first-child .post-card .wp-block-post-excerpt p { -webkit-line-clamp: 2; }
 
 /* ═══════════════════════════════════════════════
    LISTE D'ARTICLES sidebar
