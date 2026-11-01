@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.9
+Version:           1.4.10
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -746,12 +746,16 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
   font-size: 0.6rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.15em;
 }
-/* Logos partenaires discrets (le bloc Image ne gere pas l'opacite). */
-.site-footer .footer-partner-logo { opacity: 0.45; transition: opacity var(--sp-transition-fast); }
+/* Logos partenaires legerement attenues (le bloc Image ne gere pas l'opacite).
+   Pas en dessous de 0.8 : le logo Kraskowski, sombre, disparait sur fond sombre. */
+.site-footer .footer-partner-logo { opacity: 0.8; transition: opacity var(--sp-transition-fast); }
 .site-footer .footer-partner-logo:has(a):hover,
 .site-footer .footer-partner-logo:has(a:focus-visible) { opacity: 1; }
 /* Mention de licence : phrase complete, sur sa propre ligne sous le copyright. */
-.site-footer .footer-license { flex-basis: 100%; max-width: 80ch; line-height: 1.6; }
+.site-footer .footer-license { flex: 0 0 100%; line-height: 1.6; }
+/* Marge basse pour que le bouton fixe de retour en haut (42px a 2rem du bas)
+   ne recouvre pas la fin de la mention de licence. */
+.site-footer { padding-bottom: calc(42px + 2rem); }
 /* Liens du pied de page de la meme couleur que le texte : souligne pour
    reperer le lien au milieu de la phrase. */
 .site-footer .footer-license a { text-decoration: underline; text-underline-offset: 2px; }

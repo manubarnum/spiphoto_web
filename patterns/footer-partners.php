@@ -39,7 +39,7 @@ foreach ( $spiphoto_partners as $partner ) :
 		continue;
 	}
 	$img = sprintf(
-		'<img src="%s" alt="%s" class="wp-image-%d" style="width:auto;height:40px"/>',
+		'<img src="%s" alt="%s" class="wp-image-%d" style="width:auto;height:64px"/>',
 		esc_url( $src ),
 		esc_attr( $partner['alt'] ),
 		$partner['id']
@@ -50,7 +50,7 @@ foreach ( $spiphoto_partners as $partner ) :
 	$attrs = [
 		'id'              => $partner['id'],
 		'width'           => 'auto',
-		'height'          => '40px',
+		'height'          => '64px',
 		'sizeSlug'        => 'medium',
 		'linkDestination' => $partner['url'] ? 'custom' : 'none',
 		// no-lightbox : exclu par Meow Lightbox (reglage anti_selector), dont le
