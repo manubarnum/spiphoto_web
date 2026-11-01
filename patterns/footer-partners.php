@@ -53,11 +53,13 @@ foreach ( $spiphoto_partners as $partner ) :
 		'height'          => '40px',
 		'sizeSlug'        => 'medium',
 		'linkDestination' => $partner['url'] ? 'custom' : 'none',
-		'className'       => 'footer-partner-logo',
+		// no-lightbox : exclu par Meow Lightbox (reglage anti_selector), dont le
+		// selecteur .wp-block-image capterait sinon le clic au lieu du lien.
+		'className'       => 'footer-partner-logo no-lightbox',
 	];
 	?>
 <!-- wp:image <?php echo wp_json_encode( $attrs, JSON_UNESCAPED_SLASHES ); ?> -->
-<figure class="wp-block-image size-medium is-resized footer-partner-logo"><?php echo $img; ?></figure>
+<figure class="wp-block-image size-medium is-resized footer-partner-logo no-lightbox"><?php echo $img; ?></figure>
 <!-- /wp:image -->
 <?php endforeach; ?>
 </div>
