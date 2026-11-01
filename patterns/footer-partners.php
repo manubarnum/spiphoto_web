@@ -26,7 +26,7 @@ $spiphoto_partners = [
 	[
 		'id'  => 64143,
 		'alt' => 'Ville de Gournay-en-Bray',
-		'url' => '',
+		'url' => 'https://www.gournay-en-bray.fr/',
 	],
 ];
 ?>
