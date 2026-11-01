@@ -160,6 +160,57 @@
   }
 
   // ─────────────────────────────────────────
+  // Apparitions : cartes au défilement et photos en fondu
+  // Rien n'est masqué sans JavaScript, ni pour les visiteurs qui demandent
+  // moins d'animations. Ce qui est déjà à l'écran au chargement n'est jamais
+  // masqué, pour éviter tout clignotement.
+  // ─────────────────────────────────────────
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const viewH = window.innerHeight || document.documentElement.clientHeight;
+
+    // 1. Cartes d'articles (accueil, archives, recherche, articles liés).
+    const cards = qsa('.wp-block-post-template > li')
+      .filter(li => li.querySelector('.post-card'))
+      .filter(li => li.getBoundingClientRect().top > viewH);
+
+    if (cards.length) {
+      const revealObs = new IntersectionObserver((entries, obs) => {
+        // Les cartes qui entrent ensemble à l'écran arrivent en léger décalé.
+        entries
+          .filter(entry => entry.isIntersecting)
+          .forEach((entry, i) => {
+            entry.target.style.setProperty('--sp-reveal-delay', Math.min(i, 3) * 0.08 + 's');
+            entry.target.classList.add('is-revealed');
+            obs.unobserve(entry.target);
+          });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+
+      cards.forEach(li => {
+        li.classList.add('sp-reveal');
+        revealObs.observe(li);
+      });
+    }
+
+    // 2. Photos : fondu à la fin du chargement.
+    const photoSelector = [
+      '.wp-block-post-featured-image img',
+      '.entry-content .wp-block-image img',
+    ].join(',');
+
+    qsa(photoSelector).forEach(img => {
+      if (img.complete) return; // déjà chargée (cache, ou au-dessus de la ligne de flottaison)
+      const show = () => img.classList.add('is-shown');
+      img.addEventListener('load', show, { once: true });
+      img.addEventListener('error', show, { once: true });
+      img.classList.add('sp-img-fade');
+      // Le chargement a pu se terminer entre le test et l'écoute.
+      if (img.complete) show();
+    });
+  }
+
+  // ─────────────────────────────────────────
   // Table of Contents – active state
   // ─────────────────────────────────────────
   const tocLinks = qsa('.wp-block-table-of-contents a');

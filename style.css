@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.11
+Version:           1.4.12
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -473,6 +473,21 @@ h1.wp-block-post-title {
   -webkit-box-orient: vertical; overflow: hidden; margin: 0; line-height: 1.65;
 }
 
+/* Revelation de la photo au survol : un leger voile sombre couvre l'image
+   au repos et s'efface au survol ou au focus clavier, comme une lampe qu'on
+   approche du tirage. Seule l'opacite est animee. */
+.post-card .wp-block-post-featured-image { position: relative; }
+.post-card .wp-block-post-featured-image::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: #0d0e09; opacity: 0.18;
+  transition: opacity 0.45s ease;
+}
+html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opacity: 0.08; }
+.post-card:hover .wp-block-post-featured-image::after,
+.post-card:focus-within .wp-block-post-featured-image::after { opacity: 0; }
+.post-card:hover .wp-block-post-title a,
+.post-card:focus-within .wp-block-post-title a { color: var(--sp-accent-hover); }
+
 /* ═══════════════════════════════════════════════
    LISTE D'ARTICLES sidebar
 ═══════════════════════════════════════════════ */
@@ -810,7 +825,38 @@ hr { border-color: var(--sp-border); }
 @media (max-width: 600px) {
   .wp-block-post-template.is-layout-grid { grid-template-columns: 1fr !important; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+/* ═══════════════════════════════════════════════
+   ANIMATIONS D'APPARITION
+   Les classes ci-dessous ne sont posees que par main.js, et seulement si le
+   visiteur n'a pas demande a reduire les animations. Sans JavaScript, rien
+   n'est jamais masque.
+═══════════════════════════════════════════════ */
+/* Cartes d'articles : fondu et montee a l'entree dans l'ecran. On anime
+   l'element de liste qui porte la carte, pas la carte elle-meme, pour ne pas
+   entrer en conflit avec le soulevement au survol.
+   La transition n'est portee que par l'etat d'arrivee : le masquage initial
+   est instantane, seule l'apparition est animee. */
+.sp-reveal { opacity: 0; transform: translateY(18px); }
+.sp-reveal.is-revealed {
+  opacity: 1; transform: none;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.25,.46,.45,.94);
+  transition-delay: var(--sp-reveal-delay, 0s);
+}
+
+/* Photos : fondu a la fin du chargement. Dans les cartes, la transition de
+   transform est reprise pour conserver le zoom au survol (la regle des cartes
+   est plus specifique, d'ou le second selecteur). */
+img.sp-img-fade { opacity: 0; }
+.post-card .wp-block-post-featured-image img.sp-img-fade { transition: transform 0.55s cubic-bezier(.25,.46,.45,.94); }
+img.sp-img-fade.is-shown { opacity: 1; transition: opacity 0.6s ease; }
+.post-card .wp-block-post-featured-image img.sp-img-fade.is-shown {
+  transition: opacity 0.6s ease, transform 0.55s cubic-bezier(.25,.46,.45,.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .sp-reveal, img.sp-img-fade { opacity: 1 !important; transform: none !important; }
+}
 @media print { body { background: #fff !important; color: #000 !important; } .site-header, .site-sidebar, .site-footer, .back-to-top, .reading-progress-bar { display: none !important; } a { color: #000; text-decoration: underline; } }
 
 /* ═══════════════════════════════════════════════
