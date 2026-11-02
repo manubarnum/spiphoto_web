@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.17
+Version:           1.4.18
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -276,7 +276,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 ═══════════════════════════════════════════════ */
 .header-cats-bar {
   background: var(--sp-surface);
-  border-bottom: 1px solid var(--sp-border);
+  /* Filet olive sur lequel reposent les onglets. */
+  border-bottom: 3px solid var(--sp-primary);
 }
 
 /* Navigation catégories — conteneur */
@@ -284,9 +285,9 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
-  align-items: stretch !important;
+  align-items: flex-end !important;
   gap: 0 !important;
-  padding: 0 clamp(1rem, 4vw, 2rem) !important;
+  padding: 0.45rem clamp(1rem, 4vw, 2rem) 0 !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
 }
@@ -297,31 +298,44 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   font-size: 0.75rem; font-weight: 600;
   letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--sp-text-sec);
-  padding: 0.65rem 1.1rem !important;
+  padding: 0.6rem 1.6rem 0.5rem !important;
   text-decoration: none;
   white-space: nowrap;
   position: relative;
+  z-index: 0;
   display: flex !important;
   align-items: center !important;
   gap: 0.25rem !important;
-  transition: color var(--sp-transition-fast), background var(--sp-transition-fast);
+  transition: color var(--sp-transition-fast);
 }
+/* Onglets trapezes, comme des intercalaires de classeur : le fond est porte
+   par ::after, decoupe en trapeze, pour que le texte, le chevron et le
+   contour de focus ne soient pas rognes. Les onglets se chevauchent un peu ;
+   celui de la categorie en cours passe devant, en olive. */
+.cats-navigation .wp-block-navigation__container > .wp-block-navigation-item { margin-right: -0.5rem; }
 .cats-navigation .wp-block-navigation-item__content::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-  height: 2px; background: var(--sp-accent-line);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform var(--sp-transition);
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: var(--sp-surface-raised);
+  clip-path: polygon(0.65rem 0, calc(100% - 0.65rem) 0, 100% 100%, 0 100%);
+  transition: background var(--sp-transition-fast);
 }
-.cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content,
-.cats-navigation .current-menu-item > .wp-block-navigation-item__content,
-.cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content {
+.cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content {
   color: var(--sp-text);
-  background: rgba(106,126,48,.16);
+  z-index: 1;
 }
-.cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content::after,
+.cats-navigation .wp-block-navigation-item:hover > .wp-block-navigation-item__content::after {
+  background: var(--sp-surface-top);
+}
+.cats-navigation .current-menu-item > .wp-block-navigation-item__content,
+.cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content,
+.cats-navigation .wp-block-navigation-item__content.active {
+  color: var(--sp-on-brand);
+  z-index: 2;
+}
 .cats-navigation .current-menu-item > .wp-block-navigation-item__content::after,
-.cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content::after {
-  transform: scaleX(1);
+.cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content::after,
+.cats-navigation .wp-block-navigation-item__content.active::after {
+  background: var(--sp-primary);
 }
 
 /* Chevron FSE natif */
@@ -401,6 +415,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
   display: none !important;
 }
+.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item { margin-right: 0; }
 
 /* ═══════════════════════════════════════════════
    SIDEBAR
