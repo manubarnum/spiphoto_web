@@ -431,25 +431,22 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
     display: none;
   }
-  /* A partir de 800 px : pente douce de 15 degres, barre moins haute. Le pas
-     suit la largeur de l'ecran pour que les 11 categories tiennent (de
-     4,1 rem a 800 px jusqu'a 5,5 rem vers 1 000 px). En dessous de 800 px,
-     la pente de 30 degres ci-dessus, plus serree.
+  /* A partir de 850 px : pente de 20 degres, entrees sur un pas fixe de
+     4,5 rem. Les 11 categories occupent environ 770 px : la barre ne depasse
+     pas 800 px. En dessous de 850 px, la pente de 30 degres ci-dessus, plus
+     serree.
      Le menu (menus/categorie.html) classe les categories de l'intitule le
      plus long au plus court : les fins d'intitules dessinent une ligne qui
      descend regulierement, et seul le dernier, tres court, depasse a droite
      de la derniere entree, d'ou la petite reserve de 3 rem. A revoir si les
      categories changent. */
-  @media (min-width: 800px) {
-    .header-cats-bar .cats-navigation .wp-block-navigation__container {
-      padding-right: calc(clamp(1rem, 4vw, 2rem) + 3rem) !important;
-    }
+  @media (min-width: 850px) {
     .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
-      width: clamp(3.3rem, calc((100vw - 9rem) / 10), 5.5rem);
-      height: 3.8rem;
+      width: 4.5rem;
+      height: 4.2rem;
     }
     .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
-      transform: rotate(-15deg);
+      transform: rotate(-20deg);
     }
   }
   .header-cats-bar .cats-navigation .current-menu-item > .wp-block-navigation-item__content,
