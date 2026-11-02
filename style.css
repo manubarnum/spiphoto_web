@@ -598,9 +598,12 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 /* Sans galerie : le texte reprend toute la ligne, a largeur de lecture. */
 .sp-article-sans-galerie .sp-article-galerie-col { display: none; }
 .sp-article-sans-galerie .sp-article-texte { flex-basis: 100% !important; max-width: 780px; margin-inline: auto; }
-/* Encadres (anciennement barre laterale) sous l'article. */
-.sp-article-encadres > .wp-block-column { display: flex; }
-.sp-article-encadres .sidebar-widget { flex: 1; }
+/* Encadres (anciennement barre laterale) sous l'article : « A ne pas manquer »
+   a gauche, « Series » et « Lieux » empiles a droite ; les deux colonnes
+   finissent a la meme hauteur, le nuage de lieux prenant le reste. */
+.sp-article-encadres { align-items: stretch !important; }
+.sp-article-encadres > .wp-block-column { display: flex; flex-direction: column; gap: 1.5rem; }
+.sp-article-encadres > .wp-block-column > .sidebar-widget:last-child { flex: 1; }
 @media (max-width: 1024px) {
   .sp-article-colonnes { flex-direction: column; }
   .sp-article-colonnes > .wp-block-column { flex-basis: 100% !important; width: 100%; }
