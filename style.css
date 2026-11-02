@@ -513,9 +513,12 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 .section-header { position: relative; border-bottom: 2px solid var(--sp-border-lt); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
 .section-header::after {
   content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 48px; height: 2px; background: var(--sp-primary); border-radius: 1px;
+  width: 48px; height: 2px; background: var(--sp-accent-line); border-radius: 1px;
 }
-/* Le filet se trace de gauche a droite (voir « Animations d'apparition »). */
+/* L'olive de base (--sp-primary) se confondait avec la bordure --sp-border-lt
+   en mode nuit, et avec la bordure olive du mode clair : le filet etait
+   invisible. --sp-accent-line vaut l'olive clair la nuit, l'olive le jour.
+   Le filet se trace de gauche a droite (voir « Animations d'apparition »). */
 .section-header::after, .sp-page-header::after { transform-origin: left center; }
 
 /* ═══════════════════════════════════════════════
@@ -923,7 +926,9 @@ html[data-theme="light"] .site-header.scrolled { box-shadow: 0 4px 20px rgba(0,0
 html[data-theme="light"] .header-topbar { background: var(--sp-surface-top); border-bottom-color: var(--sp-border); }
 html[data-theme="light"] .header-brand-row { background: var(--sp-surface); border-bottom-color: var(--sp-border); }
 html[data-theme="light"] .header-cats-bar { background: #fff; border-bottom-color: var(--sp-border); }
-html[data-theme="light"] .section-header { border-bottom-color: var(--sp-primary); }
+/* Bordure neutre en mode clair : le filet olive (--sp-accent-line) ressort
+   dessus, comme en mode nuit. */
+html[data-theme="light"] .section-header { border-bottom-color: var(--sp-border-lt); }
 html[data-theme="light"] .post-card { box-shadow: var(--sp-card-shadow); border-color: var(--sp-border); }
 html[data-theme="light"] .post-card:hover { box-shadow: var(--sp-card-shadow-h); }
 html[data-theme="light"] .sidebar-widget { border: 1px solid var(--sp-border); }
