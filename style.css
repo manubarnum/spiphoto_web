@@ -431,6 +431,22 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
     display: none;
   }
+  /* Ecran assez large pour les 11 categories : pente douce de 15 degres et
+     entrees plus espacees (pas de 5,5 rem), barre moins haute. En dessous
+     de 1 150 px, la pente de 30 degres ci-dessus garde la barre dans la
+     largeur de l'ecran. */
+  @media (min-width: 1150px) {
+    .header-cats-bar .cats-navigation .wp-block-navigation__container {
+      padding-right: calc(clamp(1rem, 4vw, 2rem) + 8rem) !important;
+    }
+    .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
+      width: 5.5rem;
+      height: 3.8rem;
+    }
+    .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+      transform: rotate(-15deg);
+    }
+  }
   .header-cats-bar .cats-navigation .current-menu-item > .wp-block-navigation-item__content,
   .header-cats-bar .cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content,
   .header-cats-bar .cats-navigation .wp-block-navigation-item__content.active {
