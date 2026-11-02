@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.14** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.15** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -34,7 +34,10 @@ Version actuelle : **1.4.14** (voir l'en-tête de `style.css`).
 - Animations discrètes, au service des photos :
   - les cartes d'articles apparaissent en fondu au défilement, en léger décalé ;
   - les photos s'affichent en fondu à la fin de leur chargement ;
-  - au survol d'une carte, un léger voile sombre s'efface sur la photo et le titre passe en mauve.
+  - au survol d'une carte, un léger voile sombre s'efface sur la photo et le titre passe en mauve ;
+  - le filet olive sous les titres de section se trace de gauche à droite quand la section apparaît ;
+  - à l'ouverture d'un article, le titre puis le bloc auteur-date apparaissent en fondu, suivis de la photo à la une avec un très léger dézoom (une seule fois, en CSS seul) ;
+  - les boutons s'enfoncent légèrement au clic.
   Sans JavaScript, tout reste visible ; ce qui est déjà à l'écran au chargement n'est jamais masqué.
 - Barre de progression de lecture
 - Bouton de retour en haut de page
