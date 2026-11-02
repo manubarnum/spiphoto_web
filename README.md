@@ -154,7 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.18
-- Barre des catégories : les intitulés sont inclinés et posés sur un pas fixe, pour que la barre tienne en largeur (elle gagne un peu en hauteur) : 15 degrés et entrées espacées à partir de 1 150 px de large, 30 degrés et entrées serrées entre 600 et 1 150 px ; la catégorie en cours est surlignée en olive. Le menu mobile garde ses intitulés à l'horizontale
+- Barre des catégories : les intitulés sont inclinés et posés sur un pas fixe, pour que la barre tienne en largeur (elle gagne un peu en hauteur) : 15 degrés à partir de 800 px de large, avec un espacement qui suit la largeur de l'écran, 30 degrés et entrées serrées entre 600 et 800 px ; la catégorie en cours est surlignée en olive. Le menu mobile garde ses intitulés à l'horizontale
 
 ### 1.4.17
 - Page d'article : le texte (30 %) et la galerie (70 %) s'affichent côte à côte ; sous 1 024 px, la galerie passe sous le texte. La photo à la une n'est plus affichée sur la page de l'article (elle reste utilisée pour les cartes et les partages)
