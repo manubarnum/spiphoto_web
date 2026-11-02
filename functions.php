@@ -343,14 +343,55 @@ add_action('init', function (): void {
     ]);
 });
 
-// « À lire aussi » (requête n° 20 du modèle d'article) : exactement le nombre
-// d'articles demandé, sans l'article affiché ni l'article épinglé, que WordPress
-// ajouterait en plus en tête de liste.
+// « À lire aussi » (requête n° 20 du modèle d'article) : d'abord les articles
+// qui partagent un lieu (étiquette) avec l'article affiché, puis ceux de la
+// même catégorie, puis les plus récents pour compléter. Dans chaque groupe, du
+// plus récent au plus ancien. Sont exclus l'article affiché et les articles
+// épinglés, déjà présents dans « À ne pas manquer ».
+function related_post_ids(int $post_id, int $count): array {
+    $exclude = array_map('intval', array_merge([$post_id], (array) get_option('sticky_posts', [])));
+    $ids     = [];
+    $base    = [
+        'post_type'           => 'post',
+        'post_status'         => 'publish',
+        'fields'              => 'ids',
+        'ignore_sticky_posts' => true,
+        'no_found_rows'       => true,
+        'orderby'             => 'date',
+        'order'               => 'DESC',
+    ];
+    $add = function (array $args) use (&$ids, $exclude, $count, $base): void {
+        $missing = $count - count($ids);
+        if ($missing <= 0) return;
+        $found = get_posts($args + $base + [
+            'post__not_in'   => array_merge($exclude, $ids),
+            'posts_per_page' => $missing,
+        ]);
+        $ids = array_merge($ids, array_map('intval', $found));
+    };
+
+    $tags = wp_get_post_terms($post_id, 'post_tag', ['fields' => 'ids']);
+    if (!is_wp_error($tags) && $tags) $add(['tag__in' => $tags]);
+
+    $cats = wp_get_post_terms($post_id, 'category', ['fields' => 'ids']);
+    if (!is_wp_error($cats) && $cats) $add(['category__in' => $cats]);
+
+    $add([]);
+    return $ids;
+}
+
 add_filter('query_loop_block_query_vars', function (array $query, $block): array {
-    if ((int) ($block->context['queryId'] ?? 0) === 20 && is_singular('post')) {
-        $query['post__not_in'] = array_merge($query['post__not_in'] ?? [], [(int) get_queried_object_id()]);
-        $query['ignore_sticky_posts'] = true;
-    }
+    if ((int) ($block->context['queryId'] ?? 0) !== 20 || !is_singular('post')) return $query;
+
+    $count = (int) ($query['posts_per_page'] ?? 6) ?: 6;
+    $ids   = related_post_ids((int) get_queried_object_id(), $count);
+    if (!$ids) return $query;
+
+    unset($query['offset'], $query['post__not_in'], $query['tax_query']);
+    $query['post__in']            = $ids;
+    $query['orderby']             = 'post__in';
+    $query['posts_per_page']      = count($ids);
+    $query['ignore_sticky_posts'] = true;
     return $query;
 }, 10, 2);
 
