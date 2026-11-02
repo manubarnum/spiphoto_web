@@ -155,7 +155,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 
 ### 1.4.17
 - Page d'article : le texte (30 %), précédé de la photo à la une, et la galerie (70 %) s'affichent côte à côte ; sous 1 024 px, la galerie passe sous le texte
-- « À lire aussi » : 6 articles au lieu de 3, sans l'article affiché
+- « À lire aussi » : 6 articles au lieu de 3 (plus l'article épinglé, qui s'y ajoutait), sans l'article affiché
 - Les galeries (Meow Gallery ou galerie WordPress) restent dans le contenu des articles : elles sont retirées du texte au rendu et affichées par le nouveau bloc « Galerie de l'article » ; un article sans galerie s'affiche sur une seule colonne
 - Les encadrés de la barre latérale (À ne pas manquer, Séries, Lieux) passent sous l'article, sur trois colonnes
 

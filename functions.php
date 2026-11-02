@@ -343,10 +343,13 @@ add_action('init', function (): void {
     ]);
 });
 
-// « À lire aussi » (requête n° 20 du modèle d'article) : sans l'article affiché.
+// « À lire aussi » (requête n° 20 du modèle d'article) : exactement le nombre
+// d'articles demandé, sans l'article affiché ni l'article épinglé, que WordPress
+// ajouterait en plus en tête de liste.
 add_filter('query_loop_block_query_vars', function (array $query, $block): array {
     if ((int) ($block->context['queryId'] ?? 0) === 20 && is_singular('post')) {
         $query['post__not_in'] = array_merge($query['post__not_in'] ?? [], [(int) get_queried_object_id()]);
+        $query['ignore_sticky_posts'] = true;
     }
     return $query;
 }, 10, 2);
