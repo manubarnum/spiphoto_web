@@ -154,7 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.18
-- Barre des catégories : onglets en trapèze, comme des intercalaires de classeur, posés sur un filet olive ; l'onglet de la catégorie en cours passe devant, en olive. Sous-menus et menu mobile inchangés
+- Barre des catégories : sur écran large, les intitulés sont inclinés à 30 degrés et serrés sur un pas fixe, pour que la barre tienne en largeur (elle gagne un peu en hauteur) ; la catégorie en cours est surlignée en olive. Le menu mobile garde ses intitulés à l'horizontale
 
 ### 1.4.17
 - Page d'article : le texte (30 %) et la galerie (70 %) s'affichent côte à côte ; sous 1 024 px, la galerie passe sous le texte. La photo à la une n'est plus affichée sur la page de l'article (elle reste utilisée pour les cartes et les partages)
