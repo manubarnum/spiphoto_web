@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.17
+Version:           1.4.18
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -400,6 +400,61 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 }
 .cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
   display: none !important;
+}
+
+/* Categories en diagonale (ecran large) : chaque intitule est incline de 30
+   degres et les entrees sont serrees sur un pas fixe, pour que la barre
+   tienne en largeur. Elle gagne en hauteur ce qu'elle perd en largeur. Le
+   menu mobile (burger, sous 600 px) garde ses intitules a l'horizontale. */
+@media (min-width: 600px) {
+  .header-cats-bar .cats-navigation .wp-block-navigation__container {
+    align-items: flex-end !important;
+    padding-top: 0.25rem !important;
+    padding-right: calc(clamp(1rem, 4vw, 2rem) + 3rem) !important;
+  }
+  .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
+    position: relative;
+    flex: 0 0 auto;
+    width: 2.9rem;
+    height: 5.6rem;
+  }
+  .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+    position: absolute !important;
+    left: 0.5rem;
+    bottom: 0.35rem;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: var(--sp-radius-sm);
+    transform: rotate(-30deg);
+    transform-origin: left center;
+    line-height: 1.1;
+  }
+  .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
+    display: none;
+  }
+  /* A partir de 850 px : pente de 20 degres, entrees sur un pas fixe de
+     4,5 rem. Les 11 categories occupent environ 770 px : la barre ne depasse
+     pas 800 px. En dessous de 850 px, la pente de 30 degres ci-dessus, plus
+     serree.
+     Le menu (menus/categorie.html) classe les categories de l'intitule le
+     plus long au plus court : les fins d'intitules dessinent une ligne qui
+     descend regulierement, et seul le dernier, tres court, depasse a droite
+     de la derniere entree, d'ou la petite reserve de 3 rem. A revoir si les
+     categories changent. */
+  @media (min-width: 850px) {
+    .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
+      width: 4.5rem;
+      height: 4.2rem;
+    }
+    .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+      transform: rotate(-20deg);
+    }
+  }
+  .header-cats-bar .cats-navigation .current-menu-item > .wp-block-navigation-item__content,
+  .header-cats-bar .cats-navigation .current-menu-ancestor > .wp-block-navigation-item__content,
+  .header-cats-bar .cats-navigation .wp-block-navigation-item__content.active {
+    background: var(--sp-primary);
+    color: var(--sp-on-brand);
+  }
 }
 
 /* ═══════════════════════════════════════════════
