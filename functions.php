@@ -255,6 +255,158 @@ function resolve_navigation_urls($blocks) {
 add_filter('block_core_navigation_render_inner_blocks', __NAMESPACE__ . '\\resolve_navigation_urls');
 
 // ─────────────────────────────────────────────
+// 3 bis. GALERIE DE L'ARTICLE DANS SA PROPRE COLONNE
+// ─────────────────────────────────────────────
+// Le modèle d'article affiche le texte et la galerie côte à côte. Les
+// galeries restent dans le contenu de l'article (rien n'est modifié en base) :
+// le bloc « Contenu » qui porte la classe sp-galerie-a-part les retire au
+// rendu, et le bloc spiphoto/galerie-article les affiche dans l'autre colonne.
+// Un article sans bloc galerie s'affiche sur une seule colonne.
+
+const GALLERY_BLOCKS = ['meow-gallery/gallery', 'core/gallery'];
+const GALLERY_SPLIT_CLASS = 'sp-galerie-a-part';
+
+/** Blocs galerie d'un article, y compris ceux placés dans un groupe. */
+function post_gallery_blocks(int $post_id): array {
+    static $cache = [];
+    if (isset($cache[$post_id])) return $cache[$post_id];
+
+    $found = [];
+    $walk  = function (array $blocks) use (&$walk, &$found): void {
+        foreach ($blocks as $block) {
+            if (in_array($block['blockName'] ?? '', GALLERY_BLOCKS, true)) {
+                $found[] = $block;
+            } elseif (!empty($block['innerBlocks'])) {
+                $walk($block['innerBlocks']);
+            }
+        }
+    };
+    $content = (string) get_post_field('post_content', $post_id);
+    if (has_blocks($content)) $walk(parse_blocks($content));
+
+    return $cache[$post_id] = $found;
+}
+
+/** Profondeur des blocs « Contenu » dont on retire les galeries. */
+function gallery_split_depth(int $delta = 0): int {
+    static $depth = 0;
+    $depth = max(0, $depth + $delta);
+    return $depth;
+}
+
+add_filter('render_block_data', function (array $block): array {
+    if (($block['blockName'] ?? '') === 'core/post-content') {
+        $classes = ' ' . ($block['attrs']['className'] ?? '') . ' ';
+        if (str_contains($classes, ' ' . GALLERY_SPLIT_CLASS . ' ')) {
+            gallery_split_depth(1);
+            $block['attrs']['__spGallerySplit'] = true;
+        }
+    }
+    return $block;
+});
+
+add_filter('render_block_core/post-content', function (string $html, array $block): string {
+    if (!empty($block['attrs']['__spGallerySplit'])) gallery_split_depth(-1);
+    return $html;
+}, 10, 2);
+
+add_filter('render_block', function (string $html, array $block): string {
+    if (gallery_split_depth() > 0 && in_array($block['blockName'] ?? '', GALLERY_BLOCKS, true)) {
+        return '';
+    }
+    return $html;
+}, 10, 2);
+
+function render_article_gallery(array $attributes, string $content, $block): string {
+    $post_id = (int) ($block->context['postId'] ?? get_the_ID());
+    if (!$post_id) return '';
+
+    $html = '';
+    foreach (post_gallery_blocks($post_id) as $gallery) {
+        $html .= render_block($gallery);
+    }
+    // Le bloc Meow Gallery enregistre un shortcode [gallery ids="…"] que
+    // WordPress ne traite d'ordinaire qu'avec le contenu de l'article.
+    $html = do_shortcode($html);
+    if (trim($html) === '') return '';
+
+    return sprintf(
+        '<div %s>%s</div>',
+        get_block_wrapper_attributes(['class' => 'sp-article-galerie']),
+        $html
+    );
+}
+
+add_action('init', function (): void {
+    register_block_type(get_template_directory() . '/blocks/galerie-article', [
+        'render_callback' => __NAMESPACE__ . '\\render_article_gallery',
+    ]);
+});
+
+// « À lire aussi » (requête n° 20 du modèle d'article) : d'abord les articles
+// qui partagent à la fois un lieu (étiquette) et une catégorie avec l'article
+// affiché, puis ceux qui partagent un lieu, puis ceux de la même catégorie,
+// puis les plus récents pour compléter. Dans chaque groupe, du
+// plus récent au plus ancien. Sont exclus l'article affiché et les articles
+// épinglés, déjà présents dans « À ne pas manquer ».
+function related_post_ids(int $post_id, int $count): array {
+    $exclude = array_map('intval', array_merge([$post_id], (array) get_option('sticky_posts', [])));
+    $ids     = [];
+    $base    = [
+        'post_type'           => 'post',
+        'post_status'         => 'publish',
+        'fields'              => 'ids',
+        'ignore_sticky_posts' => true,
+        'no_found_rows'       => true,
+        'orderby'             => 'date',
+        'order'               => 'DESC',
+    ];
+    $add = function (array $args) use (&$ids, $exclude, $count, $base): void {
+        $missing = $count - count($ids);
+        if ($missing <= 0) return;
+        $found = get_posts($args + $base + [
+            'post__not_in'   => array_merge($exclude, $ids),
+            'posts_per_page' => $missing,
+        ]);
+        $ids = array_merge($ids, array_map('intval', $found));
+    };
+
+    $tags = wp_get_post_terms($post_id, 'post_tag', ['fields' => 'ids']);
+    $tags = is_wp_error($tags) ? [] : $tags;
+    $cats = wp_get_post_terms($post_id, 'category', ['fields' => 'ids']);
+    $cats = is_wp_error($cats) ? [] : $cats;
+
+    if ($tags && $cats) $add(['tag__in' => $tags, 'category__in' => $cats]);
+    if ($tags) $add(['tag__in' => $tags]);
+    if ($cats) $add(['category__in' => $cats]);
+
+    $add([]);
+    return $ids;
+}
+
+add_filter('query_loop_block_query_vars', function (array $query, $block): array {
+    if ((int) ($block->context['queryId'] ?? 0) !== 20 || !is_singular('post')) return $query;
+
+    $count = (int) ($query['posts_per_page'] ?? 6) ?: 6;
+    $ids   = related_post_ids((int) get_queried_object_id(), $count);
+    if (!$ids) return $query;
+
+    unset($query['offset'], $query['post__not_in'], $query['tax_query']);
+    $query['post__in']            = $ids;
+    $query['orderby']             = 'post__in';
+    $query['posts_per_page']      = count($ids);
+    $query['ignore_sticky_posts'] = true;
+    return $query;
+}, 10, 2);
+
+add_filter('body_class', function (array $classes): array {
+    if (is_singular('post') && !post_gallery_blocks((int) get_queried_object_id())) {
+        $classes[] = 'sp-article-sans-galerie';
+    }
+    return $classes;
+});
+
+// ─────────────────────────────────────────────
 // 4. READING TIME
 // ─────────────────────────────────────────────
 function reading_time(int $post_id = 0): string {

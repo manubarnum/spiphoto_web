@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.16** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.17** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,12 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.17
+- Page d'article : le texte (30 %) et la galerie (70 %) s'affichent côte à côte ; sous 1 024 px, la galerie passe sous le texte. La photo à la une n'est plus affichée sur la page de l'article (elle reste utilisée pour les cartes et les partages)
+- « À lire aussi » : 6 articles au lieu de 3 (plus l'article épinglé, qui s'y ajoutait), choisis d'abord parmi ceux qui partagent à la fois un lieu (étiquette) et une catégorie avec l'article, puis un lieu seul, puis la catégorie seule, puis parmi les plus récents ; sans l'article affiché ni les articles épinglés
+- Les galeries (Meow Gallery ou galerie WordPress) restent dans le contenu des articles : elles sont retirées du texte au rendu et affichées par le nouveau bloc « Galerie de l'article » ; un article sans galerie s'affiche sur une seule colonne
+- Les encadrés de la barre latérale passent sous l'article : « À ne pas manquer » à gauche, « Séries » et « Lieux » l'un sous l'autre à droite, les deux colonnes finissant à la même hauteur
 
 ### 1.4.3
 - Galeries Meow : elles occupent toute la largeur de la colonne de l'article au lieu de la largeur de lecture du texte ; en mise en page « justified », les photos ne s'affichent plus une par ligne
