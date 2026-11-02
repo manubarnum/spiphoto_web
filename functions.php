@@ -344,8 +344,9 @@ add_action('init', function (): void {
 });
 
 // « À lire aussi » (requête n° 20 du modèle d'article) : d'abord les articles
-// qui partagent un lieu (étiquette) avec l'article affiché, puis ceux de la
-// même catégorie, puis les plus récents pour compléter. Dans chaque groupe, du
+// qui partagent à la fois un lieu (étiquette) et une catégorie avec l'article
+// affiché, puis ceux qui partagent un lieu, puis ceux de la même catégorie,
+// puis les plus récents pour compléter. Dans chaque groupe, du
 // plus récent au plus ancien. Sont exclus l'article affiché et les articles
 // épinglés, déjà présents dans « À ne pas manquer ».
 function related_post_ids(int $post_id, int $count): array {
@@ -371,10 +372,13 @@ function related_post_ids(int $post_id, int $count): array {
     };
 
     $tags = wp_get_post_terms($post_id, 'post_tag', ['fields' => 'ids']);
-    if (!is_wp_error($tags) && $tags) $add(['tag__in' => $tags]);
-
+    $tags = is_wp_error($tags) ? [] : $tags;
     $cats = wp_get_post_terms($post_id, 'category', ['fields' => 'ids']);
-    if (!is_wp_error($cats) && $cats) $add(['category__in' => $cats]);
+    $cats = is_wp_error($cats) ? [] : $cats;
+
+    if ($tags && $cats) $add(['tag__in' => $tags, 'category__in' => $cats]);
+    if ($tags) $add(['tag__in' => $tags]);
+    if ($cats) $add(['category__in' => $cats]);
 
     $add([]);
     return $ids;
