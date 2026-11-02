@@ -1,0 +1,13 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "spiphoto/galerie-article",
+	"title": "Galerie de l'article",
+	"category": "theme",
+	"icon": "format-gallery",
+	"description": "Affiche les galeries de l'article. À associer à un bloc Contenu portant la classe sp-galerie-a-part, qui les retire du texte.",
+	"textdomain": "spiphoto-fse",
+	"usesContext": ["postId", "postType"],
+	"supports": { "html": false, "inserter": true, "reusable": false },
+	"editorScript": "file:./editor.js"
+}

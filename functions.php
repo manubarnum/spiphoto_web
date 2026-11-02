@@ -255,6 +255,99 @@ function resolve_navigation_urls($blocks) {
 add_filter('block_core_navigation_render_inner_blocks', __NAMESPACE__ . '\\resolve_navigation_urls');
 
 // ─────────────────────────────────────────────
+// 3 bis. GALERIE DE L'ARTICLE DANS SA PROPRE COLONNE
+// ─────────────────────────────────────────────
+// Le modèle d'article affiche le texte et la galerie côte à côte. Les
+// galeries restent dans le contenu de l'article (rien n'est modifié en base) :
+// le bloc « Contenu » qui porte la classe sp-galerie-a-part les retire au
+// rendu, et le bloc spiphoto/galerie-article les affiche dans l'autre colonne.
+// Un article sans bloc galerie s'affiche sur une seule colonne.
+
+const GALLERY_BLOCKS = ['meow-gallery/gallery', 'core/gallery'];
+const GALLERY_SPLIT_CLASS = 'sp-galerie-a-part';
+
+/** Blocs galerie d'un article, y compris ceux placés dans un groupe. */
+function post_gallery_blocks(int $post_id): array {
+    static $cache = [];
+    if (isset($cache[$post_id])) return $cache[$post_id];
+
+    $found = [];
+    $walk  = function (array $blocks) use (&$walk, &$found): void {
+        foreach ($blocks as $block) {
+            if (in_array($block['blockName'] ?? '', GALLERY_BLOCKS, true)) {
+                $found[] = $block;
+            } elseif (!empty($block['innerBlocks'])) {
+                $walk($block['innerBlocks']);
+            }
+        }
+    };
+    $content = (string) get_post_field('post_content', $post_id);
+    if (has_blocks($content)) $walk(parse_blocks($content));
+
+    return $cache[$post_id] = $found;
+}
+
+/** Profondeur des blocs « Contenu » dont on retire les galeries. */
+function gallery_split_depth(int $delta = 0): int {
+    static $depth = 0;
+    $depth = max(0, $depth + $delta);
+    return $depth;
+}
+
+add_filter('render_block_data', function (array $block): array {
+    if (($block['blockName'] ?? '') === 'core/post-content') {
+        $classes = ' ' . ($block['attrs']['className'] ?? '') . ' ';
+        if (str_contains($classes, ' ' . GALLERY_SPLIT_CLASS . ' ')) {
+            gallery_split_depth(1);
+            $block['attrs']['__spGallerySplit'] = true;
+        }
+    }
+    return $block;
+});
+
+add_filter('render_block_core/post-content', function (string $html, array $block): string {
+    if (!empty($block['attrs']['__spGallerySplit'])) gallery_split_depth(-1);
+    return $html;
+}, 10, 2);
+
+add_filter('render_block', function (string $html, array $block): string {
+    if (gallery_split_depth() > 0 && in_array($block['blockName'] ?? '', GALLERY_BLOCKS, true)) {
+        return '';
+    }
+    return $html;
+}, 10, 2);
+
+function render_article_gallery(array $attributes, string $content, $block): string {
+    $post_id = (int) ($block->context['postId'] ?? get_the_ID());
+    if (!$post_id) return '';
+
+    $html = '';
+    foreach (post_gallery_blocks($post_id) as $gallery) {
+        $html .= render_block($gallery);
+    }
+    if (trim($html) === '') return '';
+
+    return sprintf(
+        '<div %s>%s</div>',
+        get_block_wrapper_attributes(['class' => 'sp-article-galerie']),
+        $html
+    );
+}
+
+add_action('init', function (): void {
+    register_block_type(get_template_directory() . '/blocks/galerie-article', [
+        'render_callback' => __NAMESPACE__ . '\\render_article_gallery',
+    ]);
+});
+
+add_filter('body_class', function (array $classes): array {
+    if (is_singular('post') && !post_gallery_blocks((int) get_queried_object_id())) {
+        $classes[] = 'sp-article-sans-galerie';
+    }
+    return $classes;
+});
+
+// ─────────────────────────────────────────────
 // 4. READING TIME
 // ─────────────────────────────────────────────
 function reading_time(int $post_id = 0): string {
