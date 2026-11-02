@@ -325,6 +325,9 @@ function render_article_gallery(array $attributes, string $content, $block): str
     foreach (post_gallery_blocks($post_id) as $gallery) {
         $html .= render_block($gallery);
     }
+    // Le bloc Meow Gallery enregistre un shortcode [gallery ids="…"] que
+    // WordPress ne traite d'ordinaire qu'avec le contenu de l'article.
+    $html = do_shortcode($html);
     if (trim($html) === '') return '';
 
     return sprintf(
