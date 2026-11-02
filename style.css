@@ -513,7 +513,7 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 .section-header { position: relative; border-bottom: 2px solid var(--sp-border-lt); padding-bottom: 0.75rem; margin-bottom: 1.5rem; }
 .section-header::after {
   content: ''; position: absolute; bottom: -2px; left: 0;
-  width: 48px; height: 2px; background: var(--sp-accent-line); border-radius: 1px;
+  width: 80px; height: 2px; background: var(--sp-accent-line); border-radius: 1px;
 }
 /* L'olive de base (--sp-primary) se confondait avec la bordure --sp-border-lt
    en mode nuit, et avec la bordure olive du mode clair : le filet etait
@@ -714,7 +714,7 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
 .sp-page-header { position: relative; border-bottom: 1px solid var(--sp-border); }
 .sp-page-header::after {
   content: ''; position: absolute; bottom: -1px; left: 0;
-  width: 48px; height: 2px; background: var(--sp-accent-line);
+  width: 80px; height: 2px; background: var(--sp-accent-line);
 }
 
 /* Titre d'une .section-header : meme rendu que sur l'accueil, sans attributs
