@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.14
+Version:           1.4.15
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -515,6 +515,8 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
   content: ''; position: absolute; bottom: -2px; left: 0;
   width: 48px; height: 2px; background: var(--sp-primary); border-radius: 1px;
 }
+/* Le filet se trace de gauche a droite (voir « Animations d'apparition »). */
+.section-header::after, .sp-page-header::after { transform-origin: left center; }
 
 /* ═══════════════════════════════════════════════
    WIDGETS SIDEBAR
@@ -639,9 +641,14 @@ pre  { padding: 1rem 1.25rem; overflow-x: auto; }
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.8125rem;
   font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
   border-radius: var(--sp-radius-sm) !important;
-  transition: background var(--sp-transition), transform var(--sp-transition-fast), box-shadow var(--sp-transition) !important;
+  transition: background var(--sp-transition), color var(--sp-transition), transform 0.2s cubic-bezier(.25,.46,.45,.94), box-shadow var(--sp-transition) !important;
 }
 .wp-block-button .wp-block-button__link:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(75,90,34,.4); }
+/* Retour tactile : le bouton s'enfonce legerement au clic, et revient vite. */
+.wp-block-button .wp-block-button__link:active, .wp-element-button:active {
+  transform: translateY(1px) scale(0.98); box-shadow: none !important;
+  transition-duration: 0.08s !important;
+}
 .is-style-outline .wp-block-button__link { background: transparent; border: 1.5px solid var(--sp-primary); color: var(--sp-text); }
 .is-style-outline .wp-block-button__link:hover { background: rgba(75,90,34,.2); }
 .is-style-ghost .wp-block-button__link { background: transparent; border: 1.5px solid var(--sp-secondary); color: var(--sp-secondary); }
@@ -837,9 +844,11 @@ hr { border-color: var(--sp-border); }
 }
 /* ═══════════════════════════════════════════════
    ANIMATIONS D'APPARITION
-   Les classes ci-dessous ne sont posees que par main.js, et seulement si le
-   visiteur n'a pas demande a reduire les animations. Sans JavaScript, rien
-   n'est jamais masque.
+   Les classes sp-reveal, sp-img-fade et sp-line-wait ne sont posees que par
+   main.js, et seulement si le visiteur n'a pas demande a reduire les
+   animations. Les animations jouees au chargement (filet, entree de
+   l'article) sont en CSS seul et finissent toujours visibles. Sans
+   JavaScript, rien n'est jamais masque.
 ═══════════════════════════════════════════════ */
 /* Cartes d'articles : fondu et montee a l'entree dans l'ecran. On anime
    l'element de liste qui porte la carte, pas la carte elle-meme, pour ne pas
@@ -863,9 +872,42 @@ img.sp-img-fade.is-shown { opacity: 1; transition: opacity 0.6s ease; }
   transition: opacity 0.6s ease, transform 0.55s cubic-bezier(.25,.46,.45,.94);
 }
 
+/* Filet de section : il se trace de gauche a droite. Les en-tetes visibles au
+   chargement se tracent en CSS seul, des le premier affichage (pas de
+   clignotement, meme sans JavaScript). Ceux plus bas dans la page attendent
+   d'entrer dans l'ecran : main.js leur pose sp-line-wait puis is-drawn. */
+@keyframes sp-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.section-header::after, .sp-page-header::after {
+  animation: sp-draw 0.6s cubic-bezier(.25,.46,.45,.94) 0.15s both;
+}
+.sp-line-wait::after { animation: none; transform: scaleX(0); }
+.sp-line-wait.is-drawn::after {
+  transform: scaleX(1);
+  transition: transform 0.6s cubic-bezier(.25,.46,.45,.94) 0.1s;
+}
+
+/* Entree de l'article : une seule fois, au chargement, en CSS seul. Ordre de
+   lecture : categorie et titre, puis le bloc auteur-date, puis la photo a la
+   une, qui apparait en fondu avec un tres leger dezoom. Les animations se
+   terminent toujours sur l'etat visible (fill-mode both). */
+@keyframes sp-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes sp-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sp-dezoom { from { transform: scale(1.04); } to { transform: none; } }
+.sp-article-header > .wp-block-post-terms,
+.sp-article-header > .wp-block-post-title { animation: sp-enter 0.55s cubic-bezier(.25,.46,.45,.94) both; }
+.sp-article-header > .wp-block-group { animation: sp-enter 0.55s cubic-bezier(.25,.46,.45,.94) 0.1s both; }
+.sp-article-header > .wp-block-post-featured-image {
+  overflow: hidden; border-radius: var(--sp-radius);
+  animation: sp-fade 0.6s ease 0.2s both;
+}
+.sp-article-header > .wp-block-post-featured-image img { animation: sp-dezoom 0.9s cubic-bezier(.25,.46,.45,.94) 0.2s both; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   .sp-reveal, img.sp-img-fade { opacity: 1 !important; transform: none !important; }
+  /* Les delais d'animation masqueraient l'element un instant : on coupe tout. */
+  .section-header::after, .sp-page-header::after,
+  .sp-article-header > *, .sp-article-header > .wp-block-post-featured-image img { animation: none !important; transform: none !important; opacity: 1 !important; }
 }
 @media print { body { background: #fff !important; color: #000 !important; } .site-header, .site-sidebar, .site-footer, .back-to-top, .reading-progress-bar { display: none !important; } a { color: #000; text-decoration: underline; } }
 

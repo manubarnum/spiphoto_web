@@ -112,7 +112,11 @@
   on(document, 'click', e => {
     const anchor = e.target.closest('a[href^="#"]');
     if (!anchor) return;
-    const target = qs(anchor.hash);
+    // getElementById plutôt que querySelector : « # » seul ou un identifiant
+    // commençant par un chiffre faisaient échouer le sélecteur.
+    const id = decodeURIComponent(anchor.hash.slice(1));
+    if (!id) return;
+    const target = document.getElementById(id);
     if (!target) return;
     e.preventDefault();
     const headerH = header?.offsetHeight || 0;
@@ -201,6 +205,7 @@
 
     qsa(photoSelector).forEach(img => {
       if (img.complete) return; // déjà chargée (cache, ou au-dessus de la ligne de flottaison)
+      if (img.closest('.sp-article-header')) return; // a sa propre animation d'entrée (CSS)
       const show = () => img.classList.add('is-shown');
       img.addEventListener('load', show, { once: true });
       img.addEventListener('error', show, { once: true });
@@ -208,6 +213,26 @@
       // Le chargement a pu se terminer entre le test et l'écoute.
       if (img.complete) show();
     });
+
+    // 3. Filets de section : ceux qui sont visibles au chargement se tracent
+    //    en CSS ; les autres attendent d'entrer dans l'écran.
+    const lines = qsa('.section-header, .sp-page-header')
+      .filter(el => el.getBoundingClientRect().top > viewH);
+
+    if (lines.length) {
+      const lineObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-drawn');
+          obs.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px' });
+
+      lines.forEach(el => {
+        el.classList.add('sp-line-wait');
+        lineObs.observe(el);
+      });
+    }
   }
 
   // ─────────────────────────────────────────
