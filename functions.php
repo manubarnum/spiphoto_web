@@ -343,6 +343,14 @@ add_action('init', function (): void {
     ]);
 });
 
+// « À lire aussi » (requête n° 20 du modèle d'article) : sans l'article affiché.
+add_filter('query_loop_block_query_vars', function (array $query, $block): array {
+    if ((int) ($block->context['queryId'] ?? 0) === 20 && is_singular('post')) {
+        $query['post__not_in'] = array_merge($query['post__not_in'] ?? [], [(int) get_queried_object_id()]);
+    }
+    return $query;
+}, 10, 2);
+
 add_filter('body_class', function (array $classes): array {
     if (is_singular('post') && !post_gallery_blocks((int) get_queried_object_id())) {
         $classes[] = 'sp-article-sans-galerie';

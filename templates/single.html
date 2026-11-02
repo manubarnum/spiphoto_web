@@ -17,13 +17,11 @@
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:post-featured-image {"aspectRatio":"16/9","align":"wide","className":"sp-article-une","style":{"border":{"radius":"8px"},"spacing":{"margin":{"top":"0","bottom":"2.5rem"}}}} /-->
-
 	<!-- wp:columns {"align":"wide","className":"sp-article-colonnes","style":{"spacing":{"blockGap":{"left":"3rem"}}}} -->
 	<div class="wp-block-columns alignwide sp-article-colonnes">
 
-		<!-- wp:column {"width":"40%","className":"sp-article-texte"} -->
-		<div class="wp-block-column sp-article-texte" style="flex-basis:40%">
+		<!-- wp:column {"width":"30%","className":"sp-article-texte"} -->
+		<div class="wp-block-column sp-article-texte" style="flex-basis:30%">
 			<!-- wp:group {"tagName":"article","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"spacing":{"blockGap":"0"}}} -->
 			<article class="wp-block-group">
 
@@ -41,6 +39,8 @@
 						<!-- wp:post-date {"format":"j F Y","style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.8125rem"},"color":{"text":"var(--sp-text-muted)"}}} /-->
 					</div>
 					<!-- /wp:group -->
+
+					<!-- wp:post-featured-image {"aspectRatio":"4/3","style":{"border":{"radius":"8px"},"spacing":{"margin":{"top":"1rem","bottom":"0"}}}} /-->
 				</div>
 				<!-- /wp:group -->
 
@@ -60,8 +60,8 @@
 		</div>
 		<!-- /wp:column -->
 
-		<!-- wp:column {"width":"60%","className":"sp-article-galerie-col"} -->
-		<div class="wp-block-column sp-article-galerie-col" style="flex-basis:60%">
+		<!-- wp:column {"width":"70%","className":"sp-article-galerie-col"} -->
+		<div class="wp-block-column sp-article-galerie-col" style="flex-basis:70%">
 			<!-- wp:spiphoto/galerie-article /-->
 		</div>
 		<!-- /wp:column -->
@@ -84,7 +84,7 @@
 			<!-- wp:heading {"level":2,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.8125rem","fontWeight":"800","textTransform":"uppercase","letterSpacing":"0.12em"},"spacing":{"margin":{"bottom":"1.5rem"}}}} -->
 			<h2 class="wp-block-heading has-text-color">À lire aussi</h2>
 			<!-- /wp:heading -->
-			<!-- wp:query {"queryId":20,"query":{"perPage":3,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
+			<!-- wp:query {"queryId":20,"query":{"perPage":6,"postType":"post","order":"desc","orderBy":"date","inherit":false}} -->
 			<div class="wp-block-query">
 				<!-- wp:post-template {"layout":{"type":"grid","columnCount":3}} -->
 					<!-- wp:group {"className":"post-card","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"border":{"radius":"8px"},"spacing":{"blockGap":"0"}}} -->

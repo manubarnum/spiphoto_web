@@ -205,7 +205,7 @@
 
     qsa(photoSelector).forEach(img => {
       if (img.complete) return; // déjà chargée (cache, ou au-dessus de la ligne de flottaison)
-      if (img.closest('.sp-article-header, .sp-article-une')) return; // a sa propre animation d'entrée (CSS)
+      if (img.closest('.sp-article-header')) return; // a sa propre animation d'entrée (CSS)
       const show = () => img.classList.add('is-shown');
       img.addEventListener('load', show, { once: true });
       img.addEventListener('error', show, { once: true });

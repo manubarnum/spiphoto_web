@@ -586,8 +586,8 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 .entry-content > .mgl-root,
 .entry-content > :has(> .mgl-root) { max-width: none; }
 
-/* Article : photo a la une en tete, puis texte et galerie cote a cote
-   (templates/single.html). Les galeries sont retirees du texte au rendu et
+/* Article : texte (avec la photo a la une en tete) et galerie cote a cote,
+   30/70 (templates/single.html). Les galeries sont retirees du texte au rendu et
    affichees par le bloc spiphoto/galerie-article (voir functions.php). */
 .sp-article-colonnes { align-items: flex-start; }
 .sp-article-texte { min-width: 0; }
@@ -920,12 +920,10 @@ img.sp-img-fade.is-shown { opacity: 1; transition: opacity 0.6s ease; }
 .sp-article-header > .wp-block-post-terms,
 .sp-article-header > .wp-block-post-title { animation: sp-enter 0.55s cubic-bezier(.25,.46,.45,.94) both; }
 .sp-article-header > .wp-block-group { animation: sp-enter 0.55s cubic-bezier(.25,.46,.45,.94) 0.1s both; }
-.sp-article-une,
 .sp-article-header > .wp-block-post-featured-image {
   overflow: hidden; border-radius: var(--sp-radius);
   animation: sp-fade 0.6s ease 0.2s both;
 }
-.sp-article-une img,
 .sp-article-header > .wp-block-post-featured-image img { animation: sp-dezoom 0.9s cubic-bezier(.25,.46,.45,.94) 0.2s both; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -933,8 +931,7 @@ img.sp-img-fade.is-shown { opacity: 1; transition: opacity 0.6s ease; }
   .sp-reveal, img.sp-img-fade { opacity: 1 !important; transform: none !important; }
   /* Les delais d'animation masqueraient l'element un instant : on coupe tout. */
   .section-header::after, .sp-page-header::after,
-  .sp-article-header > *, .sp-article-header > .wp-block-post-featured-image img,
-  .sp-article-une, .sp-article-une img { animation: none !important; transform: none !important; opacity: 1 !important; }
+  .sp-article-header > *, .sp-article-header > .wp-block-post-featured-image img { animation: none !important; transform: none !important; opacity: 1 !important; }
 }
 @media print { body { background: #fff !important; color: #000 !important; } .site-header, .site-sidebar, .site-footer, .back-to-top, .reading-progress-bar { display: none !important; } a { color: #000; text-decoration: underline; } }
 
