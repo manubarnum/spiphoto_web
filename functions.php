@@ -129,27 +129,130 @@ add_action('after_setup_theme', __NAMESPACE__ . '\\enqueue_editor_assets');
 // classiques ne sont pas utilisables. Les 5 sidebars enregistrees etaient vides.
 
 // ─────────────────────────────────────────────
-// 3. NAVIGATION CONDITIONNELLE (membres connectes)
+// 3. MENUS DE NAVIGATION
 // ─────────────────────────────────────────────
-// Remplace le menu de la topbar par LoggedMenu pour un utilisateur connecte.
-// Remplace Conditional Menus, inoperant sur le bloc Navigation (il ne passe
-// pas par wp_nav_menu()). Les IDs sont ceux des objets wp_navigation.
-const NAV_MEMBRES = 64675; // LoggedMenu
+// Les menus (objets wp_navigation) sont designes par leur slug, jamais par
+// leur identifiant : les identifiants different d'une installation a l'autre
+// (site local, production). Le contenu de reference est livre avec le theme
+// dans menus/<slug>.html ; les menus absents sont crees a l'activation du
+// theme, ou a la premiere visite de l'administration apres une mise a jour.
+const NAV_MENUS = [
+    'menu-principal' => 'Menu Principal', // barre superieure, visiteurs
+    'loggedmenu'     => 'LoggedMenu',     // barre superieure, membres connectes
+    'categorie'      => 'Catégorie',      // barre des categories
+];
 
-function swap_navigation_for_members(array $block): array {
+function nav_menu_id(string $slug): int {
+    static $cache = [];
+    if (!empty($cache[$slug])) {
+        return $cache[$slug];
+    }
+    $ids = get_posts([
+        'post_type'      => 'wp_navigation',
+        'name'           => $slug,
+        'post_status'    => 'publish',
+        'posts_per_page' => 1,
+        'orderby'        => 'ID',
+        'order'          => 'ASC',
+        'fields'         => 'ids',
+        'no_found_rows'  => true,
+    ]);
+    // Seul un identifiant trouve est mis en cache : un menu cree pendant la
+    // requete reste ainsi visible.
+    return $cache[$slug] = $ids ? (int) $ids[0] : 0;
+}
+
+function ensure_nav_menus(): void {
+    foreach (NAV_MENUS as $slug => $title) {
+        if (nav_menu_id($slug)) {
+            continue;
+        }
+        $file = get_theme_file_path('menus/' . $slug . '.html');
+        if (!is_readable($file)) {
+            continue;
+        }
+        wp_insert_post([
+            'post_type'    => 'wp_navigation',
+            'post_name'    => $slug,
+            'post_title'   => $title,
+            'post_status'  => 'publish',
+            'post_content' => wp_slash(trim((string) file_get_contents($file))),
+        ]);
+    }
+}
+add_action('after_switch_theme', __NAMESPACE__ . '\\ensure_nav_menus');
+
+// Une mise a jour du theme par git ne declenche pas after_switch_theme :
+// verification une fois par version, a la premiere page d'administration.
+add_action('admin_init', function (): void {
+    $version = (string) wp_get_theme()->get('Version');
+    if (get_option('spiphoto_fse_menus_checked') === $version) {
+        return;
+    }
+    ensure_nav_menus();
+    update_option('spiphoto_fse_menus_checked', $version, false);
+});
+
+// Choix du menu a l'affichage, d'apres la classe du bloc Navigation :
+// topbar-navigation (visiteurs, ou LoggedMenu pour un utilisateur connecte ;
+// remplace Conditional Menus, inoperant sur le bloc Navigation) et
+// cats-navigation. Le « ref » ecrit dans parts/header.html ne sert plus que
+// dans l'editeur du site local.
+function select_navigation_menu(array $block): array {
     if ('core/navigation' !== ($block['blockName'] ?? '')) {
         return $block;
     }
     $class = $block['attrs']['className'] ?? '';
-    if (!str_contains($class, 'topbar-navigation')) {
-        return $block;
+    $slug  = null;
+    if (str_contains($class, 'topbar-navigation')) {
+        $slug = is_user_logged_in() ? 'loggedmenu' : 'menu-principal';
+    } elseif (str_contains($class, 'cats-navigation')) {
+        $slug = 'categorie';
     }
-    if (is_user_logged_in()) {
-        $block['attrs']['ref'] = NAV_MEMBRES;
+    if ($slug && ($id = nav_menu_id($slug))) {
+        $block['attrs']['ref'] = $id;
     }
     return $block;
 }
-add_filter('render_block_data', __NAMESPACE__ . '\\swap_navigation_for_members');
+add_filter('render_block_data', __NAMESPACE__ . '\\select_navigation_menu');
+
+// Adresse des liens calculee a l'affichage depuis l'identifiant de la page
+// ou de la categorie : le meme menu fonctionne sur le site local et en
+// production, et suit un changement d'adresse. A defaut (lien personnalise,
+// page non publiee), l'adresse enregistree, relative, est conservee.
+function navigation_item_url(array $attributes): string {
+    $id   = (int) ($attributes['id'] ?? 0);
+    $kind = $attributes['kind'] ?? '';
+    if (!$id) {
+        return '';
+    }
+    if ('post-type' === $kind) {
+        return 'publish' === get_post_status($id) ? (string) get_permalink($id) : '';
+    }
+    if ('taxonomy' === $kind) {
+        $type     = $attributes['type'] ?? 'category';
+        $taxonomy = 'tag' === $type ? 'post_tag' : $type;
+        $link     = get_term_link($id, $taxonomy);
+        return is_wp_error($link) ? '' : $link;
+    }
+    return '';
+}
+
+function resolve_navigation_urls($blocks) {
+    foreach ($blocks as $block) {
+        if (in_array($block->name, ['core/navigation-link', 'core/navigation-submenu'], true)) {
+            $url = navigation_item_url($block->attributes);
+            if ($url) {
+                $block->attributes['url'] = $url;
+            }
+        }
+        if (count($block->inner_blocks)) {
+            resolve_navigation_urls($block->inner_blocks);
+        }
+    }
+    return $blocks;
+}
+add_filter('block_core_navigation_render_inner_blocks', __NAMESPACE__ . '\\resolve_navigation_urls');
 
 // ─────────────────────────────────────────────
 // 4. READING TIME

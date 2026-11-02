@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.15** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.16** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -72,6 +72,7 @@ spiphoto_web/
 │   ├── blank.html       # Contenu seul, sans en-tête ni pied de page
 │   └── 404.html         # Page introuvable
 ├── patterns/            # Compositions (une par fichier, en-tête Title/Slug/Categories)
+├── menus/               # Menus de navigation livrés avec le thème (créés s'ils manquent)
 ├── parts/
 │   ├── header.html      # En-tête + bouton Jour/Nuit
 │   └── footer.html      # Pied de page
@@ -90,15 +91,17 @@ spiphoto_web/
 
 ### Menus
 
-Les menus sont des blocs Navigation qui pointent vers des menus existants de la base WordPress, par leur identifiant :
+Les menus sont des menus Navigation (objets `wp_navigation`) désignés **par leur slug**, jamais par leur identifiant, qui change d'une installation à l'autre. Le thème choisit le menu à l'affichage d'après la classe du bloc Navigation (`functions.php`, section 3) :
 
-| Emplacement | Fichier | Identifiant |
-|---|---|---|
-| Barre supérieure (visiteurs) | `parts/header.html` | 64676 |
-| Barre supérieure (membres connectés) | `functions.php`, constante `NAV_MEMBRES` | 64675 |
-| Barre des catégories | `parts/header.html` | 64677 |
+| Emplacement | Classe du bloc | Slug du menu | Fichier de référence |
+|---|---|---|---|
+| Barre supérieure (visiteurs) | `topbar-navigation` | `menu-principal` | `menus/menu-principal.html` |
+| Barre supérieure (membres connectés) | `topbar-navigation` | `loggedmenu` | `menus/loggedmenu.html` |
+| Barre des catégories | `cats-navigation` | `categorie` | `menus/categorie.html` |
 
-Sur une autre installation, ces identifiants n'existent pas : il faut réaffecter les menus dans l'éditeur, et mettre à jour `NAV_MEMBRES`.
+- **Création automatique** : à l'activation du thème, et à la première page d'administration après une mise à jour, le thème crée les menus absents à partir des fichiers `menus/*.html`. Un menu existant n'est jamais modifié : après une retouche dans l'éditeur, recopiez le menu dans son fichier pour que la version livrée avec le thème reste à jour.
+- **Liens portables** : chaque lien vers une page ou une catégorie porte son identifiant, et son adresse est recalculée à l'affichage sur le site courant (site local ou production). Les adresses enregistrées sont relatives (`/agenda/`) et servent de repli.
+- Le `ref` écrit dans `parts/header.html` ne sert qu'à l'éditeur du site local.
 
 ### Bon à savoir
 
