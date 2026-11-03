@@ -557,13 +557,19 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 /* ═══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════ */
-/* Colonne de droite collante. L'en-tete n'est pas collant (il est emballe
-   dans le bloc de la partie de modele, qui l'empeche de coller) : l'ancien
-   decalage de 110px + 1.5rem laissait un grand vide au-dessus du premier
-   encadre. main.js ajuste « top » : 24px du haut si la colonne tient dans
-   l'ecran, sinon elle defile jusqu'a montrer son dernier encadre, puis se
-   fige en bas. Sans JavaScript : 1.5rem du haut. */
-.site-sidebar { position: sticky; top: 1.5rem; align-self: start; }
+/* Colonne de droite (accueil, categories) : son premier encadre (« A ne pas
+   manquer » sur l'accueil) reste visible en haut de l'ecran pendant tout le
+   defilement ; les encadres suivants defilent et passent dessous. La
+   colonne s'etire sur toute la hauteur des articles pour que l'encadre
+   puisse la parcourir. L'en-tete n'est pas collant (la partie de modele
+   l'emballe dans un div) : l'encadre se fige a 1.5rem du haut, sous la
+   barre d'administration le cas echeant. */
+.site-sidebar { align-self: stretch; }
+.site-sidebar > aside { height: 100%; }
+.site-sidebar > aside > .sidebar-widget:first-child {
+  position: sticky; top: 1.5rem; z-index: 2;
+}
+.admin-bar .site-sidebar > aside > .sidebar-widget:first-child { top: calc(32px + 1.5rem); }
 @media (max-width: 900px) { .site-sidebar { position: static; display: none; } }
 
 /* Section HERO (.featured-hero*) retiree le 24/10/2026 : aucune de ces classes

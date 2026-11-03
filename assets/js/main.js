@@ -254,28 +254,6 @@
   }
 
   // ─────────────────────────────────────────
-  // Colonne de droite collante (accueil, categories)
-  // Si elle tient dans l'ecran : figee a 24px du haut (sous la barre
-  // d'administration le cas echeant). Si elle est plus haute : elle defile
-  // avec la page jusqu'a ce que son bas soit visible, puis se fige en bas.
-  // ─────────────────────────────────────────
-  const sidebar = qs('.site-sidebar');
-  if (sidebar) {
-    const gap = 24;
-    const placeSidebar = () => {
-      const adminBar = qs('#wpadminbar');
-      const admin = adminBar && getComputedStyle(adminBar).position === 'fixed' ? adminBar.offsetHeight : 0;
-      const fits = gap + admin;
-      const bottom = window.innerHeight - sidebar.offsetHeight - gap;
-      sidebar.style.top = Math.min(fits, bottom) + 'px';
-    };
-    placeSidebar();
-    window.addEventListener('resize', placeSidebar, { passive: true });
-    window.addEventListener('load', placeSidebar);
-    if ('ResizeObserver' in window) new ResizeObserver(placeSidebar).observe(sidebar);
-  }
-
-  // ─────────────────────────────────────────
   // Recherche : idees de mots-cles sous le champ
   // Le panneau est fourni par le PHP (functions.php), masque. Il s'ouvre
   // quand on clique dans le champ encore vide et se referme des qu'on tape,
