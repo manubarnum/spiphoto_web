@@ -557,7 +557,13 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 /* ═══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════ */
-.site-sidebar { position: sticky; top: calc(var(--sp-header-h) + 1.5rem); align-self: start; }
+/* Colonne de droite collante. L'en-tete n'est pas collant (il est emballe
+   dans le bloc de la partie de modele, qui l'empeche de coller) : l'ancien
+   decalage de 110px + 1.5rem laissait un grand vide au-dessus du premier
+   encadre. main.js ajuste « top » : 24px du haut si la colonne tient dans
+   l'ecran, sinon elle defile jusqu'a montrer son dernier encadre, puis se
+   fige en bas. Sans JavaScript : 1.5rem du haut. */
+.site-sidebar { position: sticky; top: 1.5rem; align-self: start; }
 @media (max-width: 900px) { .site-sidebar { position: static; display: none; } }
 
 /* Section HERO (.featured-hero*) retiree le 24/10/2026 : aucune de ces classes
