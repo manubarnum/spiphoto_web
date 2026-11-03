@@ -84,6 +84,22 @@
       applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
     });
     document.body.appendChild(btn);
+
+    /* Sous 900px, le bouton flottant chevauchait la loupe de recherche : il
+       est alors range dans la ligne du logo, juste avant la loupe. */
+    var loupe = document.querySelector('.sp-search-mobile');
+    var small = window.matchMedia('(max-width: 900px)');
+    function placeToggle() {
+      if (small.matches && loupe) {
+        loupe.parentNode.insertBefore(btn, loupe);
+        btn.classList.add('theme-toggle--inline');
+      } else if (btn.parentNode !== document.body) {
+        document.body.appendChild(btn);
+        btn.classList.remove('theme-toggle--inline');
+      }
+    }
+    placeToggle();
+    if (small.addEventListener) small.addEventListener('change', placeToggle);
   }
 
   /* ── DOMContentLoaded ── */

@@ -263,6 +263,7 @@ html[data-theme="light"] .sp-search-suggest { box-shadow: 0 8px 24px rgba(0,0,0,
   /* Champ deplie : pose a gauche de la loupe, par-dessus le titre du site. */
   .sp-search-mobile:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
     position: absolute; right: calc(100% + 0.5rem); top: 50%; transform: translateY(-50%);
+    z-index: 2;
     width: min(260px, calc(100vw - 6rem)) !important;
     padding: 0.5rem 0.75rem !important;
     background: var(--sp-surface-top);
@@ -1116,6 +1117,16 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 html[data-theme="light"] .theme-toggle .toggle-label-dark  { display: none; }
 html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 @media (max-width: 900px) { .theme-toggle .toggle-label-dark, .theme-toggle .toggle-label-light { display: none !important; } }
+/* Sous 900px, le bouton est range par le script de l'en-tete dans la ligne
+   du logo, juste avant la loupe de recherche, et prend sa forme ronde. */
+.theme-toggle.theme-toggle--inline {
+  position: static;
+  flex-shrink: 0;
+  width: 40px; height: 40px; padding: 0;
+  margin: 0 0.5rem 0 auto;
+  border-radius: 50%;
+}
+.theme-toggle.theme-toggle--inline svg { width: 18px; height: 18px; }
 
 /* ═══════════════════════════════════════════════
    FIX FOND SUBMENU — override WP block CSS

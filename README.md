@@ -157,6 +157,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 - Recherche : le champ propose des exemples (« Randonnée, moto, Gerberoy… ») et, au clic, une liste d'idées de recherche cliquables ; la liste est fixée dans `functions.php` (`SEARCH_IDEAS`)
 - Page de résultats : « Autres idées » sous le titre, et « Essayez plutôt » quand rien n'est trouvé (nouveau bloc « Idées de recherche »)
 - Téléphone et tablette : une loupe à droite du logo, qui déplie le champ de recherche (la barre supérieure, qui le contenait, est masquée sous 900 px)
+- Téléphone et tablette : le bouton Jour/Nuit, qui flottait et chevauchait la loupe, est rangé dans la ligne du logo, juste avant elle, avec la même forme ronde
 
 ### 1.4.19
 - Recherche : 9 résultats par page au lieu de 8, soit trois rangées complètes sur la grille de trois colonnes ; les archives gardent 8 articles par page (quatre rangées de deux)
