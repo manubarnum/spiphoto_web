@@ -156,6 +156,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ### 1.4.20
 - Corps des pages : marge latérale de 16 à 32 px, comme l'en-tête et le pied de page ; sous 1 200 px de large, articles et colonne de droite ne touchent plus les bords de la fenêtre
 - Pied de page : bloc « Partenaires » aligné sur le bord droit (à gauche sous 900 px, colonnes empilées)
+- Article : la colonne du texte défile au rythme de la galerie, souvent bien plus longue ; les deux colonnes finissent ensemble en bas (au-dessus de 1 024 px, quand elles sont côte à côte)
 - Colonne de droite (accueil, catégories) : défilement synchronisé avec les articles ; les deux colonnes partent ensemble en haut et finissent ensemble en bas, la colonne de droite restant visible entre les deux (plus de vide de 134 px au-dessus d'elle)
 - Grille commune : en-tête, corps et pied de page alignés sur 1 200 px de contenu, avec la même marge latérale (variables `--sp-gutter` et `--sp-frame`) ; l'en-tête et le pied de page n'ont plus 32 px de retrait par rapport au corps sur grand écran
 - Pied de page resserré : plus d'espace automatique de 32 px entre ses blocs, ni entre le titre, l'accroche, le texte et les logos, ni entre le copyright et la licence ; marges du bloc principal de 40 à 28 px ; la place du bouton « retour en haut » est réservée à droite de la licence au lieu de 74 px de vide en bas

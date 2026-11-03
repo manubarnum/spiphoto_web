@@ -748,7 +748,7 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
    30/70 (templates/single.html). Les galeries sont retirees du texte au rendu et
    affichees par le bloc spiphoto/galerie-article (voir functions.php). */
 .sp-article-colonnes { align-items: flex-start; }
-.sp-article-texte { min-width: 0; }
+.sp-article-texte { min-width: 0; align-self: flex-start; } /* defilement synchronise avec la galerie : main.js */
 .sp-article-texte .entry-content > * { max-width: none; }
 .sp-article-galerie-col { min-width: 0; }
 .sp-article-galerie > * + * { margin-top: 2rem; }
