@@ -154,6 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.20
+- En-tête : plus d'espace automatique de 2rem (32 px) entre la barre du haut, la ligne du titre et de la pellicule, et la barre des catégories (espacement global du thème appliqué au groupe de l'en-tête) ; chaque bande garde ses propres marges
 - Recherche : le champ propose des exemples (« Randonnée, moto, Gerberoy… ») et, au clic, une liste d'idées de recherche cliquables ; la liste est fixée dans `functions.php` (`SEARCH_IDEAS`)
 - Page de résultats : « Autres idées » sous le titre, et « Essayez plutôt » quand rien n'est trouvé (nouveau bloc « Idées de recherche »)
 - Téléphone et tablette : une loupe à droite du logo, qui déplie le champ de recherche (la barre supérieure, qui le contenait, est masquée sous 900 px)
