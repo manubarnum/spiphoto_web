@@ -154,6 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.20
+- Corps des pages : marge latérale de 16 à 32 px, comme l'en-tête et le pied de page ; sous 1 200 px de large, articles et colonne de droite ne touchent plus les bords de la fenêtre
 - Pied de page resserré : plus d'espace automatique de 32 px entre ses blocs, ni entre le titre, l'accroche, le texte et les logos, ni entre le copyright et la licence ; marges du bloc principal de 40 à 28 px ; la place du bouton « retour en haut » est réservée à droite de la licence au lieu de 74 px de vide en bas
 - En-tête : plus d'espace automatique de 2rem (32 px) entre la barre du haut, la ligne du titre et de la pellicule, et la barre des catégories (espacement global du thème appliqué au groupe de l'en-tête) ; chaque bande garde ses propres marges
 - Recherche : le champ propose des exemples (« Randonnée, moto, Gerberoy… ») et, au clic, une liste d'idées de recherche cliquables ; la liste est fixée dans `functions.php` (`SEARCH_IDEAS`)

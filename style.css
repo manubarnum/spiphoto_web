@@ -531,6 +531,13 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   }
 }
 
+/* Corps des pages : meme marge laterale que l'en-tete et le pied de page.
+   Sans elle, sous 1200px de large, articles et colonne de droite touchaient
+   les bords de la fenetre. Au-dela de 1200px plus les marges, rien ne
+   change : le contenu reste centre sur 1200px. Le modele « vide » (blank,
+   disposition par defaut) n'est pas concerne. */
+#main-content.is-layout-constrained { padding-inline: clamp(1rem, 4vw, 2rem); }
+
 /* ═══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════ */
