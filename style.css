@@ -557,19 +557,19 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 /* ═══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════ */
-/* Colonne de droite (accueil, categories) : son premier encadre (« A ne pas
-   manquer » sur l'accueil) reste visible en haut de l'ecran pendant tout le
-   defilement ; les encadres suivants defilent et passent dessous. La
-   colonne s'etire sur toute la hauteur des articles pour que l'encadre
-   puisse la parcourir. L'en-tete n'est pas collant (la partie de modele
-   l'emballe dans un div) : l'encadre se fige a 1.5rem du haut, sous la
-   barre d'administration le cas echeant. */
-.site-sidebar { align-self: stretch; }
-.site-sidebar > aside { height: 100%; }
-.site-sidebar > aside > .sidebar-widget:first-child {
-  position: sticky; top: 1.5rem; z-index: 2;
+/* Colonne de droite (accueil, categories) : toute la colonne reste visible
+   pendant le defilement, figee a 1.5rem du haut (sous la barre
+   d'administration le cas echeant). L'en-tete n'est pas collant (la partie
+   de modele l'emballe dans un div) : l'ancien decalage de 110px + 1.5rem
+   laissait un grand vide au-dessus. Si la colonne devient plus haute que
+   l'ecran (beaucoup d'articles epingles, petit ecran), elle defile en elle-
+   meme plutot que de cacher ses derniers encadres. */
+.site-sidebar {
+  position: sticky; top: 1.5rem; align-self: start;
+  max-height: calc(100vh - 3rem); overflow-y: auto;
+  scrollbar-width: thin;
 }
-.admin-bar .site-sidebar > aside > .sidebar-widget:first-child { top: calc(32px + 1.5rem); }
+.admin-bar .site-sidebar { top: calc(32px + 1.5rem); max-height: calc(100vh - 32px - 3rem); }
 @media (max-width: 900px) { .site-sidebar { position: static; display: none; } }
 
 /* Section HERO (.featured-hero*) retiree le 24/10/2026 : aucune de ces classes
