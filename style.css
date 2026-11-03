@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.19
+Version:           1.4.20
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -18,6 +18,9 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
    CUSTOM PROPERTIES — Palette SPIPHOTO
 ═══════════════════════════════════════════════ */
 :root {
+  /* Marge laterale commune et largeur des bandes (contenu 1200px + marges). */
+  --sp-gutter:         clamp(1rem, 4vw, 2rem);
+  --sp-frame:          calc(1200px + 2 * var(--sp-gutter));
   /* Les couleurs viennent de theme.json. Les variables --sp-* n'en sont que
      des alias courts : une seule source de verite pour la palette. */
   --sp-primary:        var(--wp--preset--color--primary);
@@ -160,8 +163,8 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom: 1px solid var(--sp-border);
 }
 .header-topbar-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 clamp(1rem, 4vw, 2rem);
+  max-width: var(--sp-frame); margin: 0 auto;
+  padding: 0 var(--sp-gutter);
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; min-height: 36px;
 }
@@ -178,13 +181,13 @@ img, video { max-width: 100%; height: auto; display: block; }
   font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
   font-size: 0.75rem;
   padding: 0.3rem 0.65rem !important;
-  width: 160px;
+  width: 190px;
   transition: border-color var(--sp-transition-fast), width var(--sp-transition);
 }
 .topbar-search .wp-block-search__input:focus {
   outline: none !important;
   border-color: var(--sp-primary);
-  width: 220px;
+  width: 240px;
   box-shadow: none !important;
 }
 .topbar-search .wp-block-search__input::placeholder { color: var(--sp-text-disabled); }
@@ -198,6 +201,80 @@ img, video { max-width: 100%; height: auto; display: block; }
   transition: color var(--sp-transition-fast);
 }
 .topbar-search .wp-block-search__button:hover { color: var(--sp-text); }
+
+/* Idees de recherche : pastilles cliquables, sous le champ de l'en-tete
+   (panneau ouvert par main.js) et sur la page de resultats. */
+.sp-search-ideas__list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+}
+.sp-search-idea {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--sp-border-lt);
+  border-radius: 999px;
+  color: var(--sp-text-sec);
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.75rem; font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--sp-transition-fast), background var(--sp-transition-fast), border-color var(--sp-transition-fast);
+}
+.sp-search-idea:hover,
+.sp-search-idea:focus-visible {
+  color: var(--sp-on-brand);
+  background: var(--sp-primary);
+  border-color: var(--sp-primary);
+}
+.topbar-search, .sp-search-mobile { position: relative; }
+.sp-search-suggest {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 150;
+  width: min(320px, calc(100vw - 2rem));
+  padding: 0.75rem 0.85rem;
+  background: var(--sp-surface-top);
+  border: 1px solid var(--sp-border-lt);
+  border-top: 2px solid var(--sp-primary);
+  border-radius: 0 0 var(--sp-radius) var(--sp-radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,.45);
+}
+.sp-search-suggest[hidden] { display: none; }
+html[data-theme="light"] .sp-search-suggest { box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+.sp-search-suggest__label,
+.sp-search-ideas__label {
+  margin: 0 0 0.5rem;
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--sp-text-muted);
+}
+.sp-search-ideas { margin-top: 1rem; }
+
+/* Recherche sur telephone et tablette (la barre superieure y est masquee) :
+   une loupe a droite de la ligne du logo. Un premier appui deplie le champ
+   (comportement natif du bloc Recherche), un second lance la recherche. */
+.sp-search-mobile { display: none; }
+@media (max-width: 900px) {
+  .sp-search-mobile { display: block; flex-shrink: 0; }
+  .sp-search-mobile .wp-block-search__button {
+    background: none; border: 1px solid var(--sp-border-lt); border-radius: 50%;
+    width: 40px; height: 40px; padding: 0 !important; margin: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--sp-text-sec); cursor: pointer;
+  }
+  .sp-search-mobile .wp-block-search__button svg { width: 20px; height: 20px; fill: currentColor; }
+  .sp-search-mobile .wp-block-search__inside-wrapper { position: relative; border: 0; padding: 0; background: none; }
+  /* Champ deplie : pose a gauche de la loupe, par-dessus le titre du site. */
+  .sp-search-mobile:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
+    position: absolute; right: calc(100% + 0.5rem); top: 50%; transform: translateY(-50%);
+    z-index: 2;
+    width: min(260px, calc(100vw - 6rem)) !important;
+    padding: 0.5rem 0.75rem !important;
+    background: var(--sp-surface-top);
+    border: 1px solid var(--sp-primary); border-radius: var(--sp-radius-sm);
+    color: var(--sp-text);
+    font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.875rem;
+  }
+}
 
 /* Navigation topbar — mode nuit */
 .header-topbar .wp-block-navigation-item__content {
@@ -265,8 +342,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   border-bottom: 1px solid var(--sp-border);
 }
 .header-brand-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  max-width: var(--sp-frame); margin: 0 auto;
+  padding: 0.75rem var(--sp-gutter);
   display: flex; align-items: center; justify-content: space-between;
 }
 .header-brand { display: flex; align-items: center; gap: 0.75rem; }
@@ -286,8 +363,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   flex-wrap: nowrap !important;
   align-items: stretch !important;
   gap: 0 !important;
-  padding: 0 clamp(1rem, 4vw, 2rem) !important;
-  max-width: 1200px !important;
+  padding: 0 var(--sp-gutter) !important;
+  max-width: var(--sp-frame) !important;
   margin: 0 auto !important;
 }
 
@@ -410,7 +487,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   .header-cats-bar .cats-navigation .wp-block-navigation__container {
     align-items: flex-end !important;
     padding-top: 0.25rem !important;
-    padding-right: calc(clamp(1rem, 4vw, 2rem) + 3rem) !important;
+    padding-right: calc(var(--sp-gutter) + 3rem) !important;
   }
   .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
     position: relative;
@@ -457,10 +534,36 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   }
 }
 
+/* Corps des pages : meme marge laterale que l'en-tete et le pied de page.
+   Sans elle, sous 1200px de large, articles et colonne de droite touchaient
+   les bords de la fenetre. Au-dela de 1200px plus les marges, rien ne
+   change : le contenu reste centre sur 1200px. Le modele « vide » (blank,
+   disposition par defaut) n'est pas concerne. */
+#main-content.is-layout-constrained { padding-inline: var(--sp-gutter); }
+
+/* Grille commune : en-tete, corps et pied de page ont 1200px de contenu et la
+   meme marge laterale (--sp-gutter). Les bandes de l'en-tete et du pied de
+   page portent leur marge a l'interieur : leur largeur maximale est donc
+   1200px plus deux marges (--sp-frame), sinon elles etaient en retrait de
+   32px par rapport au corps sur grand ecran. Selecteurs a deux classes pour
+   passer devant la largeur posee par la disposition « contrainte » des
+   groupes. */
+.header-topbar > .header-topbar-inner,
+.header-brand-row > .header-brand-inner,
+.site-footer > .wp-block-columns,
+.site-footer > .wp-block-group { max-width: var(--sp-frame); }
+.header-cats-bar > .cats-navigation { max-width: none; }
+
 /* ═══════════════════════════════════════════════
    SIDEBAR
 ═══════════════════════════════════════════════ */
-.site-sidebar { position: sticky; top: calc(var(--sp-header-h) + 1.5rem); align-self: start; }
+/* Colonne de droite (accueil, categories) : defilement synchronise avec les
+   articles (main.js). Les deux colonnes partent ensemble en haut et leurs bas
+   arrivent ensemble a la fin ; entre les deux, la colonne de droite glisse
+   proportionnellement et reste visible. Sans JavaScript, elle defile avec la
+   page. (L'ancien collage a 110px + 1.5rem du haut supposait un en-tete
+   collant, qui ne l'est pas : grand vide au-dessus de la colonne.) */
+.site-sidebar { align-self: flex-start; }
 @media (max-width: 900px) { .site-sidebar { position: static; display: none; } }
 
 /* Section HERO (.featured-hero*) retiree le 24/10/2026 : aucune de ces classes
@@ -645,7 +748,7 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
    30/70 (templates/single.html). Les galeries sont retirees du texte au rendu et
    affichees par le bloc spiphoto/galerie-article (voir functions.php). */
 .sp-article-colonnes { align-items: flex-start; }
-.sp-article-texte { min-width: 0; }
+.sp-article-texte { min-width: 0; align-self: flex-start; } /* defilement synchronise avec la galerie : main.js */
 .sp-article-texte .entry-content > * { max-width: none; }
 .sp-article-galerie-col { min-width: 0; }
 .sp-article-galerie > * + * { margin-top: 2rem; }
@@ -867,9 +970,21 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 .site-footer .footer-partner-logo:has(a:focus-visible) { opacity: 1; }
 /* Mention de licence : phrase complete, sur sa propre ligne sous le copyright. */
 .site-footer .footer-license { flex: 0 0 100%; line-height: 1.6; }
-/* Marge basse pour que le bouton fixe de retour en haut (42px a 2rem du bas)
-   ne recouvre pas la fin de la mention de licence. */
-.site-footer { padding-bottom: calc(42px + 2rem); }
+/* Le bouton fixe de retour en haut (42px, a 2rem du bas et de la droite) ne
+   doit pas recouvrir la fin de la mention de licence : on lui reserve la
+   place a droite du texte plutot que 74px de vide sous le pied de page. */
+.site-footer { padding-bottom: 0.5rem; }
+.site-footer .footer-license { padding-right: calc(42px + 1rem); }
+/* Colonnes du pied de page : pas d'espacement automatique de 2rem entre le
+   titre, l'accroche, le texte, l'intitule « Partenaires » et les logos ;
+   seules les marges basses posees dans parts/footer.html comptent. */
+.site-footer .wp-block-column > * { margin-block-start: 0; }
+/* Bloc « Partenaires » cale sur le bord droit, comme la colonne de droite
+   du corps. Sous 900px, les colonnes s'empilent : il reste a gauche. */
+@media (min-width: 901px) {
+  .site-footer .footer-partners { text-align: right; }
+  .site-footer .footer-partners .wp-block-group.is-layout-flex { justify-content: flex-end; }
+}
 /* Liens du pied de page de la meme couleur que le texte : souligne pour
    reperer le lien au milieu de la phrase. */
 .site-footer .footer-license a { text-decoration: underline; text-underline-offset: 2px; }
@@ -1043,6 +1158,18 @@ html[data-theme="light"] .theme-toggle .icon-moon { display: block; }
 html[data-theme="light"] .theme-toggle .toggle-label-dark  { display: none; }
 html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 @media (max-width: 900px) { .theme-toggle .toggle-label-dark, .theme-toggle .toggle-label-light { display: none !important; } }
+/* Le script de l'en-tete range le bouton dans l'en-tete : dans la barre du
+   haut, apres le champ de recherche (--topbar), ou sous 900px dans la ligne
+   du logo, juste avant la loupe, en bouton rond (--inline). */
+.theme-toggle.theme-toggle--topbar { position: static; flex-shrink: 0; }
+.theme-toggle.theme-toggle--inline {
+  position: static;
+  flex-shrink: 0;
+  width: 40px; height: 40px; padding: 0;
+  margin: 0 0.5rem 0 auto;
+  border-radius: 50%;
+}
+.theme-toggle.theme-toggle--inline svg { width: 18px; height: 18px; }
 
 /* ═══════════════════════════════════════════════
    FIX FOND SUBMENU — override WP block CSS

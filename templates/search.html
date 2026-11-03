@@ -4,6 +4,7 @@
   <!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"className":"section-header","style":{"spacing":{"margin":{"bottom":"2rem"},"padding":{"bottom":"1.5rem"}}}} -->
   <div class="wp-block-group section-header">
     <!-- wp:query-title {"type":"search","style":{"typography":{"fontFamily":"var(--wp--preset--font-family--playfair)","fontWeight":"800","fontSize":"clamp(1.5rem,3vw,2rem)"},"color":{"text":"var(--sp-text)"}}} /-->
+    <!-- wp:spiphoto/idees-recherche {"label":"Autres idées :","when":"results"} /-->
   </div>
   <!-- /wp:group -->
   <!-- wp:query {"queryId":0,"query":{"perPage":9,"postType":"post","order":"desc","orderBy":"relevance","inherit":true}} -->
@@ -29,8 +30,9 @@
     <!-- /wp:query-pagination -->
     <!-- wp:query-no-results -->
       <!-- wp:paragraph {"style":{"spacing":{"padding":{"top":"2rem"}}}} -->
-      <p>Aucun résultat pour votre recherche. Essayez d'autres termes.</p>
+      <p>Aucun résultat pour votre recherche.</p>
       <!-- /wp:paragraph -->
+      <!-- wp:spiphoto/idees-recherche {"label":"Essayez plutôt :"} /-->
     <!-- /wp:query-no-results -->
   </div>
   <!-- /wp:query -->

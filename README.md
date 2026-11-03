@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.19** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.20** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,19 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.20
+- Corps des pages : marge latérale de 16 à 32 px, comme l'en-tête et le pied de page ; sous 1 200 px de large, articles et colonne de droite ne touchent plus les bords de la fenêtre
+- Pied de page : bloc « Partenaires » aligné sur le bord droit (à gauche sous 900 px, colonnes empilées)
+- Article : la colonne du texte défile au rythme de la galerie, souvent bien plus longue ; les deux colonnes finissent ensemble en bas (au-dessus de 1 024 px, quand elles sont côte à côte)
+- Colonne de droite (accueil, catégories) : défilement synchronisé avec les articles ; les deux colonnes partent ensemble en haut et finissent ensemble en bas, la colonne de droite restant visible entre les deux (plus de vide de 134 px au-dessus d'elle)
+- Grille commune : en-tête, corps et pied de page alignés sur 1 200 px de contenu, avec la même marge latérale (variables `--sp-gutter` et `--sp-frame`) ; l'en-tête et le pied de page n'ont plus 32 px de retrait par rapport au corps sur grand écran
+- Pied de page resserré : plus d'espace automatique de 32 px entre ses blocs, ni entre le titre, l'accroche, le texte et les logos, ni entre le copyright et la licence ; marges du bloc principal de 40 à 28 px ; la place du bouton « retour en haut » est réservée à droite de la licence au lieu de 74 px de vide en bas
+- En-tête : plus d'espace automatique de 2rem (32 px) entre la barre du haut, la ligne du titre et de la pellicule, et la barre des catégories (espacement global du thème appliqué au groupe de l'en-tête) ; chaque bande garde ses propres marges
+- Recherche : le champ propose des exemples (« Randonnée, moto, Gerberoy… ») et, au clic, une liste d'idées de recherche cliquables ; la liste est fixée dans `functions.php` (`SEARCH_IDEAS`)
+- Page de résultats : « Autres idées » sous le titre, et « Essayez plutôt » quand rien n'est trouvé (nouveau bloc « Idées de recherche »)
+- Téléphone et tablette : une loupe à droite du logo, qui déplie le champ de recherche (la barre supérieure, qui le contenait, est masquée sous 900 px)
+- Bouton Jour/Nuit : il flottait à une distance fixe du bord droit et chevauchait la loupe de recherche tant que la fenêtre ne laissait pas de marge à droite du site (en dessous d'environ 1 350 px). Il est désormais rangé dans l'en-tête : après le champ de recherche de la barre du haut, ou sous 900 px dans la ligne du logo, juste avant la loupe, en bouton rond
 
 ### 1.4.19
 - Recherche : 9 résultats par page au lieu de 8, soit trois rangées complètes sur la grille de trois colonnes ; les archives gardent 8 articles par page (quatre rangées de deux)

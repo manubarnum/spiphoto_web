@@ -1,4 +1,4 @@
-<!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"header","className":"site-header","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"default"}} -->
 <header class="wp-block-group site-header">
 
   <!-- wp:group {"className":"header-topbar","layout":{"type":"constrained","wideSize":"1200px"}} -->
@@ -10,7 +10,7 @@
 
       <!-- wp:group {"className":"topbar-right","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"},"style":{"spacing":{"blockGap":"0.75rem"}}} -->
       <div class="wp-block-group topbar-right">
-        <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Rechercher…","buttonText":"","buttonUseIcon":true,"className":"topbar-search","style":{"border":{"radius":"4px"}}} /-->
+        <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Randonnée, moto, Gerberoy…","buttonText":"","buttonUseIcon":true,"className":"topbar-search","style":{"border":{"radius":"4px"}}} /-->
       </div>
       <!-- /wp:group -->
 
@@ -37,6 +37,7 @@
       <!-- wp:shortcode -->
 [sites_adherents]
       <!-- /wp:shortcode -->
+      <!-- wp:search {"label":"Rechercher","showLabel":false,"placeholder":"Randonnée, moto, Gerberoy…","buttonText":"Rechercher","buttonPosition":"button-only","buttonUseIcon":true,"isSearchFieldHidden":true,"className":"sp-search-mobile"} /-->
     </div>
     <!-- /wp:group -->
   </div>
@@ -83,6 +84,29 @@
       applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
     });
     document.body.appendChild(btn);
+
+    /* Le bouton flottant chevauchait la loupe de recherche tant que la
+       fenetre ne laissait pas de marge a droite du site. Il est donc range
+       dans l'en-tete : apres le champ de recherche de la barre du haut, ou,
+       sous 900px (barre du haut masquee), juste avant la loupe de la ligne
+       du logo. Sans l'un ni l'autre, il reste flottant. */
+    var loupe = document.querySelector('.sp-search-mobile');
+    var topbar = document.querySelector('.topbar-right');
+    var small = window.matchMedia('(max-width: 900px)');
+    function placeToggle() {
+      btn.classList.remove('theme-toggle--inline', 'theme-toggle--topbar');
+      if (small.matches && loupe) {
+        loupe.parentNode.insertBefore(btn, loupe);
+        btn.classList.add('theme-toggle--inline');
+      } else if (!small.matches && topbar) {
+        topbar.appendChild(btn);
+        btn.classList.add('theme-toggle--topbar');
+      } else if (btn.parentNode !== document.body) {
+        document.body.appendChild(btn);
+      }
+    }
+    placeToggle();
+    if (small.addEventListener) small.addEventListener('change', placeToggle);
   }
 
   /* ── DOMContentLoaded ── */

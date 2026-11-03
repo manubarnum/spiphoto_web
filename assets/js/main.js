@@ -253,4 +253,77 @@
     headings.forEach(h => h && tocObs.observe(h));
   }
 
+  // ─────────────────────────────────────────
+  // Colonne courte synchronisee avec la colonne longue
+  // - accueil et categories : la colonne de droite (encadres) avec les articles ;
+  // - article : la colonne du texte avec la galerie, souvent bien plus longue.
+  // Decalage proportionnel a l'avancement dans la zone des colonnes : 0 quand
+  // le haut des colonnes atteint le haut de l'ecran, (hauteur de la rangee -
+  // hauteur de la colonne courte) quand leur bas atteint le bas de l'ecran.
+  // Les bas coincident donc en fin de defilement, et la colonne courte reste
+  // visible pendant tout le trajet. Rien ne bouge quand les colonnes sont
+  // empilees (petit ecran), masquees, ou quand la colonne n'est pas la plus
+  // courte.
+  // ─────────────────────────────────────────
+  const syncPairs = qsa('.site-sidebar, .sp-article-texte')
+    .map(col => ({ col, row: col.closest('.wp-block-columns') }))
+    .filter(pair => pair.row);
+  if (syncPairs.length) {
+    let ticking = false;
+    const syncColumns = () => {
+      ticking = false;
+      const adminBar = qs('#wpadminbar');
+      const admin = adminBar && getComputedStyle(adminBar).position === 'fixed' ? adminBar.offsetHeight : 0;
+      const view = window.innerHeight - admin;
+      syncPairs.forEach(({ col, row }) => {
+        const stacked = getComputedStyle(row).flexDirection.startsWith('column');
+        const travel  = row.offsetHeight - col.offsetHeight; // marge de deplacement
+        const range   = row.offsetHeight - view;             // defilement disponible
+        if (stacked || !col.offsetHeight || travel <= 0 || range <= 0) {
+          col.style.transform = '';
+          return;
+        }
+        const rowTop = row.getBoundingClientRect().top + window.scrollY - admin;
+        const p = Math.min(1, Math.max(0, (window.scrollY - rowTop) / range));
+        col.style.transform = 'translateY(' + Math.round(p * travel) + 'px)';
+      });
+    };
+    const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(syncColumns); } };
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+    window.addEventListener('load', request);
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(request);
+      syncPairs.forEach(({ col, row }) => { ro.observe(col); ro.observe(row); });
+    }
+    request();
+  }
+
+  // ─────────────────────────────────────────
+  // Recherche : idees de mots-cles sous le champ
+  // Le panneau est fourni par le PHP (functions.php), masque. Il s'ouvre
+  // quand on clique dans le champ encore vide et se referme des qu'on tape,
+  // qu'on quitte le champ ou qu'on appuie sur Echap.
+  // ─────────────────────────────────────────
+  qsa('.sp-search-suggest').forEach(panel => {
+    const form  = panel.closest('form');
+    const input = form && qs('.wp-block-search__input', form);
+    if (!input) return;
+    input.setAttribute('aria-controls', panel.id);
+    input.setAttribute('aria-expanded', 'false');
+    const show = visible => {
+      panel.hidden = !visible;
+      input.setAttribute('aria-expanded', String(visible));
+    };
+    on(input, 'focus', () => show(!input.value.trim()));
+    on(input, 'input', () => show(!input.value.trim()));
+    // Garde le focus dans le champ pendant le clic sur une idee : sinon le
+    // panneau se refermerait avant que le lien ne soit suivi (Safari).
+    on(panel, 'mousedown', e => e.preventDefault());
+    on(form, 'focusout', e => { if (!form.contains(e.relatedTarget)) show(false); });
+    on(form, 'keydown', e => {
+      if (e.key === 'Escape' && !panel.hidden) { show(false); input.focus(); }
+    });
+  });
+
 })();

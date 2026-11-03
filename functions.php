@@ -399,6 +399,80 @@ add_filter('query_loop_block_query_vars', function (array $query, $block): array
     return $query;
 }, 10, 2);
 
+// Recherche : idées de mots-clés. Une liste fixe, choisie pour donner de
+// vrais résultats sur le site (vérifié le 3 novembre 2026). Affichée sous le
+// champ de recherche quand on clique dedans, et sur la page de résultats
+// (bloc spiphoto/idees-recherche). Pour la changer : modifier la liste
+// ci-dessous, ou le filtre spiphoto_fse_search_ideas.
+const SEARCH_IDEAS = [
+    'Randonnée', 'Moto', 'Concert', 'Marché', 'Château', 'Tracteur',
+    'Fête du cheval', 'Gerberoy', 'Forges-les-Eaux',
+];
+
+/** Mots-clés à proposer, sans celui qui vient d'être cherché. */
+function search_ideas(string $exclude = ''): array {
+    $ideas = (array) apply_filters('spiphoto_fse_search_ideas', SEARCH_IDEAS);
+    $norm  = fn(string $t): string => remove_accents(mb_strtolower(trim($t)));
+    $skip  = $norm($exclude);
+    return array_values(array_filter($ideas, fn($i) => is_string($i) && $i !== '' && $norm($i) !== $skip));
+}
+
+/** Liste de liens vers la recherche, un par mot-clé. */
+function search_ideas_list(string $exclude = ''): string {
+    $items = '';
+    foreach (search_ideas($exclude) as $idea) {
+        $items .= sprintf(
+            '<li><a class="sp-search-idea" href="%s">%s</a></li>',
+            esc_url(add_query_arg('s', rawurlencode($idea), home_url('/'))),
+            esc_html($idea)
+        );
+    }
+    return $items === '' ? '' : '<ul class="sp-search-ideas__list">' . $items . '</ul>';
+}
+
+// Champs de recherche de l'en-tête : un panneau d'idées, masqué, ouvert par
+// main.js quand on clique dans le champ encore vide.
+add_filter('render_block_core/search', function (string $html, array $block): string {
+    $classes = ' ' . ($block['attrs']['className'] ?? '') . ' ';
+    if (!str_contains($classes, ' topbar-search ') && !str_contains($classes, ' sp-search-mobile ')) {
+        return $html;
+    }
+    $list = search_ideas_list();
+    $pos  = strrpos($html, '</form>');
+    if ($list === '' || $pos === false) return $html;
+
+    static $n = 0;
+    $panel = sprintf(
+        '<div class="sp-search-suggest" id="sp-search-suggest-%d" hidden><p class="sp-search-suggest__label">%s</p>%s</div>',
+        ++$n,
+        esc_html__('Idées de recherche', 'spiphoto-fse'),
+        $list
+    );
+    return substr_replace($html, $panel, $pos, 0);
+}, 10, 2);
+
+// Bloc « Idées de recherche » (page de résultats). when = « results » : seulement
+// s'il y a des résultats (sinon le bloc placé dans « Aucun résultat » prend le relais).
+function render_search_ideas(array $attributes): string {
+    if (($attributes['when'] ?? 'always') === 'results' && !(int) ($GLOBALS['wp_query']->found_posts ?? 0)) {
+        return '';
+    }
+    $list = search_ideas_list(get_search_query(false));
+    if ($list === '') return '';
+    return sprintf(
+        '<div %s><p class="sp-search-ideas__label">%s</p>%s</div>',
+        get_block_wrapper_attributes(['class' => 'sp-search-ideas']),
+        esc_html($attributes['label'] ?? __('Idées de recherche :', 'spiphoto-fse')),
+        $list
+    );
+}
+
+add_action('init', function (): void {
+    register_block_type(get_template_directory() . '/blocks/idees-recherche', [
+        'render_callback' => __NAMESPACE__ . '\\render_search_ideas',
+    ]);
+});
+
 // Recherche : 9 résultats par page, soit trois rangées complètes sur la
 // grille de trois colonnes (templates/search.html). Le réglage général
 // « articles par page » (8) reste valable ailleurs : les archives, sur deux
