@@ -941,9 +941,15 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 .site-footer .footer-partner-logo:has(a:focus-visible) { opacity: 1; }
 /* Mention de licence : phrase complete, sur sa propre ligne sous le copyright. */
 .site-footer .footer-license { flex: 0 0 100%; line-height: 1.6; }
-/* Marge basse pour que le bouton fixe de retour en haut (42px a 2rem du bas)
-   ne recouvre pas la fin de la mention de licence. */
-.site-footer { padding-bottom: calc(42px + 2rem); }
+/* Le bouton fixe de retour en haut (42px, a 2rem du bas et de la droite) ne
+   doit pas recouvrir la fin de la mention de licence : on lui reserve la
+   place a droite du texte plutot que 74px de vide sous le pied de page. */
+.site-footer { padding-bottom: 0.5rem; }
+.site-footer .footer-license { padding-right: calc(42px + 1rem); }
+/* Colonnes du pied de page : pas d'espacement automatique de 2rem entre le
+   titre, l'accroche, le texte, l'intitule « Partenaires » et les logos ;
+   seules les marges basses posees dans parts/footer.html comptent. */
+.site-footer .wp-block-column > * { margin-block-start: 0; }
 /* Liens du pied de page de la meme couleur que le texte : souligne pour
    reperer le lien au milieu de la phrase. */
 .site-footer .footer-license a { text-decoration: underline; text-underline-offset: 2px; }
