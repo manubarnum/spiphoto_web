@@ -399,6 +399,16 @@ add_filter('query_loop_block_query_vars', function (array $query, $block): array
     return $query;
 }, 10, 2);
 
+// Recherche : 9 résultats par page, soit trois rangées complètes sur la
+// grille de trois colonnes (templates/search.html). Le réglage général
+// « articles par page » (8) reste valable ailleurs : les archives, sur deux
+// colonnes, y gardent quatre rangées complètes.
+add_action('pre_get_posts', function (\WP_Query $query): void {
+    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+        $query->set('posts_per_page', 9);
+    }
+});
+
 add_filter('body_class', function (array $classes): array {
     if (is_singular('post') && !post_gallery_blocks((int) get_queried_object_id())) {
         $classes[] = 'sp-article-sans-galerie';
