@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.19** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.20** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,11 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.20
+- Recherche : le champ propose des exemples (« Randonnée, moto, Gerberoy… ») et, au clic, une liste d'idées de recherche cliquables ; la liste est fixée dans `functions.php` (`SEARCH_IDEAS`)
+- Page de résultats : « Autres idées » sous le titre, et « Essayez plutôt » quand rien n'est trouvé (nouveau bloc « Idées de recherche »)
+- Téléphone et tablette : une loupe à droite du logo, qui déplie le champ de recherche (la barre supérieure, qui le contenait, est masquée sous 900 px)
 
 ### 1.4.19
 - Recherche : 9 résultats par page au lieu de 8, soit trois rangées complètes sur la grille de trois colonnes ; les archives gardent 8 articles par page (quatre rangées de deux)

@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "spiphoto/idees-recherche",
+	"title": "Idées de recherche",
+	"category": "theme",
+	"icon": "search",
+	"description": "Mots-clés à essayer, en liens vers la recherche. La liste est fixée dans le thème (functions.php, SEARCH_IDEAS).",
+	"textdomain": "spiphoto-fse",
+	"attributes": {
+		"label": { "type": "string", "default": "Idées de recherche :" },
+		"when": { "type": "string", "enum": [ "always", "results" ], "default": "always" }
+	},
+	"supports": { "html": false, "inserter": true, "reusable": false },
+	"editorScript": "file:./editor.js"
+}

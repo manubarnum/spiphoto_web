@@ -253,4 +253,31 @@
     headings.forEach(h => h && tocObs.observe(h));
   }
 
+  // ─────────────────────────────────────────
+  // Recherche : idees de mots-cles sous le champ
+  // Le panneau est fourni par le PHP (functions.php), masque. Il s'ouvre
+  // quand on clique dans le champ encore vide et se referme des qu'on tape,
+  // qu'on quitte le champ ou qu'on appuie sur Echap.
+  // ─────────────────────────────────────────
+  qsa('.sp-search-suggest').forEach(panel => {
+    const form  = panel.closest('form');
+    const input = form && qs('.wp-block-search__input', form);
+    if (!input) return;
+    input.setAttribute('aria-controls', panel.id);
+    input.setAttribute('aria-expanded', 'false');
+    const show = visible => {
+      panel.hidden = !visible;
+      input.setAttribute('aria-expanded', String(visible));
+    };
+    on(input, 'focus', () => show(!input.value.trim()));
+    on(input, 'input', () => show(!input.value.trim()));
+    // Garde le focus dans le champ pendant le clic sur une idee : sinon le
+    // panneau se refermerait avant que le lien ne soit suivi (Safari).
+    on(panel, 'mousedown', e => e.preventDefault());
+    on(form, 'focusout', e => { if (!form.contains(e.relatedTarget)) show(false); });
+    on(form, 'keydown', e => {
+      if (e.key === 'Escape' && !panel.hidden) { show(false); input.focus(); }
+    });
+  });
+
 })();
