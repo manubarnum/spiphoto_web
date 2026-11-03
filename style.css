@@ -18,6 +18,9 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
    CUSTOM PROPERTIES — Palette SPIPHOTO
 ═══════════════════════════════════════════════ */
 :root {
+  /* Marge laterale commune et largeur des bandes (contenu 1200px + marges). */
+  --sp-gutter:         clamp(1rem, 4vw, 2rem);
+  --sp-frame:          calc(1200px + 2 * var(--sp-gutter));
   /* Les couleurs viennent de theme.json. Les variables --sp-* n'en sont que
      des alias courts : une seule source de verite pour la palette. */
   --sp-primary:        var(--wp--preset--color--primary);
@@ -160,8 +163,8 @@ img, video { max-width: 100%; height: auto; display: block; }
   border-bottom: 1px solid var(--sp-border);
 }
 .header-topbar-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 clamp(1rem, 4vw, 2rem);
+  max-width: var(--sp-frame); margin: 0 auto;
+  padding: 0 var(--sp-gutter);
   display: flex; align-items: center; justify-content: space-between;
   gap: 1rem; min-height: 36px;
 }
@@ -339,8 +342,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   border-bottom: 1px solid var(--sp-border);
 }
 .header-brand-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  max-width: var(--sp-frame); margin: 0 auto;
+  padding: 0.75rem var(--sp-gutter);
   display: flex; align-items: center; justify-content: space-between;
 }
 .header-brand { display: flex; align-items: center; gap: 0.75rem; }
@@ -360,8 +363,8 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   flex-wrap: nowrap !important;
   align-items: stretch !important;
   gap: 0 !important;
-  padding: 0 clamp(1rem, 4vw, 2rem) !important;
-  max-width: 1200px !important;
+  padding: 0 var(--sp-gutter) !important;
+  max-width: var(--sp-frame) !important;
   margin: 0 auto !important;
 }
 
@@ -484,7 +487,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   .header-cats-bar .cats-navigation .wp-block-navigation__container {
     align-items: flex-end !important;
     padding-top: 0.25rem !important;
-    padding-right: calc(clamp(1rem, 4vw, 2rem) + 3rem) !important;
+    padding-right: calc(var(--sp-gutter) + 3rem) !important;
   }
   .header-cats-bar .cats-navigation .wp-block-navigation__container > .wp-block-navigation-item {
     position: relative;
@@ -536,7 +539,20 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
    les bords de la fenetre. Au-dela de 1200px plus les marges, rien ne
    change : le contenu reste centre sur 1200px. Le modele « vide » (blank,
    disposition par defaut) n'est pas concerne. */
-#main-content.is-layout-constrained { padding-inline: clamp(1rem, 4vw, 2rem); }
+#main-content.is-layout-constrained { padding-inline: var(--sp-gutter); }
+
+/* Grille commune : en-tete, corps et pied de page ont 1200px de contenu et la
+   meme marge laterale (--sp-gutter). Les bandes de l'en-tete et du pied de
+   page portent leur marge a l'interieur : leur largeur maximale est donc
+   1200px plus deux marges (--sp-frame), sinon elles etaient en retrait de
+   32px par rapport au corps sur grand ecran. Selecteurs a deux classes pour
+   passer devant la largeur posee par la disposition « contrainte » des
+   groupes. */
+.header-topbar > .header-topbar-inner,
+.header-brand-row > .header-brand-inner,
+.site-footer > .wp-block-columns,
+.site-footer > .wp-block-group { max-width: var(--sp-frame); }
+.header-cats-bar > .cats-navigation { max-width: none; }
 
 /* ═══════════════════════════════════════════════
    SIDEBAR
