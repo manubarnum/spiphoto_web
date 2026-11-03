@@ -254,6 +254,43 @@
   }
 
   // ─────────────────────────────────────────
+  // Colonne de droite synchronisee avec les articles (accueil, categories)
+  // Decalage proportionnel a l'avancement dans la zone des colonnes : 0 quand
+  // le haut des colonnes atteint le haut de l'ecran, (hauteur des articles -
+  // hauteur de la colonne) quand leur bas atteint le bas de l'ecran. Les bas
+  // coincident donc en fin de defilement, et la colonne reste visible
+  // pendant tout le trajet. Sous 900px, la colonne est masquee.
+  // ─────────────────────────────────────────
+  const sidebar = qs('.site-sidebar');
+  const sideRow = sidebar && sidebar.closest('.wp-block-columns');
+  if (sidebar && sideRow) {
+    const wide = window.matchMedia('(min-width: 901px)');
+    let ticking = false;
+    const syncSidebar = () => {
+      ticking = false;
+      if (!wide.matches) { sidebar.style.transform = ''; return; }
+      const adminBar = qs('#wpadminbar');
+      const admin = adminBar && getComputedStyle(adminBar).position === 'fixed' ? adminBar.offsetHeight : 0;
+      const view   = window.innerHeight - admin;
+      const rowTop = sideRow.getBoundingClientRect().top + window.scrollY - admin;
+      const travel = sideRow.offsetHeight - sidebar.offsetHeight; // marge de deplacement
+      const range  = sideRow.offsetHeight - view;                 // defilement disponible
+      if (travel <= 0 || range <= 0) { sidebar.style.transform = ''; return; }
+      const p = Math.min(1, Math.max(0, (window.scrollY - rowTop) / range));
+      sidebar.style.transform = 'translateY(' + Math.round(p * travel) + 'px)';
+    };
+    const request = () => { if (!ticking) { ticking = true; requestAnimationFrame(syncSidebar); } };
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request, { passive: true });
+    window.addEventListener('load', request);
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(request);
+      ro.observe(sidebar); ro.observe(sideRow);
+    }
+    request();
+  }
+
+  // ─────────────────────────────────────────
   // Recherche : idees de mots-cles sous le champ
   // Le panneau est fourni par le PHP (functions.php), masque. Il s'ouvre
   // quand on clique dans le champ encore vide et se referme des qu'on tape,
