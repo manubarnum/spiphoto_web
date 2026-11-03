@@ -78,8 +78,20 @@ add_action('wp_head', __NAMESPACE__ . '\\theme_antiflash', 1);
 // ─────────────────────────────────────────────
 // 2. ENQUEUE SCRIPTS & STYLES
 // ─────────────────────────────────────────────
+/**
+ * Version d'un fichier du thème pour son adresse (?ver=) : numéro du thème
+ * suivi de la date de modification du fichier. L'adresse change à chaque
+ * modification, même sans changer de numéro de version : les caches
+ * (Cloudflare devant spi.enkirche.fr, navigateurs) servent toujours le
+ * fichier à jour.
+ */
+function asset_version(string $relative): string {
+    $file = get_template_directory() . '/' . ltrim($relative, '/');
+    $ver  = (string) wp_get_theme()->get('Version');
+    return is_file($file) ? $ver . '.' . filemtime($file) : $ver;
+}
+
 function enqueue_assets(): void {
-    $ver = wp_get_theme()->get('Version');
 
     // Polices : servies localement depuis assets/fonts/ via theme.json (RGPD).
 
@@ -88,7 +100,7 @@ function enqueue_assets(): void {
         'spiphoto-fse-style',
         get_template_directory_uri() . '/style.css',
         [],
-        $ver
+        asset_version('style.css')
     );
 
     // Main JS (deferred).
@@ -96,7 +108,7 @@ function enqueue_assets(): void {
         'spiphoto-fse-main',
         get_template_directory_uri() . '/assets/js/main.js',
         [],
-        $ver,
+        asset_version('assets/js/main.js'),
         ['strategy' => 'defer', 'in_footer' => true]
     );
 
