@@ -973,6 +973,12 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
    titre, l'accroche, le texte, l'intitule « Partenaires » et les logos ;
    seules les marges basses posees dans parts/footer.html comptent. */
 .site-footer .wp-block-column > * { margin-block-start: 0; }
+/* Bloc « Partenaires » cale sur le bord droit, comme la colonne de droite
+   du corps. Sous 900px, les colonnes s'empilent : il reste a gauche. */
+@media (min-width: 901px) {
+  .site-footer .footer-partners { text-align: right; }
+  .site-footer .footer-partners .wp-block-group.is-layout-flex { justify-content: flex-end; }
+}
 /* Liens du pied de page de la meme couleur que le texte : souligne pour
    reperer le lien au milieu de la phrase. */
 .site-footer .footer-license a { text-decoration: underline; text-underline-offset: 2px; }
