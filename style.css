@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.22
+Version:           1.4.23
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -57,7 +57,6 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
   --sp-card-shadow:    0 2px 8px rgba(0,0,0,.45);
   --sp-card-shadow-h:  0 8px 28px rgba(0,0,0,.65), 0 0 0 1px rgba(75,90,34,.3);
 
-  --sp-header-h:       110px;
   --sp-radius-sm:      4px;
   --sp-radius:         8px;
   --sp-radius-lg:      12px;
@@ -108,15 +107,6 @@ img, video { max-width: 100%; height: auto; display: block; }
 /* ═══════════════════════════════════════════════
    ACCESSIBILITÉ
 ═══════════════════════════════════════════════ */
-.skip-to-content {
-  position: absolute; top: -100%; left: 1rem; z-index: 9999;
-  padding: 0.75rem 1.5rem; background: var(--sp-secondary); color: var(--sp-on-brand);
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
-  font-size: 0.875rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
-  text-decoration: none; border-radius: 0 0 var(--sp-radius-sm) var(--sp-radius-sm);
-  transition: top 0.15s ease;
-}
-.skip-to-content:focus { top: 0; }
 :focus-visible { outline: 2px solid var(--sp-secondary); outline-offset: 3px; border-radius: 2px; }
 
 /* ═══════════════════════════════════════════════
@@ -1037,7 +1027,6 @@ hr { border-color: var(--sp-border); }
 ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
   .wp-block-columns { flex-direction: column; }
-  :root { --sp-header-h: 72px; }
   .header-topbar { display: none; }
   .theme-toggle { top: 8px; right: 60px; }
   .admin-bar .theme-toggle { top: 54px; right: 60px; }

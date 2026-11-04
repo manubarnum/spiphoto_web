@@ -81,23 +81,6 @@
                     "name": "Texte atténué"
                 }
             ],
-            "gradients": [
-                {
-                    "slug": "hero-gradient",
-                    "gradient": "linear-gradient(to top, #0d0e09 0%, rgba(13,14,9,0.6) 50%, transparent 100%)",
-                    "name": "Hero sombre"
-                },
-                {
-                    "slug": "primary-gradient",
-                    "gradient": "linear-gradient(135deg, #3a4519 0%, #4b5a22 60%, #5d6f2a 100%)",
-                    "name": "Dégradé olive"
-                },
-                {
-                    "slug": "accent-gradient",
-                    "gradient": "linear-gradient(135deg, #7a5579 0%, #936893 100%)",
-                    "name": "Dégradé mauve"
-                }
-            ],
             "custom": true,
             "customGradient": true,
             "defaultPalette": false,
@@ -403,33 +386,6 @@
             "width": true
         },
         "shadow": {
-            "presets": [
-                {
-                    "slug": "sm",
-                    "shadow": "0 1px 4px rgba(0,0,0,.35)",
-                    "name": "Small"
-                },
-                {
-                    "slug": "md",
-                    "shadow": "0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.3)",
-                    "name": "Medium"
-                },
-                {
-                    "slug": "lg",
-                    "shadow": "0 10px 30px rgba(0,0,0,.55), 0 4px 10px rgba(0,0,0,.35)",
-                    "name": "Large"
-                },
-                {
-                    "slug": "card",
-                    "shadow": "0 2px 8px rgba(0,0,0,.4), 0 0 0 1px rgba(75,90,34,.15)",
-                    "name": "Card"
-                },
-                {
-                    "slug": "lift",
-                    "shadow": "0 8px 24px rgba(0,0,0,.5), 0 0 0 1px rgba(75,90,34,.2)",
-                    "name": "Lift"
-                }
-            ],
             "defaultPresets": false
         },
         "custom": {
@@ -677,23 +633,6 @@
                 "page",
                 "post"
             ]
-        },
-        {
-            "name": "page",
-            "title": "Page standard",
-            "postTypes": [
-                "page"
-            ]
-        },
-        {
-            "name": "search",
-            "title": "Recherche",
-            "postTypes": []
-        },
-        {
-            "name": "404",
-            "title": "Page 404",
-            "postTypes": []
         }
     ],
     "templateParts": [

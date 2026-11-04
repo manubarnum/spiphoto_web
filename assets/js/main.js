@@ -300,6 +300,78 @@
   }
 
   // ─────────────────────────────────────────
+  // En-tete : bouton Jour/Nuit, ombre au defilement, lien actif
+  // (anciennement dans un bloc HTML de parts/header.html). L'etat initial du
+  // theme est pose avant tout rendu par theme_antiflash() (functions.php,
+  // wp_head priorite 1) : c'est ce qui evite le flash, ne pas le deplacer ici.
+  // ─────────────────────────────────────────
+  (function headerUi() {
+    const KEY = 'spiphoto-theme';
+    const root = document.documentElement;
+    const applyTheme = t => {
+      root.setAttribute('data-theme', t);
+      try { localStorage.setItem(KEY, t); } catch (e) { /* stockage indisponible */ }
+    };
+
+    // Bouton Jour/Nuit : range dans l'en-tete, apres la recherche de la barre
+    // du haut, ou sous 900px juste avant la loupe de la ligne du logo (la
+    // barre du haut y est masquee). Sans l'un ni l'autre, il reste flottant.
+    // Seulement avec l'en-tete du theme (pas sur le modele « Vide »), comme
+    // lorsque ce code etait dans parts/header.html.
+    if (qs('.site-header') && !document.getElementById('theme-toggle')) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-toggle';
+      btn.id = 'theme-toggle';
+      btn.setAttribute('aria-label', 'Basculer thème clair/sombre');
+      btn.innerHTML =
+        '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>' +
+        '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="13" height="13" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>' +
+        '<span class="toggle-label-dark">Jour</span>' +
+        '<span class="toggle-label-light">Nuit</span>';
+      btn.addEventListener('click', () => applyTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+      document.body.appendChild(btn);
+
+      const loupe  = qs('.sp-search-mobile');
+      const topbar = qs('.topbar-right');
+      const small  = window.matchMedia('(max-width: 900px)');
+      const placeToggle = () => {
+        btn.classList.remove('theme-toggle--inline', 'theme-toggle--topbar');
+        if (small.matches && loupe) {
+          loupe.parentNode.insertBefore(btn, loupe);
+          btn.classList.add('theme-toggle--inline');
+        } else if (!small.matches && topbar) {
+          topbar.appendChild(btn);
+          btn.classList.add('theme-toggle--topbar');
+        } else if (btn.parentNode !== document.body) {
+          document.body.appendChild(btn);
+        }
+      };
+      placeToggle();
+      if (small.addEventListener) small.addEventListener('change', placeToggle);
+    }
+
+    // Ombre de l'en-tete apres 40px de defilement.
+    const header = qs('.site-header');
+    if (header) {
+      window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
+    }
+
+    // Lien actif des menus. Les liens sont des adresses completes : on compare
+    // leur chemin (l'ancienne version comparait l'adresse complete au chemin
+    // de la page et ne marquait jamais rien).
+    const path = window.location.pathname;
+    qsa('.cats-navigation a, .topbar-navigation a').forEach(a => {
+      let linkPath;
+      try { linkPath = new URL(a.getAttribute('href') || '', window.location.href).pathname; } catch (e) { return; }
+      if (linkPath && linkPath !== '/' && path.startsWith(linkPath)) {
+        a.classList.add('active');
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+  })();
+
+  // ─────────────────────────────────────────
   // Recherche : idees de mots-cles sous le champ
   // Le panneau est fourni par le PHP (functions.php), masque. Il s'ouvre
   // quand on clique dans le champ encore vide et se referme des qu'on tape,
