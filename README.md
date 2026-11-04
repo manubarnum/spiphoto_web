@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.22** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.23** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,15 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.23 — optimisation du code (aucun changement visuel)
+- Modèles : 31 blocs déclaraient dans leurs réglages des styles absents de leur HTML (marges, polices, bordures, couleurs) ; l'éditeur de site les affichait autrement que le site et les aurait réécrits à la première sauvegarde. Réglages retirés, HTML inchangé : l'éditeur montre désormais exactement le site
+- En-tête : le script du bouton Jour/Nuit, de l'ombre au défilement et du lien actif passe du bloc HTML de `parts/header.html` à `main.js` (chargé en différé et mis en cache) ; l'en-tête ne contient plus que des blocs natifs ; le marquage du lien actif, qui comparait des adresses complètes au chemin de la page, fonctionne enfin
+- `theme.json` : modèles « page », « search » et « 404 » retirés des modèles personnalisés (ce sont des modèles de la hiérarchie, pas des choix à proposer) ; dégradés (3) et ombres (5) retirés, utilisés nulle part (thème ni contenus)
+- Accueil, archives, recherche : la première image à la une est chargée tout de suite, en priorité haute (plus grand élément visible, LCP) ; sur l'accueil elle était en chargement différé
+- Partenaires : logos en taille « medium » avec leurs dimensions (pas de décalage à l'affichage), reconnus par leur chemin dans le dossier des médias quel que soit le domaine
+- Sous 900 px : loupe alignée sur le bouton Jour/Nuit (le champ masqué la remontait de 4 px) et ronde comme lui (la règle générale des boutons lui imposait 4 px d'arrondi), les deux boutons espacés de 0,5 rem au lieu de 2,5 rem
+- CSS : règles mortes retirées (`.skip-to-content`, WordPress utilise `.skip-link` ; variable `--sp-header-h`, plus utilisée)
 
 ### 1.4.22
 - Pied de page : les partenaires viennent du gestionnaire de liens (catégorie « Nos partenaires », liens publics, dans l'ordre du champ « Note » du lien (1 en premier ; non notés ensuite, par ordre alphabétique) ; logo = « Adresse de l'image » du lien, ou le nom en texte à défaut) au lieu d'une liste écrite dans le thème ; sans partenaire public, l'intitulé « Partenaires » disparaît aussi

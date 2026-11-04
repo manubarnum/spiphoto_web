@@ -15,8 +15,11 @@
  * - Nom du lien : texte alternatif du logo ;
  * - Adresse web : lien du logo (nouvel onglet) ;
  * - Adresse de l'image (Avancé) : logo. Une image de la médiathèque est
- *   affichée en taille « medium » ; une autre adresse, telle quelle. Sans
- *   image, le nom du partenaire s'affiche en texte.
+ *   affichée en taille « medium », avec ses dimensions (pas de décalage à
+ *   l'affichage) ; elle est reconnue par son chemin dans le dossier des
+ *   médias, quel que soit le domaine de l'adresse (site local, production,
+ *   /wordpress/…). Une autre adresse est affichée telle quelle. Sans image,
+ *   le nom du partenaire s'affiche en texte.
  * Sans partenaire public, ni l'intitulé ni le bloc ne s'affichent.
  */
 
@@ -55,15 +58,21 @@ foreach ( $spiphoto_links as $spiphoto_link ) :
 	$spiphoto_url  = $spiphoto_link->link_url;
 	$spiphoto_src  = trim( (string) $spiphoto_link->link_image );
 	$spiphoto_id   = $spiphoto_src ? attachment_url_to_postid( $spiphoto_src ) : 0;
-	if ( $spiphoto_id ) {
-		$spiphoto_src = wp_get_attachment_image_url( $spiphoto_id, 'medium' ) ?: $spiphoto_src;
+	if ( ! $spiphoto_id && $spiphoto_src && preg_match( '#/wp-content/uploads/(.+)$#', (string) wp_parse_url( $spiphoto_src, PHP_URL_PATH ), $spiphoto_m ) ) {
+		$spiphoto_id = attachment_url_to_postid( trailingslashit( wp_get_upload_dir()['baseurl'] ) . $spiphoto_m[1] );
+	}
+	$spiphoto_dims = '';
+	if ( $spiphoto_id && ( $spiphoto_img = wp_get_attachment_image_src( $spiphoto_id, 'medium' ) ) ) {
+		$spiphoto_src  = $spiphoto_img[0];
+		$spiphoto_dims = $spiphoto_img[1] && $spiphoto_img[2] ? sprintf( ' width="%d" height="%d"', $spiphoto_img[1], $spiphoto_img[2] ) : '';
 	}
 
 	if ( $spiphoto_src ) {
 		$spiphoto_inner = sprintf(
-			'<img src="%s" alt="%s"%s style="width:auto;height:64px" loading="lazy"/>',
+			'<img src="%s" alt="%s"%s%s style="width:auto;height:64px" loading="lazy" decoding="async"/>',
 			esc_url( $spiphoto_src ),
 			esc_attr( $spiphoto_name ),
+			$spiphoto_dims,
 			$spiphoto_id ? ' class="wp-image-' . (int) $spiphoto_id . '"' : ''
 		);
 	} else {

@@ -485,6 +485,22 @@ add_action('init', function (): void {
     ]);
 });
 
+// Première image à la une des pages de liste (accueil, archives, recherche) :
+// c'est le plus grand élément visible au chargement (LCP). WordPress la marque
+// parfois en chargement différé (accueil : elle est dans une seconde boucle
+// de requête) ; on la charge tout de suite, en priorité haute. Les suivantes
+// restent différées.
+add_filter('render_block_core/post-featured-image', function (string $html): string {
+    static $done = false;
+    if ($done || is_admin() || !(is_home() || is_front_page() || is_archive() || is_search())) return $html;
+    if (!str_contains($html, '<img')) return $html;
+    $done = true;
+    if (str_contains($html, 'fetchpriority=')) return $html; // déjà traitée par WordPress
+    $html = preg_replace('/\sloading="lazy"/', '', $html, 1);
+    $html = preg_replace('/sizes="auto,\s*/', 'sizes="', $html, 1); // « auto » ne vaut qu'en différé
+    return preg_replace('/<img\b/', '<img fetchpriority="high"', $html, 1);
+});
+
 // Recherche : 9 résultats par page, soit trois rangées complètes sur la
 // grille de trois colonnes (templates/search.html). Le réglage général
 // « articles par page » (8) reste valable ailleurs : les archives, sur deux
