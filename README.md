@@ -154,7 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.22
-- Pied de page : les partenaires viennent du gestionnaire de liens (catégorie « Nos partenaires », liens publics, ordre alphabétique ; logo = « Adresse de l'image » du lien, ou le nom en texte à défaut) au lieu d'une liste écrite dans le thème ; sans partenaire public, l'intitulé « Partenaires » disparaît aussi
+- Pied de page : les partenaires viennent du gestionnaire de liens (catégorie « Nos partenaires », liens publics, dans l'ordre du champ « Note » du lien (1 en premier ; non notés ensuite, par ordre alphabétique) ; logo = « Adresse de l'image » du lien, ou le nom en texte à défaut) au lieu d'une liste écrite dans le thème ; sans partenaire public, l'intitulé « Partenaires » disparaît aussi
 
 ### 1.4.21
 - Feuille de style et script : leur adresse (`?ver=`) comprend désormais la date de modification du fichier ; un cache (Cloudflare, navigateur) ne peut plus servir une ancienne version après une mise à jour sans changement de numéro

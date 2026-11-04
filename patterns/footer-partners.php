@@ -8,7 +8,10 @@
  *
  * Source : Liens → catégorie « Nos partenaires » (slug nos-partenaires),
  * liens publics seulement (cocher « Garder ce lien privé » retire un
- * partenaire), par ordre alphabétique du nom.
+ * partenaire).
+ * Ordre : champ « Note » du lien (Avancé), utilisé comme position : 1 en
+ * premier, puis 2, 3… ; les liens notés 0 (non renseigné) viennent ensuite.
+ * À note égale, ordre alphabétique du nom.
  * - Nom du lien : texte alternatif du logo ;
  * - Adresse web : lien du logo (nouvel onglet) ;
  * - Adresse de l'image (Avancé) : logo. Une image de la médiathèque est
@@ -30,6 +33,15 @@ $spiphoto_links = $spiphoto_cat ? get_bookmarks(
 if ( ! $spiphoto_links ) {
 	return;
 }
+
+usort(
+	$spiphoto_links,
+	static function ( $a, $b ) {
+		$ra = (int) $a->link_rating ?: 99;
+		$rb = (int) $b->link_rating ?: 99;
+		return $ra <=> $rb ?: strcasecmp( remove_accents( $a->link_name ), remove_accents( $b->link_name ) );
+	}
+);
 ?>
 <!-- wp:paragraph {"style":{"spacing":{"margin":{"bottom":"0.875rem"}}},"className":"footer-partners-label"} -->
 <p class="footer-partners-label" style="margin-bottom:0.875rem">Partenaires</p>
