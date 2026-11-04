@@ -154,8 +154,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ## 📝 Changelog
 
 ### 1.4.24 — colonne de droite sur les pages
-- Les pages affichent la colonne de droite de l'accueil (« À ne pas manquer », « Séries », « Lieux & régions »), comme les articles de l'ancien thème
-- La page « Initiation » et ses sous-pages gardent la pleine largeur (modèle `page-initiation`, choisi aussi pour les sous-pages par le filtre `page_template_hierarchy`)
+- Toutes les pages affichent la colonne de droite de l'accueil (« À ne pas manquer », « Séries », « Lieux & régions »)
 - La colonne de droite devient une partie de modèle (`parts/sidebar.html`, « Colonne de droite ») partagée par l'accueil et les pages : une seule à modifier dans l'éditeur de site
 
 ### 1.4.23 — optimisation du code (aucun changement visuel)
