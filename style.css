@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.24
+Version:           1.4.25
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -30,6 +30,7 @@ Tags:              full-site-editing, block-themes, news, magazine, photography,
   --sp-secondary-dk:   var(--wp--preset--color--secondary-dark);
   --sp-secondary-lt:   var(--wp--preset--color--secondary-light);
 
+  --sp-outside:        var(--wp--preset--color--outside);
   --sp-bg:             var(--wp--preset--color--bg);
   --sp-surface:        var(--wp--preset--color--surface);
   --sp-surface-raised: var(--wp--preset--color--surface-raised);
@@ -70,6 +71,7 @@ html[data-theme="light"] {
   /* On redefinit les variables de la PALETTE theme.json, pas seulement les
      --sp-*. Ainsi les blocs qui utilisent une couleur de palette (boutons,
      navigation, badges) suivent le mode clair sans !important. */
+  --wp--preset--color--outside:        #ddd6c7;
   --wp--preset--color--bg:             #f7f3ec;
   --wp--preset--color--surface:        #ffffff;
   --wp--preset--color--surface-raised: #eee9df;
@@ -548,6 +550,22 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .site-footer > .wp-block-columns,
 .site-footer > .wp-block-group { max-width: var(--sp-frame); }
 .header-cats-bar > .cats-navigation { max-width: none; }
+
+/* Site encadre, comme Hueman en mode « boxed » : au-dela de --sp-frame, les
+   marges exterieures prennent le fond exterieur (palette « Fond exterieur »)
+   et le site garde son fond, avec une ombre legere. En dessous, le cadre
+   occupe toute la largeur et rien ne change. Le fond exterieur passe par
+   body:has(> .wp-site-blocks) : propre au site public (l'editeur n'a pas
+   .wp-site-blocks, son fond reste celui du site) et plus precis que la
+   regle « body » des styles globaux. */
+body:has(> .wp-site-blocks) { background-color: var(--sp-outside); }
+.wp-site-blocks {
+  max-width: var(--sp-frame);
+  margin-inline: auto;
+  background-color: var(--sp-bg);
+  box-shadow: 0 0 32px rgba(0,0,0,.45);
+}
+html[data-theme="light"] .wp-site-blocks { box-shadow: 0 0 24px rgba(0,0,0,.10); }
 
 /* ═══════════════════════════════════════════════
    SIDEBAR

@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.24** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.25** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,11 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.25 — site encadré
+- Comme Hueman en mode « boxed » : au-delà de 1 264 px de large, le site est encadré (fond du site, ombre légère) et les marges extérieures prennent une autre couleur
+- Nouvelle couleur de palette « Fond extérieur » (`outside`) : #1f2416 en sombre, #ddd6c7 en clair ; modifiable dans Styles → Couleurs
+- Propre au site public : l'éditeur garde son fond habituel
 
 ### 1.4.24 — colonne de droite sur les pages
 - Toutes les pages affichent la colonne de droite de l'accueil (« À ne pas manquer », « Séries », « Lieux & régions »)

@@ -41,6 +41,11 @@
                     "name": "Mauve clair"
                 },
                 {
+                    "slug": "outside",
+                    "color": "#1f2416",
+                    "name": "Fond extérieur"
+                },
+                {
                     "slug": "bg",
                     "color": "#0d0e09",
                     "name": "Fond"
