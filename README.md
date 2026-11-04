@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.23** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.24** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,11 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.24 — colonne de droite sur les pages
+- Les pages affichent la colonne de droite de l'accueil (« À ne pas manquer », « Séries », « Lieux & régions »), comme les articles de l'ancien thème
+- La page « Initiation » et ses sous-pages gardent la pleine largeur (modèle `page-initiation`, choisi aussi pour les sous-pages par le filtre `page_template_hierarchy`)
+- La colonne de droite devient une partie de modèle (`parts/sidebar.html`, « Colonne de droite ») partagée par l'accueil et les pages : une seule à modifier dans l'éditeur de site
 
 ### 1.4.23 — optimisation du code (aucun changement visuel)
 - Modèles : 31 blocs déclaraient dans leurs réglages des styles absents de leur HTML (marges, polices, bordures, couleurs) ; l'éditeur de site les affichait autrement que le site et les aurait réécrits à la première sauvegarde. Réglages retirés, HTML inchangé : l'éditeur montre désormais exactement le site

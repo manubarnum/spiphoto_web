@@ -501,6 +501,22 @@ add_filter('render_block_core/post-featured-image', function (string $html): str
     return preg_replace('/<img\b/', '<img fetchpriority="high"', $html, 1);
 });
 
+// Pages : le modèle « page » affiche la colonne de droite. La page
+// « Initiation » et ses sous-pages (exercices H5P, rencontres) gardent la
+// pleine largeur avec le modèle « page-initiation », que WordPress ne
+// choisirait sinon que pour la page elle-même et pas pour ses sous-pages.
+add_filter('page_template_hierarchy', function (array $templates): array {
+    $page = get_queried_object();
+    if (!$page instanceof WP_Post) return $templates;
+    foreach (array_merge([$page->ID], get_post_ancestors($page)) as $id) {
+        if (get_post_field('post_name', $id) === 'initiation') {
+            array_unshift($templates, 'page-initiation.php');
+            break;
+        }
+    }
+    return array_values(array_unique($templates));
+});
+
 // Recherche : 9 résultats par page, soit trois rangées complètes sur la
 // grille de trois colonnes (templates/search.html). Le réglage général
 // « articles par page » (8) reste valable ailleurs : les archives, sur deux

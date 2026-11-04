@@ -645,6 +645,11 @@
             "name": "footer",
             "title": "Pied de page",
             "area": "footer"
+        },
+        {
+            "name": "sidebar",
+            "title": "Colonne de droite",
+            "area": "uncategorized"
         }
     ]
 }
