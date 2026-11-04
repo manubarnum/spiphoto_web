@@ -1166,10 +1166,17 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
   position: static;
   flex-shrink: 0;
   width: 40px; height: 40px; padding: 0;
-  margin: 0 0.5rem 0 auto;
+  margin: 0 0 0 auto;
   border-radius: 50%;
 }
 .theme-toggle.theme-toggle--inline svg { width: 18px; height: 18px; }
+/* Bouton Jour/Nuit et loupe rapproches : 0,5rem entre eux au lieu de
+   l'espacement general de la ligne du logo (2rem). La pellicule, seule
+   autre voisine, est masquee sous 900px ; le titre reste separe des
+   boutons par la marge automatique du bouton. */
+@media (max-width: 900px) {
+  .site-header .header-brand-inner { column-gap: 0.5rem; }
+}
 
 /* ═══════════════════════════════════════════════
    FIX FOND SUBMENU — override WP block CSS
