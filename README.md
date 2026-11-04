@@ -159,6 +159,7 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 - `theme.json` : modèles « page », « search » et « 404 » retirés des modèles personnalisés (ce sont des modèles de la hiérarchie, pas des choix à proposer) ; dégradés (3) et ombres (5) retirés, utilisés nulle part (thème ni contenus)
 - Accueil, archives, recherche : la première image à la une est chargée tout de suite, en priorité haute (plus grand élément visible, LCP) ; sur l'accueil elle était en chargement différé
 - Partenaires : logos en taille « medium » avec leurs dimensions (pas de décalage à l'affichage), reconnus par leur chemin dans le dossier des médias quel que soit le domaine
+- Sous 900 px : loupe alignée sur le bouton Jour/Nuit (le champ masqué la remontait de 4 px) et ronde comme lui (la règle générale des boutons lui imposait 4 px d'arrondi)
 - CSS : règles mortes retirées (`.skip-to-content`, WordPress utilise `.skip-link` ; variable `--sp-header-h`, plus utilisée)
 
 ### 1.4.22

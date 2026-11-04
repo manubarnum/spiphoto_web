@@ -246,13 +246,18 @@ html[data-theme="light"] .sp-search-suggest { box-shadow: 0 8px 24px rgba(0,0,0,
 @media (max-width: 900px) {
   .sp-search-mobile { display: block; flex-shrink: 0; }
   .sp-search-mobile .wp-block-search__button {
-    background: none; border: 1px solid var(--sp-border-lt); border-radius: 50%;
+    /* !important : la regle generale des boutons (.wp-element-button) impose
+       un arrondi de 4px en !important ; la loupe est ronde comme Jour/Nuit. */
+    background: none; border: 1px solid var(--sp-border-lt); border-radius: 50% !important;
     width: 40px; height: 40px; padding: 0 !important; margin: 0;
     display: flex; align-items: center; justify-content: center;
     color: var(--sp-text-sec); cursor: pointer;
   }
   .sp-search-mobile .wp-block-search__button svg { width: 20px; height: 20px; fill: currentColor; }
-  .sp-search-mobile .wp-block-search__inside-wrapper { position: relative; border: 0; padding: 0; background: none; }
+  /* Hauteur de la loupe (40px) et centrage : le champ masque gardait sa
+     hauteur (49px), ce qui remontait la loupe de 4px par rapport au bouton
+     Jour/Nuit voisin. */
+  .sp-search-mobile .wp-block-search__inside-wrapper { position: relative; border: 0; padding: 0; background: none; height: 40px; align-items: center; }
   /* Champ deplie : pose a gauche de la loupe, par-dessus le titre du site. */
   .sp-search-mobile:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
     position: absolute; right: calc(100% + 0.5rem); top: 50%; transform: translateY(-50%);
