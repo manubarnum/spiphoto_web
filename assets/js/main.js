@@ -361,7 +361,7 @@
     // leur chemin (l'ancienne version comparait l'adresse complete au chemin
     // de la page et ne marquait jamais rien).
     const path = window.location.pathname;
-    qsa('.cats-navigation a, .topbar-navigation a').forEach(a => {
+    qsa('.cats-navigation a, .topbar-navigation a, .topbar-navigation-mobile a').forEach(a => {
       let linkPath;
       try { linkPath = new URL(a.getAttribute('href') || '', window.location.href).pathname; } catch (e) { return; }
       if (linkPath && linkPath !== '/' && path.startsWith(linkPath)) {
