@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.25** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.26** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,11 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.26 — pellicule des adhérents sur téléphone
+- Sous 900 px, la ligne du logo laisse la place à la pellicule de l'extension SPIPHOTO Site (1.5.0 ou plus) : titre et boutons en haut, pellicule dessous, d'un bord à l'autre de l'écran
+- La marge latérale du thème est transmise à la pellicule (`--sps-film-gutter`) : la première vue reste alignée sur le titre
+- Sans la classe `sps-film--mobile` (réglage « Sur téléphone » de l'extension), rien ne change
 
 ### 1.4.25 — site encadré
 - Comme Hueman en mode « boxed » : au-delà de 1 264 px de large, le site est encadré (fond du site, ombre légère) et les marges extérieures prennent une autre couleur

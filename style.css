@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.25
+Version:           1.4.26
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -1189,11 +1189,19 @@ html[data-theme="light"] .theme-toggle .toggle-label-light { display: inline; }
 }
 .theme-toggle.theme-toggle--inline svg { width: 18px; height: 18px; }
 /* Bouton Jour/Nuit et loupe rapproches : 0,5rem entre eux au lieu de
-   l'espacement general de la ligne du logo (2rem). La pellicule, seule
-   autre voisine, est masquee sous 900px ; le titre reste separe des
-   boutons par la marge automatique du bouton. */
+   l'espacement general de la ligne du logo (2rem). Le titre reste separe des
+   boutons par la marge automatique du bouton.
+   Pellicule des adherents (extension spiphoto-site 1.5.0) : sous 900px, elle
+   ne s'affiche qu'avec la classe sps-film--mobile (reglage « Sur telephone »
+   de l'extension). La ligne du logo passe alors a la ligne : titre et
+   boutons en haut, le titre se resserre pour laisser les boutons a droite,
+   la pellicule dessous. --sps-film-gutter donne la marge laterale a la
+   bande, qui va ainsi d'un bord a l'autre de l'ecran, premiere vue alignee
+   sur le titre. */
 @media (max-width: 900px) {
-  .site-header .header-brand-inner { column-gap: 0.5rem; }
+  .site-header .header-brand-inner { column-gap: 0.5rem; --sps-film-gutter: var(--sp-gutter); }
+  .site-header .header-brand-inner:has(.sps-film--mobile) { flex-wrap: wrap; row-gap: 0.75rem; }
+  .site-header .header-brand-inner:has(.sps-film--mobile) .header-brand { flex: 1 1 0; min-width: 0; }
 }
 
 /* ═══════════════════════════════════════════════
