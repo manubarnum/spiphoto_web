@@ -114,6 +114,13 @@ img, video { max-width: 100%; height: auto; display: block; }
 /* ═══════════════════════════════════════════════
    HEADER
 ═══════════════════════════════════════════════ */
+/* Cartes Leaflet (page « Carte interactive », extension spiphoto-site) :
+   leurs couches ont des z-index de 400 a 1000, au meme niveau que l'en-tete
+   (100). La carte passait alors par-dessus l'en-tete collant et par-dessus
+   les volets des menus, qui ne peuvent depasser le niveau de l'en-tete.
+   isolation: isolate enferme ces couches dans la carte. */
+.leaflet-container { isolation: isolate; }
+
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: var(--sp-surface);
