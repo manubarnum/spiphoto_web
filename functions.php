@@ -208,7 +208,9 @@ add_action('admin_init', function (): void {
 // Choix du menu a l'affichage, d'apres la classe du bloc Navigation :
 // topbar-navigation (visiteurs, ou LoggedMenu pour un utilisateur connecte ;
 // remplace Conditional Menus, inoperant sur le bloc Navigation) et
-// cats-navigation. Le « ref » ecrit dans parts/header.html ne sert plus que
+// cats-navigation. topbar-navigation-mobile (bouton du menu principal a
+// droite de la barre des categories, sous 900px) contient
+// « topbar-navigation » : il recoit le meme menu. Le « ref » ecrit dans parts/header.html ne sert plus que
 // dans l'editeur du site local.
 function select_navigation_menu(array $block): array {
     if ('core/navigation' !== ($block['blockName'] ?? '')) {
@@ -227,6 +229,25 @@ function select_navigation_menu(array $block): array {
     return $block;
 }
 add_filter('render_block_data', __NAMESPACE__ . '\\select_navigation_menu');
+
+// Sur telephone, deux boutons de menu cote a cote (categories a gauche,
+// menu principal a droite) : WordPress les nomme tous deux « Ouvrir le
+// menu ». On precise lequel pour les lecteurs d'ecran.
+add_filter('render_block_core/navigation', function (string $html, array $block): string {
+    $class = $block['attrs']['className'] ?? '';
+    $label = str_contains($class, 'topbar-navigation-mobile') ? 'Ouvrir le menu principal'
+        : (str_contains($class, 'cats-navigation') ? 'Ouvrir le menu des catégories' : '');
+    if ('' === $label) {
+        return $html;
+    }
+    // Bouton d'ouverture : aria-label precede la classe dans le HTML du bloc.
+    return (string) preg_replace(
+        '/(<button\b[^>]*?)\baria-label="[^"]*"([^>]*\bclass="wp-block-navigation__responsive-container-open)/',
+        '$1aria-label="' . esc_attr($label) . '"$2',
+        $html,
+        1
+    );
+}, 10, 2);
 
 // Adresse des liens calculee a l'affichage depuis l'identifiant de la page
 // ou de la categorie : le meme menu fonctionne sur le site local et en

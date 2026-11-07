@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.26
+Version:           1.4.27
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -114,6 +114,13 @@ img, video { max-width: 100%; height: auto; display: block; }
 /* ═══════════════════════════════════════════════
    HEADER
 ═══════════════════════════════════════════════ */
+/* Cartes Leaflet (page « Carte interactive », extension spiphoto-site) :
+   leurs couches ont des z-index de 400 a 1000, au meme niveau que l'en-tete
+   (100). La carte passait alors par-dessus l'en-tete collant et par-dessus
+   les volets des menus, qui ne peuvent depasser le niveau de l'en-tete.
+   isolation: isolate enferme ces couches dans la carte. */
+.leaflet-container { isolation: isolate; }
+
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: var(--sp-surface);
@@ -436,18 +443,18 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 }
 
 /* Bouton burger mobile (généré par WP) */
-.cats-navigation .wp-block-navigation__responsive-container-open svg,
-.cats-navigation .wp-block-navigation__responsive-container-close svg {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container-open svg,
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container-close svg {
   color: var(--sp-text);
 }
-.cats-navigation .wp-block-navigation__responsive-container.is-menu-open {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container.is-menu-open {
   background: var(--sp-surface) !important;
   padding: 1.5rem !important;
   z-index: 200 !important;
 }
 /* Menu deplie : annule le flex-direction:row de .wp-block-navigation__container,
    qui s'appliquait a tous les etats et empilait mal les entrees en overlay. */
-.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
   flex-direction: column !important;
   flex-wrap: nowrap !important;
   align-items: stretch !important;
@@ -456,7 +463,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   margin: 0 !important;
 }
 /* Sous-menus en overlay : dans le flux, pas en position absolue */
-.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container {
   position: static !important;
   box-shadow: none !important;
   background: transparent !important;
@@ -464,7 +471,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   padding-left: 1rem !important;
   min-width: 0 !important;
 }
-.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
   font-size: 1rem;
   padding: 0.75rem 0 !important;
   color: var(--sp-text) !important;
@@ -472,7 +479,7 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
   text-transform: uppercase;
   background: none !important;
 }
-.cats-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
+:is(.cats-navigation, .topbar-navigation-mobile) .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
   display: none !important;
 }
 
@@ -550,6 +557,44 @@ html[data-theme="light"] .header-topbar .wp-block-navigation__submenu-container 
 .site-footer > .wp-block-columns,
 .site-footer > .wp-block-group { max-width: var(--sp-frame); }
 .header-cats-bar > .cats-navigation { max-width: none; }
+
+/* Telephone (sous 900px) : la barre du haut, et donc le menu principal, est
+   masquee. Le menu principal a son propre bouton, a droite de la barre des
+   categories (bloc Navigation topbar-navigation-mobile, toujours replie) ;
+   son volet a le style de celui des categories. Au-dessus de 900px, ce
+   bouton est masque. Marges a zero : la disposition « contrainte » centre
+   chaque enfant par des marges automatiques et ecarte le second du premier
+   par une marge haute (espacement des blocs), ce qui decalait le bouton. */
+.header-cats-bar > .topbar-navigation-mobile { max-width: none; }
+@media (min-width: 901px) {
+  .header-cats-bar > .topbar-navigation-mobile { display: none; }
+}
+@media (max-width: 900px) {
+  .header-cats-bar { display: flex; align-items: center; justify-content: space-between; }
+  .header-cats-bar > .wp-block-navigation { margin: 0 !important; }
+}
+/* Volet du menu principal : police des categories, et sans les espacements
+   que WordPress met entre les entrees et avant les sous-menus (2em par
+   defaut ; le menu des categories n'a pas de sous-menus). */
+.topbar-navigation-mobile .wp-block-navigation-item__content {
+  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+.topbar-navigation-mobile .wp-block-navigation__responsive-container.is-menu-open :is(.wp-block-navigation__container, .wp-block-navigation__submenu-container) {
+  gap: 0 !important;
+}
+.topbar-navigation-mobile .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container {
+  padding-top: 0 !important;
+}
+.topbar-navigation-mobile .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--sp-text-sec) !important;
+}
 
 /* Site encadre, comme Hueman en mode « boxed » : au-dela de --sp-frame, les
    marges exterieures prennent le fond exterieur (palette « Fond exterieur »)
