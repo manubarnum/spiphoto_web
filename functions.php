@@ -230,6 +230,45 @@ function select_navigation_menu(array $block): array {
 }
 add_filter('render_block_data', __NAMESPACE__ . '\\select_navigation_menu');
 
+// Même choix dans l'éditeur du site : le « ref » écrit dans parts/header.html
+// est l'identifiant du menu sur le site local. Ailleurs (production), il ne
+// désigne aucun menu et l'éditeur affiche « Le menu de navigation a été
+// supprimé ou n'est pas disponible ». On le remplace, dans le contenu des
+// modèles fournis à l'éditeur, par l'identifiant du menu de même slug
+// (barre supérieure : menu des visiteurs).
+function fix_navigation_refs(string $content): string {
+    if (!str_contains($content, 'wp:navigation')) {
+        return $content;
+    }
+    return (string) preg_replace_callback(
+        '/<!-- wp:navigation (\{.*?\}) \/?-->/',
+        static function (array $m): string {
+            $attrs = json_decode($m[1], true);
+            $class = is_array($attrs) ? (string) ($attrs['className'] ?? '') : '';
+            $slug  = str_contains($class, 'topbar-navigation') ? 'menu-principal'
+                : (str_contains($class, 'cats-navigation') ? 'categorie' : '');
+            $id = $slug ? nav_menu_id($slug) : 0;
+            if (!$id || !preg_match('/"ref":\d+/', $m[0])) {
+                return $m[0];
+            }
+            return (string) preg_replace('/"ref":\d+/', '"ref":' . $id, $m[0], 1);
+        },
+        $content
+    );
+}
+
+function fix_template_navigation_refs($template) {
+    if ($template instanceof \WP_Block_Template && is_string($template->content)) {
+        $template->content = fix_navigation_refs($template->content);
+    }
+    return $template;
+}
+add_filter('get_block_file_template', __NAMESPACE__ . '\\fix_template_navigation_refs');
+add_filter('get_block_template', __NAMESPACE__ . '\\fix_template_navigation_refs');
+add_filter('get_block_templates', function (array $templates): array {
+    return array_map(__NAMESPACE__ . '\\fix_template_navigation_refs', $templates);
+});
+
 // Sur telephone, deux boutons de menu cote a cote (categories a gauche,
 // menu principal a droite) : WordPress les nomme tous deux « Ouvrir le
 // menu ». On precise lequel pour les lecteurs d'ecran.
