@@ -87,22 +87,17 @@ foreach ( $spiphoto_links as $spiphoto_link ) :
 		);
 	}
 
-	$spiphoto_attrs = array(
-		'width'           => 'auto',
-		'height'          => '64px',
-		'sizeSlug'        => 'medium',
-		'linkDestination' => $spiphoto_url ? 'custom' : 'none',
-		// no-lightbox : exclu par Meow Lightbox (réglage anti_selector), dont le
-		// sélecteur .wp-block-image capterait sinon le clic au lieu du lien.
-		'className'       => 'footer-partner-logo no-lightbox',
-	);
-	if ( $spiphoto_id ) {
-		$spiphoto_attrs = array( 'id' => (int) $spiphoto_id ) + $spiphoto_attrs;
-	}
+	// Bloc « HTML personnalisé » plutôt que « Image » : l'éditeur valide un
+	// bloc Image en régénérant son balisage à partir de ses attributs, et ce
+	// balisage (dimensions, chargement différé, infobulle, nom sans logo) ne
+	// correspond pas à celui-ci (« Le bloc contient du contenu invalide »). Le
+	// rendu public est identique.
+	// no-lightbox : exclu par Meow Lightbox (réglage anti_selector), dont le
+	// sélecteur .wp-block-image capterait sinon le clic au lieu du lien.
 	?>
-<!-- wp:image <?php echo wp_json_encode( $spiphoto_attrs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ); ?> -->
+<!-- wp:html -->
 <figure class="wp-block-image size-medium is-resized footer-partner-logo no-lightbox"><?php echo $spiphoto_inner; // Échappé ci-dessus. ?></figure>
-<!-- /wp:image -->
+<!-- /wp:html -->
 <?php endforeach; ?>
 </div>
 <!-- /wp:group -->
