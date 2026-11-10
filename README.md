@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.27** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.28** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,10 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.28 — pied de page
+- Copyright « © SPIPHOTO 2004–2026 » : l'année de fin suit l'année en cours (filtre sur le paragraphe `footer-copyright`) ; il affichait « 2025 » écrit en dur
+- Logos des partenaires en blocs « HTML personnalisé » au lieu de blocs « Image » : l'éditeur de site ne signale plus « Le bloc contient du contenu invalide » ; rendu public inchangé
 
 ### 1.4.27 — menu principal sur téléphone
 - Sous 900 px, un second bouton de menu, à droite de la barre des catégories, ouvre le menu principal (LoggedMenu pour un membre connecté), jusqu'ici inaccessible sur téléphone avec la barre du haut masquée

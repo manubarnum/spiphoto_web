@@ -522,6 +522,13 @@ add_filter('render_block_core/post-featured-image', function (string $html): str
     return preg_replace('/<img\b/', '<img fetchpriority="high"', $html, 1);
 });
 
+// Pied de page : l'année de fin du copyright (« © SPIPHOTO 2004–2026 », écrit
+// dans parts/footer.html) suit l'année en cours, sans modifier le modèle.
+add_filter('render_block_core/paragraph', function (string $html, array $block): string {
+    if (!str_contains(' ' . ($block['attrs']['className'] ?? '') . ' ', ' footer-copyright ')) return $html;
+    return preg_replace('/(© SPIPHOTO 2004–)\d{4}/u', '${1}' . wp_date('Y'), $html, 1) ?? $html;
+}, 10, 2);
+
 // Recherche : 9 résultats par page, soit trois rangées complètes sur la
 // grille de trois colonnes (templates/search.html). Le réglage général
 // « articles par page » (8) reste valable ailleurs : les archives, sur deux
