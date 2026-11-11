@@ -4,7 +4,7 @@ Theme URI:         https://preprod.spiphoto.fr
 Author:            SPIPHOTO
 Author URI:        https://spiphoto.fr
 Description:       Thème Full Site Editing pour le club photo SPIPHOTO de Gournay-en-Bray. Mode sombre, palette olive & mauve prune, optimisé pour la photographie.
-Version:           1.4.29
+Version:           1.4.30
 Requires at least: 6.4
 Tested up to:      7.1
 Requires PHP:      8.1
@@ -766,23 +766,6 @@ html[data-theme="light"] .post-card .wp-block-post-featured-image::after { opaci
 /* Liste deroulante des series (bloc Categories, taxonomie series) */
 .sidebar-series select { width: 100%; }
 .wp-block-tag-cloud a:hover { background: var(--sp-primary); border-color: var(--sp-primary); color: var(--sp-on-brand); }
-.wp-block-categories-list { list-style: none !important; margin: 0 !important; padding: 0 !important; }
-/* WordPress ecrit le nombre d'articles en texte brut apres le lien
-   (<a>Nom</a> (12)) : c'est le <li> qui doit etre flex pour garder le nombre
-   sur la ligne, a droite. Le texte du <li> sert donc au nombre. */
-.wp-block-categories-list li {
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
-  padding: 0.45rem 0; border-bottom: 1px solid var(--sp-border);
-  font-family: var(--wp--preset--font-family--dm-sans, sans-serif);
-  /* --sp-text-muted n'a que 3,2:1 sur la surface sombre : --sp-text-sec
-     tient le AA dans les deux modes. */
-  font-size: 0.75rem; color: var(--sp-text-sec);
-}
-.wp-block-categories-list li > ul { flex-basis: 100%; }
-.wp-block-categories-list li:last-child { border-bottom: none; }
-.wp-block-categories-list a { color: var(--sp-text-sec); text-decoration: none; transition: color var(--sp-transition-fast); font-size: 0.875rem; }
-.wp-block-categories-list a:hover { color: var(--sp-accent-hover); }
-.wp-block-categories__post-count { font-size: 0.6875rem; color: var(--sp-text-muted); margin-left: 0.35rem; }
 
 /* ═══════════════════════════════════════════════
    CONTENU ARTICLE
@@ -1062,9 +1045,6 @@ input::placeholder, textarea::placeholder { color: var(--sp-text-muted); }
 .site-footer .wp-block-navigation-item__content { color: var(--sp-text-sec) !important; font-family: var(--wp--preset--font-family--dm-sans, sans-serif); font-size: 0.875rem; text-transform: none; letter-spacing: 0; }
 .site-footer .wp-block-navigation-item__content:hover { color: var(--sp-accent-hover) !important; }
 .site-footer .wp-block-navigation-item__content::after { display: none !important; }
-.site-footer .wp-block-categories-list a { color: var(--sp-text-sec); }
-.site-footer .wp-block-categories-list a:hover { color: var(--sp-accent-hover); }
-.site-footer .wp-block-categories-list li { border-color: var(--sp-border); }
 
 /* ═══════════════════════════════════════════════
    BARRE PROGRESSION + RETOUR EN HAUT
