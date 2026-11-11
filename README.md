@@ -2,7 +2,7 @@
 
 **Thème WordPress Full Site Editing** du club photo SPIPHOTO de Gournay-en-Bray : mode sombre par défaut, palette olive & mauve prune, mise en page magazine pensée pour la photographie.
 
-Version actuelle : **1.4.29** (voir l'en-tête de `style.css`).
+Version actuelle : **1.4.30** (voir l'en-tête de `style.css`).
 
 ---
 
@@ -152,6 +152,9 @@ Définie dans `theme.json`. Les couleurs de marque sont les mêmes dans les deux
 ---
 
 ## 📝 Changelog
+
+### 1.4.30 — colonne de droite des archives
+- Les pages de catégorie, d'étiquette, de série et de date utilisent la colonne de droite partagée (`parts/sidebar.html`) : « À ne pas manquer » y reste affiché au lieu d'être remplacé par « Toutes les catégories » ; « Séries » et « Lieux & régions » sont inchangés
 
 ### 1.4.29 — menus de l'en-tête dans l'éditeur
 - Hors du site local, l'éditeur de site affichait « Le menu de navigation a été supprimé ou n'est pas disponible » : le `ref` de `parts/header.html` est l'identifiant du menu en local. Il est désormais remplacé, dans les modèles fournis à l'éditeur, par l'identifiant du menu de même slug (`menu-principal`, `categorie`)

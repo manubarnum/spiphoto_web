@@ -56,35 +56,7 @@
 
 		<!-- wp:column {"width":"32%","className":"site-sidebar"} -->
 		<div class="wp-block-column site-sidebar" style="flex-basis:32%">
-			<!-- wp:group {"tagName":"aside","ariaLabel":"Barre latérale","layout":{"type":"default"}} -->
-			<aside class="wp-block-group" aria-label="Barre latérale">
-				<!-- wp:group {"className":"sidebar-widget","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"},"blockGap":"0"}}} -->
-				<div class="wp-block-group sidebar-widget" style="border-radius:8px;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
-					<!-- wp:heading {"level":3,"className":"widget-title"} -->
-					<h3 class="wp-block-heading widget-title">Toutes les catégories</h3>
-					<!-- /wp:heading -->
-					<!-- wp:categories {"showHierarchy":true,"showPostCounts":true,"style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.8125rem"}}} /-->
-				</div>
-				<!-- /wp:group -->
-				<!-- wp:group {"className":"sidebar-widget","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"},"margin":{"top":"1.5rem"},"blockGap":"0"}}} -->
-				<div class="wp-block-group sidebar-widget" style="border-radius:8px;margin-top:1.5rem;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
-					<!-- wp:heading {"level":3,"className":"widget-title"} -->
-					<h3 class="wp-block-heading widget-title">Séries</h3>
-					<!-- /wp:heading -->
-					<!-- wp:categories {"taxonomy":"series","displayAsDropdown":true,"showPostCounts":true,"showLabel":false,"className":"sidebar-series"} /-->
-				</div>
-				<!-- /wp:group -->
-
-				<!-- wp:group {"className":"sidebar-widget","layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"},"style":{"border":{"radius":"8px"},"spacing":{"padding":{"top":"1.5rem","bottom":"1.5rem","left":"1.5rem","right":"1.5rem"},"margin":{"top":"1.5rem"},"blockGap":"0"}}} -->
-				<div class="wp-block-group sidebar-widget" style="border-radius:8px;margin-top:1.5rem;padding-top:1.5rem;padding-right:1.5rem;padding-bottom:1.5rem;padding-left:1.5rem">
-					<!-- wp:heading {"level":3,"className":"widget-title"} -->
-					<h3 class="wp-block-heading widget-title">Lieux</h3>
-					<!-- /wp:heading -->
-					<!-- wp:tag-cloud {"numberOfTags":30,"smallestFontSize":"0.6875rem","largestFontSize":"1.25rem","style":{"typography":{"fontFamily":"var(--wp--preset--font-family--dm-sans)","fontSize":"0.75rem"}}} /-->
-				</div>
-				<!-- /wp:group -->
-			</aside>
-			<!-- /wp:group -->
+			<!-- wp:template-part {"slug":"sidebar","tagName":"div"} /-->
 		</div>
 		<!-- /wp:column -->
 
